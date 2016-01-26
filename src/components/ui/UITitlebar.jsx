@@ -35,7 +35,7 @@ const styles = {
     position : 'absolute',
     backgroundColor : 'rgb(251, 251, 251)',
     backgroundImage : 'linear-gradient(#f4f4f4, #d4d1d4)',
-    borderBottom : '1px solid rgba(0, 0, 0, .75)',
+    borderBottom : '1px solid rgba(0, 0, 0, .25)',
     zIndex : 3,
     top : 0,
     left : 0,
