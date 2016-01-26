@@ -46,10 +46,10 @@ class UIContent extends React.Component {
   }
 
   renderContent(anim) {
-    const { active, children } = this.props;
+    const { active, children, disableSidebarAnimation } = this.props;
     return (
       <div style={this.setStyles(anim)}>
-        {/* active ? null : this.renderOverlay() */}
+        { disableSidebarAnimation ? null : this.renderOverlay() }
         {this.props.children}
       </div>
     );
