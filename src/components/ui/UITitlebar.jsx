@@ -10,13 +10,13 @@ class UITitlebar extends React.Component {
 
   render() {
     const { leftItem, centerItem, rightItem } = this.props,
-      { titlebarStyle, leftItemStyle, rightItemStyle } = styles;
+      { titlebarStyle, leftItemStyle, rightItemStyle, centerItemStyle } = styles;
     return (
       <div id="titlebar" style={titlebarStyle}>
         <div className="left-item" style={leftItemStyle}>
           {leftItem ? leftItem() : null}
         </div>
-        <div className="center-item">
+        <div className="center-item" style={centerItemStyle}>
           {centerItem ? centerItem() : null}
         </div>
         <div className="right-item" style={rightItemStyle}>
@@ -48,7 +48,8 @@ const styles = {
     WebkitFlexDirection : 'row',
     flexDirection : 'row',
     WebkitAlignItems : 'center',
-    alignItems : 'center'
+    alignItems : 'center',
+    WebkitAppRegion : 'drag'
   },
   leftItemStyle : {
     width : '5rem',
@@ -64,7 +65,26 @@ const styles = {
   },
   rightItemStyle : {
     width : '5rem',
-    height : '100%'
+    height : '100%',
+    WebkitTransition : 'all 0.3s',
+    transition : 'all 0.3s',
+    position : 'relative',
+    display : 'flex',
+    WebkitFlexDirection : 'row',
+    flexDirection : 'row',
+    WebkitAlignItems : 'center',
+    alignItems : 'center'
+  },
+  centerItemStyle : {
+    height : '100%',
+    WebkitTransition : 'all 0.3s',
+    transition : 'all 0.3s',
+    position : 'relative',
+    display : 'flex',
+    WebkitFlexDirection : 'row',
+    flexDirection : 'row',
+    WebkitAlignItems : 'center',
+    alignItems : 'center'
   }
 };
 

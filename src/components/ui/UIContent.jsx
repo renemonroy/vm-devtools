@@ -9,7 +9,8 @@ import * as UIActions from '../../actions/ui';
  *----------------------------------------------------------------------------*/
 @connect(state => ({
   active : !state.UI.get('showSidebar'),
-  slideWidth : state.UI.get('sidebarWidth')
+  slideWidth : state.UI.get('sidebarWidth'),
+  disableSidebarAnimation : state.UI.get('disableSidebarAnimation')
 }))
 @Radium
 class UIContent extends React.Component {
@@ -17,7 +18,8 @@ class UIContent extends React.Component {
   static displayName = 'Content';
 
   static propTypes = {
-    active : React.PropTypes.bool.isRequired
+    active : React.PropTypes.bool.isRequired,
+    disableSidebarAnimation : React.PropTypes.bool.isRequired
   };
 
   getAnimation() {
@@ -26,10 +28,15 @@ class UIContent extends React.Component {
   }
 
   setStyles(anim) {
-    const animStyle = {
-      WebkitTransform : 'translate3d(' + anim.x + 'px, 0, 0)',
-      transform : 'translate3d(' + anim.x + 'px, 0, 0)',
+    const { slideWidth, disableSidebarAnimation } = this.props;
+    let x = disableSidebarAnimation ? slideWidth : anim.x;
+    let animStyle = {
+      WebkitTransform : 'translate3d(' + x + 'px, 0, 0)',
+      transform : 'translate3d(' + x + 'px, 0, 0)',
     };
+    if ( disableSidebarAnimation ) {
+      animStyle.width = 'calc(100% - ' + slideWidth + 'px)';
+    }
     return [styles.contentStyle, animStyle];
   }
 

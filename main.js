@@ -12,8 +12,8 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
-    width : 800,
-    height : 600,
+    width : 570,
+    height : 750,
     frame : false
   });
   if ( process.env && process.env.NODE_ENV == 'development' ) {

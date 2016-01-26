@@ -4,5 +4,6 @@ import { fromJS } from 'immutable';
  *----------------------------------------------------------------------------*/
 export const UI = fromJS({
   showSidebar : true,
-  sidebarWidth : 70
+  sidebarWidth : 70,
+  disableSidebarAnimation : true
 });
