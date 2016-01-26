@@ -28,12 +28,14 @@ article, aside, figure, footer, header, nav, section, details, summary {display:
    http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
 html {
 	box-sizing: border-box;
+	-webkit-user-select: none;
 }
 
 *,
 *:before,
 *:after {
 	box-sizing: inherit;
+	-webkit-user-select: inherit;
 }
 
 /* consider resetting the default cursor: https://gist.github.com/murtaugh/5247154 */
