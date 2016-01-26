@@ -41,6 +41,10 @@ let styles = {
     },
     warning : {
       background : '#FF4136'
+    },
+    'window-gui' : {
+      height : '2.4rem',
+      width : '2.4rem'
     }
   }
 };
