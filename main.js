@@ -6,6 +6,8 @@ const BrowserWindow = electron.BrowserWindow;
 
 var mainWindow = null;
 
+app.dock.hide();
+
 app.on('window-all-closed', function() {
   if ( process.platform != 'darwin' ) app.quit();
 });
@@ -14,6 +16,11 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width : 570,
     height : 750,
+    minWidth : 500,
+    maxWidth : 900,
+    minHeight : 700,
+    maxHeight : 1000,
+    alwaysOnTop : true,
     frame : false
   });
   if ( process.env && process.env.NODE_ENV == 'development' ) {

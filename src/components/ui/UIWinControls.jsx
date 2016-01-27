@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import { UIButton } from './index';
 
-const winIconsActions = require('../../images/window-icons-actions.png');
+require('../../images/window-icons-actions.png');
 
 /** UIWinControls Class
  *----------------------------------------------------------------------------*/
@@ -56,7 +56,7 @@ let styles = {
     margin : '0 auto'
   },
   baseBtnStyle : {
-    backgroundImage : 'url(' + winIconsActions + ')',
+    backgroundImage : 'url("/images/window-icons-actions.png")',
     backgroundRepeat : 'no-repeat',
     backgroundSize : '4.5rem'
   },
