@@ -70,7 +70,8 @@ const styles = {
   sidebarStyle : {
     position : 'relative',
     height : '100%',
-    top : 0
+    top : 0,
+    paddingTop : '.4rem'
   }
 };
 

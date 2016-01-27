@@ -18,7 +18,7 @@ class UIButton extends React.Component {
     let { buttonStyle } = styles;
     let btnStyl = [ buttonStyle.base, buttonStyle[kind], style ];
     return (
-      <div onClick={onClick} style={btnStyl}>
+      <div className="ui-button" onClick={onClick} style={btnStyl}>
         {children}
       </div>
     );
@@ -43,8 +43,11 @@ let styles = {
       background : '#FF4136'
     },
     'window-gui' : {
-      height : '2.4rem',
-      width : '2.4rem'
+      height : '1.3rem',
+      width : '1.3rem',
+      textIndent : '100%',
+      whiteSpace : 'nowrap',
+      overflow : 'hidden'
     }
   }
 };
