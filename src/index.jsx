@@ -10,8 +10,11 @@ import * as Scenes from './components/scenes';
 
 require('./index.scss');
 
+const remote = window.require('remote');
+const currentWindow = remote.getCurrentWindow();
 const appStore = createStore(CombinedReducers);
 const history = createBrowserHistory();
+
 const routes = (
   <Route path="/" component={App}>
     <IndexRoute component={Scenes.MissionScene} />
@@ -25,3 +28,7 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app-wrapper')
 );
+
+document.addEventListener('DOMContentLoaded', e => {
+  setTimeout(() => currentWindow.show(), 0);
+});

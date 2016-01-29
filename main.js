@@ -22,10 +22,9 @@ app.on('ready', function() {
     width : 570,
     height : 750,
     minWidth : 500,
-    maxWidth : 900,
     minHeight : 700,
-    maxHeight : 1000,
-    frame : false
+    frame : false,
+    show : false
   });
 
   if ( process.env && process.env.NODE_ENV == 'development' ) {
@@ -33,6 +32,8 @@ app.on('ready', function() {
   } else {
     mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
   }
+
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function() {
     mainWindow = null;
