@@ -18,7 +18,7 @@ class UIButton extends React.Component {
     let { buttonStyle } = styles;
     let btnStyl = [ buttonStyle.base, buttonStyle[kind], style ];
     return (
-      <div className="ui-button" onClick={onClick} style={btnStyl}>
+      <div {...this.props} className="ui-button" style={btnStyl}>
         {children}
       </div>
     );
