@@ -4,6 +4,9 @@ import { UIButton } from './index';
 
 require('../../images/window-icons-actions.png');
 
+const remote = window.require('remote');
+const currentWindow = remote.getCurrentWindow();
+
 /** UIWinControls Class
  *----------------------------------------------------------------------------*/
 @Radium
@@ -33,9 +36,27 @@ class UIWinControls extends React.Component {
         onMouseOver={() => {this.setState({ groupState : 'hover' })}}
         onMouseOut={() => {this.setState({ groupState : 'normal' })}}
         style={winControlsStyle}>
-        <UIButton kind="window-gui" style={closeBtnStyles}>Close</UIButton>
-        <UIButton kind="window-gui" style={minBtnStyles}>Min</UIButton>
-        <UIButton kind="window-gui" style={maxBtnStyles}>Max</UIButton>
+        <UIButton
+          onClick={() => currentWindow.hide()}
+          kind="window-gui"
+          style={closeBtnStyles}
+          key="close-window">
+          Close
+        </UIButton>
+        <UIButton
+          onClick={() => currentWindow.minimize()}
+          kind="window-gui"
+          style={minBtnStyles}
+          key="minimize-window">
+          Minimize
+          </UIButton>
+        <UIButton
+          onClick={() => currentWindow.maximize()}
+          kind="window-gui"
+          style={maxBtnStyles}
+          key="maximize-window">
+          Maximize
+          </UIButton>
       </div>
     );
   }
