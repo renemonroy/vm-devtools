@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import { UIContent, UISidebar, UITitlebar, UIScenesGroup, UIWinControls } from './ui';
+import { UIContent, UISidebar, UITitlebar, UIScenesGroup, UIWinControls, UIIcon } from './ui';
 import { SidebarToggler } from './buttons';
 
 /** App Class
@@ -17,6 +17,7 @@ class App extends React.Component {
       <div id="app" style={styles.appStyle}>
         <UISidebar>
           <UIWinControls />
+          <UIIcon name="rocket" color="#fff" />
         </UISidebar>
         <UIContent>
           <UITitlebar
