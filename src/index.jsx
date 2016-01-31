@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import CombinedReducers from './reducers';
-import { Router, Route, IndexRoute } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import App from './components';
 import * as Scenes from './components/scenes';
 
@@ -13,18 +12,18 @@ require('./index.scss');
 const remote = window.require('remote');
 const currentWindow = remote.getCurrentWindow();
 const appStore = createStore(CombinedReducers);
-const history = createBrowserHistory();
 
 const routes = (
   <Route path="/" component={App}>
-    <IndexRoute component={Scenes.MissionScene} />
+    <IndexRedirect to="/missions" />
+    <Route path="/missions" component={Scenes.MissionsScene} />
     <Route path="/labs" component={Scenes.LabsScene} />
   </Route>
 );
 
 ReactDOM.render(
   <Provider store={appStore}>
-    <Router  history={history} routes={routes} />
+    <Router  history={browserHistory} routes={routes} />
   </Provider>,
   document.getElementById('app-wrapper')
 );
