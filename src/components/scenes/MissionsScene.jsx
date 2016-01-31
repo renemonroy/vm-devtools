@@ -3,11 +3,11 @@ import { UIScene } from '../ui';
 
 /** MissionScene Class
  *----------------------------------------------------------------------------*/
-class MissionScene extends React.Component {
+class MissionsScene extends React.Component {
 
   render() {
     return (
-      <UIScene name="auth">
+      <UIScene name="missions">
         <p>Mission scene.</p>
       </UIScene>
     );
@@ -15,4 +15,4 @@ class MissionScene extends React.Component {
 
 };
 
-export default MissionScene;
+export default MissionsScene;
