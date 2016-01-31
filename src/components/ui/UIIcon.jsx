@@ -12,11 +12,9 @@ class UIIcon extends React.Component {
 
   render() {
     const { name, color, size } = this.props;
-    const attrs = {
-      color : color || '#000',
-      fontSize : ((size || 16) * .1) + 'rem'
-    };
+    const attrs = { fontSize : ((size || 16) * .1) + 'rem' };
     const iconStyle = [styles.base, attrs];
+    if ( color ) attrs.color = color;
     return (
       <span className={'icon-' + name} style={iconStyle}></span>
     );
