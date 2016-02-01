@@ -34,7 +34,7 @@ class NavigationButton extends React.Component {
       <UIButton
         style={buttonStyle}
         onClick={this.onClick.bind(this)}>
-        <UIIcon name={icon} size="20" />
+        <UIIcon name={icon} size="22" />
       </UIButton>
     );
   }

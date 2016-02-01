@@ -1,5 +1,5 @@
 import React from 'react';
-import { UIScene } from '../ui';
+import { UIScene, UIInputTag } from '../ui';
 
 /** MissionScene Class
  *----------------------------------------------------------------------------*/
@@ -9,6 +9,9 @@ class MissionsScene extends React.Component {
     return (
       <UIScene name="missions">
         <p>Mission scene.</p>
+        <UIInputTag
+          placeholder="Add a screen name"
+          onChange={(tags) => {console.log('tags:', tags)}}/>
       </UIScene>
     );
   }
