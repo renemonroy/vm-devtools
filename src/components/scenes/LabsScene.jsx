@@ -5,6 +5,8 @@ import { UIScene } from '../ui';
  *----------------------------------------------------------------------------*/
 class LabsScene extends React.Component {
 
+  static displayName = 'LabsScene';
+
   render() {
     return (
       <UIScene name="auth">

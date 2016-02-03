@@ -7,6 +7,8 @@ import cx from 'classnames';
 @Radium
 class UIScene extends React.Component {
 
+  static displayName = 'UIScene';
+
   static propTypes = {
     name : React.PropTypes.string.isRequired
   };

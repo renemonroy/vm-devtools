@@ -6,6 +6,8 @@ import Radium from 'radium';
 @Radium
 class UIIcon extends React.Component {
 
+  static displayName = 'UIIcon';
+
   static propTypes = {
     name : React.PropTypes.string.isRequired
   };

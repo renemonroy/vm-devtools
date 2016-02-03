@@ -7,6 +7,8 @@ import { NavigationButton } from '../buttons';
 @Radium
 class Navigation extends React.Component {
 
+  static displayName = 'Navigation';
+
   render() {
     return (
       <nav style={styles.navStyle}>

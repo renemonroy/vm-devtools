@@ -8,6 +8,8 @@ import { fastEaseOut } from '../../constants/SpringPresets';
 @Radium
 class UIScenesGroup extends React.Component {
 
+  static displayName = 'UIScenesGroup';
+
   static propTypes = {
     sceneRoute : React.PropTypes.string.isRequired
   };

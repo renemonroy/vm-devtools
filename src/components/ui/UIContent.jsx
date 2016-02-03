@@ -15,7 +15,7 @@ import * as UIActions from '../../actions/ui';
 @Radium
 class UIContent extends React.Component {
 
-  static displayName = 'Content';
+  static displayName = 'UIContent';
 
   static propTypes = {
     active : React.PropTypes.bool.isRequired,

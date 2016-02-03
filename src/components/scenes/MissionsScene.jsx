@@ -5,6 +5,8 @@ import { UIScene, UIInputTag } from '../ui';
  *----------------------------------------------------------------------------*/
 class MissionsScene extends React.Component {
 
+  static displayName = 'MissionsScene';
+
   render() {
     return (
       <UIScene name="missions">
