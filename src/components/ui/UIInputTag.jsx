@@ -9,11 +9,12 @@ class UIInputTag extends React.Component {
   static displayName = 'UIInputTag';
 
   static propTypes = {
-    placeholder : React.PropTypes.string,
-    addKeys : React.PropTypes.array,
-    removeKeys : React.PropTypes.array,
-    onChange : React.PropTypes.func,
-    color : React.PropTypes.oneOf(['lilac', 'salmon', 'green'])
+    tags: React.PropTypes.array,
+    placeholder: React.PropTypes.string,
+    addKeys: React.PropTypes.array,
+    removeKeys: React.PropTypes.array,
+    onChange: React.PropTypes.func,
+    color: React.PropTypes.oneOf(['lilac', 'salmon', 'green'])
   };
 
   static defaultProps = {
@@ -26,34 +27,28 @@ class UIInputTag extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { tags : [], tagName : '' };
+    this.state = { tagName : '' };
   }
 
   addTag() {
-    let { tagName, tags } = this.state,
-      newTags = null;
+    let { tagName } = this.state, newTags = null;
     if ( tagName !== '' || tagName !== ' ' ) {
-      newTags = tags.concat([tagName]);
-      this.updateTags({ tags : newTags, tagName : '' });
+      newTags = this.props.tags.concat([tagName]);
+      this.props.onChange(newTags);
+      this.setState({ tagName : '' });
     }
   }
 
   removeTag(i) {
-    let newTags = this.state.tags.concat([]);
+    let newTags = this.props.tags.concat([]);
     if ( i > -1 && i < newTags.length ) {
       newTags.splice(i, 1);
-      this.updateTags({ tags : newTags });
+      this.props.onChange(newTags);
     }
   }
 
-  updateTags(e) {
-    const { onChange } = this.props;
-    this.setState(e);
-    onChange(e.tags);
-  }
-
   handleKeyDown(e) {
-    const tagsSize = this.state.tags.length;
+    const tagsSize = this.props.tags.length;
     if ( this.props.addKeys.indexOf(e.keyCode) !== -1 ) {
       e.preventDefault();
       this.addTag();
@@ -67,8 +62,8 @@ class UIInputTag extends React.Component {
   }
 
   render() {
-    const { tagName, tags } = this.state,
-      { placeholder, color } = this.props,
+    const { tagName } = this.state,
+      { tags, placeholder, color } = this.props,
       { wrapperStyle, inputStyle, tagStyle, tagNameStyle, iconStyle } = styles,
       tagStyles = [tagStyle.base, tagStyle[color]],
       iconStyles = [iconStyle.base, iconStyle[color]];
@@ -115,7 +110,7 @@ const styles = {
     fontSize : '1.3rem',
     padding : '.2rem',
     fontWeight : 100,
-    marginBottom : '.1rem'
+    marginBottom : '.5rem'
   },
   tagStyle : {
     base : {
