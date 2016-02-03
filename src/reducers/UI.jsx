@@ -1,5 +1,5 @@
-import { UI } from '../constants/ActionTypes';
-import * as initialState from '../constants/InitialStates';
+import { UI as Action } from '../constants/ActionTypes';
+import { UI as InitialState } from '../constants/InitialStates';
 
 /** Pure Functions
  *----------------------------------------------------------------------------*/
@@ -9,9 +9,9 @@ function toggleSidebar(state) {
 
 /** Reducer
  *----------------------------------------------------------------------------*/
-export default function UIReducer(state = initialState.UI, action) {
+export default function UIReducer(state = InitialState, action) {
   switch ( action.type ) {
-    case UI.TOGGLE_SIDEBAR :
+    case Action.TOGGLE_SIDEBAR :
       return toggleSidebar(state);
   }
   return state;

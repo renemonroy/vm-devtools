@@ -1,7 +1,7 @@
-import { UI } from '../constants/ActionTypes.jsx';
+import { UI as Action } from '../constants/ActionTypes.jsx';
 
 export function toggleSidebar() {
   return {
-    type : UI.TOGGLE_SIDEBAR
+    type : Action.TOGGLE_SIDEBAR
   };
 };
