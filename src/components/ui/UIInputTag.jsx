@@ -69,13 +69,21 @@ class UIInputTag extends React.Component {
   render() {
     const { tagName, tags } = this.state,
       { placeholder, color } = this.props,
-      { wrapperStyle, inputStyle, tagStyle } = styles,
-      tagStyles = [tagStyle.base, tagStyle[color]];
+      { wrapperStyle, inputStyle, tagStyle, tagNameStyle, iconStyle } = styles,
+      tagStyles = [tagStyle.base, tagStyle[color]],
+      iconStyles = [iconStyle.base, iconStyle[color]];
     return (
       <div style={wrapperStyle} onClick={(e) => this._input.focus()}>
         <div>
           {tags.map((tag, i) =>
-            <span key={'tag-' + i} style={tagStyles}>{tag}</span>
+            <span key={'tag-' + i} style={tagStyles}>
+              <span style={tagNameStyle}>{tag}</span>
+              <i
+                style={iconStyles}
+                className="icon-close"
+                onClick={this.removeTag.bind(this,i)}>
+              </i>
+            </span>
           )}
           <input
             value={tagName}
@@ -96,7 +104,8 @@ class UIInputTag extends React.Component {
  *----------------------------------------------------------------------------*/
 const styles = {
   wrapperStyle : {
-    borderBottom : '1px solid #e7e7e7'
+    borderBottom : '1px solid #e7e7e7',
+    overflow : 'hidden'
   },
   inputStyle : {
     border : '0 none',
@@ -110,13 +119,14 @@ const styles = {
   },
   tagStyle : {
     base : {
-      lineHeight : '2.2rem',
       padding : '0 .6rem',
       display : 'inline-block',
       marginBottom : '.5rem',
       marginRight : '.5rem',
       fontWeight : '600',
-      color : '#4c4c4c'
+      color : '#4c4c4c',
+      overflow : 'hidden',
+      float : 'left'
     },
     lilac : {
       backgroundColor : '#e1cbe2'
@@ -126,6 +136,44 @@ const styles = {
     },
     green : {
       backgroundColor : '#cbe2d1'
+    }
+  },
+  tagNameStyle : {
+    display : 'inline-block',
+    fontWeight : 600,
+    float : 'left',
+    marginTop : '.3rem',
+    marginRight : '.4rem'
+  },
+  iconStyle : {
+    base : {
+      fontFamily : 'VMDevTools',
+      speak : 'none',
+      fontStyle : 'normal',
+      fontWeight : 'normal',
+      fontVariant : 'normal',
+      textTransform : 'none',
+      lineHeight : 1,
+      WebkitFontSmoothing : 'antialiased',
+      fontSize : '1.4rem',
+      display : 'inline-block',
+      height : '1.4rem',
+      widht : '1.4rem',
+      marginTop : '.4rem',
+      marginBottom : '.4rem',
+      borderRadius : '.7rem'
+    },
+    lilac : {
+      color : '#b083b2',
+      backgroundColor : '#e9d7ea'
+    },
+    salmon : {
+      color : '#c79393',
+      backgroundColor : '#f1d8d8'
+    },
+    green : {
+      color : '#83b28e',
+      backgroundColor : '#d6eadc'
     }
   }
 };
