@@ -8,7 +8,7 @@ class MissionsScene extends React.Component {
   render() {
     return (
       <UIScene name="missions">
-        <p>Mission scene.</p>
+        <h3>Missions names</h3>
         <UIInputTag
           placeholder="Add a screen name"
           onChange={(tags) => {console.log('tags:', tags)}}/>

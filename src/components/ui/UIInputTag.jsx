@@ -73,7 +73,7 @@ class UIInputTag extends React.Component {
       tagStyles = [tagStyle.base, tagStyle[color]];
     return (
       <div style={wrapperStyle} onClick={(e) => this._input.focus()}>
-        <span>
+        <div>
           {tags.map((tag, i) =>
             <span key={'tag-' + i} style={tagStyles}>{tag}</span>
           )}
@@ -85,7 +85,7 @@ class UIInputTag extends React.Component {
             ref={(comp) => this._input = comp}
             onChange={(e) => {this.setState({ tagName : e.target.value })}}
             onKeyDown={::this.handleKeyDown}/>
-        </span>
+        </div>
       </div>
     );
   }
@@ -99,7 +99,14 @@ const styles = {
     borderBottom : '1px solid #e7e7e7'
   },
   inputStyle : {
-    border : '0 none'
+    border : '0 none',
+    lineHeight : '2.2rem',
+    height : '2.2rem',
+    display : 'inline-block',
+    fontSize : '1.3rem',
+    padding : '.2rem',
+    fontWeight : 100,
+    marginBottom : '.1rem'
   },
   tagStyle : {
     base : {
