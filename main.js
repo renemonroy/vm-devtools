@@ -1,9 +1,12 @@
 'use strict';
 
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const Tray = electron.Tray;
+var electron = require('electron');
+var fs = require('fs-plus');
+var path = require('path');
+var app = electron.app;
+var BrowserWindow = electron.BrowserWindow;
+var Tray = electron.Tray;
+var missionsPath = './missions/';
 
 var mainWindow = null;
 var appIcon = null;
@@ -47,3 +50,20 @@ app.on('ready', function() {
     }
   }.bind(this));
 });
+
+/* MISSIONS
+ *--------------------------------------------------------------------------- */
+// fs.readdir(missionsPath, function(err, files) {
+//   if ( err ) throw err;
+//   files
+//     .map( function(file) {
+//       return path.join(missionsPath, file);
+//     })
+//     .filter( function(file) {
+//       return fs.isDirectorySync(file) && fs.existsSync(file + '/mission.json');
+//     })
+//     .forEach( function(file) {
+//       console.log('>>>', file);
+//     });
+// });
+//
