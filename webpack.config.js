@@ -17,6 +17,8 @@ module.exports = {
 
   entry : getEntry(),
 
+  target : 'electron',
+
   output : {
     path : __dirname + '/dist',
     publicPath : '/',

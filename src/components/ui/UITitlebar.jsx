@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-const remote = window.require('remote');
+const remote = require('electron').remote;
 const currentWindow = remote.getCurrentWindow();
 
 /** UITitlebar Class

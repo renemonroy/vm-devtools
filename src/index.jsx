@@ -9,7 +9,7 @@ import * as Scenes from './components/scenes';
 
 require('./index.scss');
 
-const remote = window.require('remote');
+const remote = require('electron').remote;
 const currentWindow = remote.getCurrentWindow();
 const appStore = createStore(CombinedReducers);
 

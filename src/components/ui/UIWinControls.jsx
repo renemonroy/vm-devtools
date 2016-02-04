@@ -4,7 +4,7 @@ import { UIButton } from './index';
 
 require('../../images/window-icons-actions.png');
 
-const remote = window.require('remote');
+const remote = require('electron').remote;
 const currentWindow = remote.getCurrentWindow();
 
 /** UIWinControls Class
