@@ -57,14 +57,14 @@ app.on('ready', function() {
  *--------------------------------------------------------------------------- */
 var getMissionsList = function(e) {
   fs.readdir(missionsPath, function(err, files) {
+    var missionsList = [];
     if ( err ) throw err;
-    var missionsList = files
-      .map( function(file) {
-        return path.join(missionsPath, file);
-      })
-      .filter( function(file) {
-        return fs.isDirectorySync(file) && fs.existsSync(file + '/mission.json');
-      });
+    files.forEach( function(fileName) {
+      var mp = path.join(missionsPath, fileName);
+      if ( fs.isDirectorySync(mp) && fs.existsSync(mp + '/mission.json') ) {
+        missionsList.push(fileName);
+      }
+    });
     console.log('>>> Missions List:', missionsList);
     e.sender.send('missions:resList', missionsList);
   });
