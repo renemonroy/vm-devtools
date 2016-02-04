@@ -7,6 +7,7 @@ var app = electron.app;
 var BrowserWindow = electron.BrowserWindow;
 var Tray = electron.Tray;
 var missionsPath = './missions/';
+var ipcMain = electron.ipcMain;
 
 var mainWindow = null;
 var appIcon = null;
@@ -39,6 +40,7 @@ app.on('ready', function() {
   mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function() {
+    ipcMain.removeListener('missions:reqList', getMissionsList);
     mainWindow = null;
   });
 
@@ -53,17 +55,20 @@ app.on('ready', function() {
 
 /* MISSIONS
  *--------------------------------------------------------------------------- */
-// fs.readdir(missionsPath, function(err, files) {
-//   if ( err ) throw err;
-//   files
-//     .map( function(file) {
-//       return path.join(missionsPath, file);
-//     })
-//     .filter( function(file) {
-//       return fs.isDirectorySync(file) && fs.existsSync(file + '/mission.json');
-//     })
-//     .forEach( function(file) {
-//       console.log('>>>', file);
-//     });
-// });
-//
+var getMissionsList = function(e) {
+  fs.readdir(missionsPath, function(err, files) {
+    if ( err ) throw err;
+    var missionsList = files
+      .map( function(file) {
+        return path.join(missionsPath, file);
+      })
+      .filter( function(file) {
+        return fs.isDirectorySync(file) && fs.existsSync(file + '/mission.json');
+      });
+    console.log('>>> Missions List:', missionsList);
+    e.sender.send('missions:resList', missionsList);
+  });
+};
+
+ipcMain.on('missions:reqList', getMissionsList);
+

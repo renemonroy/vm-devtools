@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { UIScene, UIInputTag } from '../ui';
 import * as missionActions from '../../actions/Mission';
 
+var ipcRenderer = require('electron').ipcRenderer;
+
 /** MissionScene Class
  *----------------------------------------------------------------------------*/
 @connect(state => ({
@@ -15,6 +17,23 @@ class MissionsScene extends React.Component {
   static propTypes = {
     missions : React.PropTypes.object
   };
+
+  componentWillMount() {
+    ipcRenderer.on('missions:resList', this.onMissionsList);
+  }
+
+  componentDidMount() {
+    ipcRenderer.send('missions:reqList');
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.removeListener('missions:resList', this.onMissionsList);
+    ipcRenderer = null;
+  }
+
+  onMissionsList(e, missions) {
+    console.log('>>> Missions Found', missions);
+  }
 
   handleScreensChange(tags) {
     this.props.dispatch(missionActions.editMission('com.virginmegausa.mission.view-media', { screens : tags }));
