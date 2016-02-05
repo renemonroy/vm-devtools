@@ -40,7 +40,7 @@ app.on('ready', function() {
   mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function() {
-    ipcMain.removeListener('missions:reqList', getMissionsList);
+    ipcMain.removeListener('missions:req:list', getMissionsList);
     mainWindow = null;
   });
 
@@ -66,9 +66,9 @@ var getMissionsList = function(e) {
       }
     });
     console.log('>>> Missions List:', missionsList);
-    e.sender.send('missions:resList', missionsList);
+    e.sender.send('missions:res:list', missionsList);
   });
 };
 
-ipcMain.on('missions:reqList', getMissionsList);
+ipcMain.on('missions:req:list', getMissionsList);
 

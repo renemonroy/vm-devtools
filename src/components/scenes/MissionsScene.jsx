@@ -19,20 +19,19 @@ class MissionsScene extends React.Component {
   };
 
   componentWillMount() {
-    ipcRenderer.on('missions:resList', this.onMissionsList);
+    ipcRenderer.on('missions:res:list', ::this.onMissionsNames);
   }
 
   componentDidMount() {
-    ipcRenderer.send('missions:reqList');
+    ipcRenderer.send('missions:req:list');
   }
 
   componentWillUnmount() {
-    ipcRenderer.removeListener('missions:resList', this.onMissionsList);
-    ipcRenderer = null;
+    ipcRenderer.removeListener('missions:res:list', ::this.onMissionsNames);
   }
 
-  onMissionsList(e, missions) {
-    console.log('>>> Missions Found', missions);
+  onMissionsNames(e, names) {
+    this.props.dispatch(missionActions.updateMissionsNames(names));
   }
 
   handleScreensChange(tags) {
