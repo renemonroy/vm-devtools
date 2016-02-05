@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { default as UI } from './UI';
-import { default as MissionStore } from './Mission';
+import { default as Mission } from './Mission';
 
-const CombinedReducers = combineReducers({ UI, MissionStore });
+const CombinedReducers = combineReducers({ UI, Mission });
 export default CombinedReducers;
