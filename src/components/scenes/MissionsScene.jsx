@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { UIScene, UIInputTag } from '../ui';
 import * as missionActions from '../../actions/Mission';
@@ -7,15 +7,15 @@ var ipcRenderer = require('electron').ipcRenderer;
 
 /** MissionScene Class
  *----------------------------------------------------------------------------*/
-@connect(state => ({
-  missions : state.MissionStore.get('missions').toJS()
-}))
+@connect(state => (state.Mission.toJS()))
 class MissionsScene extends React.Component {
 
   static displayName = 'MissionsScene';
 
   static propTypes = {
-    missions : React.PropTypes.object
+    sceneMode: PropTypes.oneOf([-1, 0, 1, 2, 3]),
+    missionsNames: PropTypes.array,
+    activeMission: PropTypes.object
   };
 
   componentWillMount() {
@@ -35,17 +35,21 @@ class MissionsScene extends React.Component {
   }
 
   handleScreensChange(tags) {
-    this.props.dispatch(missionActions.editMission('com.virginmegausa.mission.view-media', { screens : tags }));
+    this.props.dispatch(missionActions.editActiveMission({ screens : tags }));
   }
 
   render() {
-    const { missions } = this.props;
-    const mission = missions['com.virginmegausa.mission.view-media'];
+    const { missionsNames, activeMission } = this.props;
     return (
       <UIScene name="missions">
-        <h3>Missions names</h3>
+        <ul>
+          {missionsNames.map((mn) =>
+            <li>{mn}</li>
+          )}
+        </ul>
+        <h3>Scenes names</h3>
         <UIInputTag
-          tags={mission.screens}
+          tags={activeMission.screens}
           placeholder="Add a screen name"
           onChange={::this.handleScreensChange}/>
       </UIScene>
