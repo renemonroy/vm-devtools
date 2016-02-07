@@ -4,35 +4,37 @@ import { Mission as InitialState } from '../constants/InitialStates';
 
 /** Pure Functions
  *----------------------------------------------------------------------------*/
-// function addMission(state, data) {
-//   return state.update('missions', (missions) =>
-//     missions.push(fromJS({ [data.identifier] : data }))
-//   );
-// };
-
-function updateMissionsNames(state, names) {
-  return state
-    .set('missionsNames', fromJS(names));
+function changeMissionsListStatus(state, status) {
+  return state.setIn(['missionsList', 'status'], status);
 };
 
-function editActiveMission(state, data) {
+function updateMissionsList(state, list) {
   return state
-    .set('sceneMode', 1)
-    .updateIn('activeMission', (m) => m.merge( fromJS(data) ));
+    .setIn(['missionsList', 'status'], 1)
+    .updateIn(['missionsList', 'data'], (data) =>
+      data.clear().merge(fromJS(list))
+    );
 };
 
-// function deleteMission(state, identifier) {
-//   return state.deleteIn(['missions', identifier]);
-// };
+function updateActiveMission(state, payload) {
+  return state
+    .setIn(['activeMission', 'status'], 1)
+    .updateIn(['activeMission', 'data'], (data) =>
+      data.merge(fromJS(payload))
+    );
+};
 
 /** Reducer
  *----------------------------------------------------------------------------*/
 export default function MissionStore(state = InitialState, action) {
   switch ( action.type ) {
-    case Action.UPDATE_MISSIONS_NAMES :
-      return updateMissionsNames(state, action.names);
-    case Action.EDIT_ACTIVE_MISSION :
-      return editActiveMission(state, action.data);
+    case Action.CHANGE_MISSIONS_LIST_STATUS :
+      return changeMissionsListStatus(state, action.status);
+    case Action.UPDATE_MISSIONS_LIST :
+      return updateMissionsList(state, action.list);
+    case Action.UPDATE_ACTIVE_MISSION :
+      return updateActiveMission(state, action.data);
+    default :
+      return state;
   }
-  return state;
 };
