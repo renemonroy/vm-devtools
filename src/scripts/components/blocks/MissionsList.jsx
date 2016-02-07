@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { MissionActions } from '../../actions';
 
 /** MissionsList Class
  *----------------------------------------------------------------------------*/
@@ -12,18 +14,20 @@ class MissionsList extends React.Component {
   };
 
   render() {
-    const { status, data } = this.props;
+    const { data:missions, dispatch } = this.props;
     return (
-      <div>
-        <ul>
-          {data.map((missionName, i) =>
-            <li key={'mission-' + i}>{missionName}</li>
-          )}
-        </ul>
-      </div>
+      <ul>
+        {missions.map((mission, i) =>
+          <li
+            onClick={(e) => dispatch(MissionActions.loadActiveMission(mission))}
+            key={'mission-' + mission}>
+            {mission}
+          </li>
+        )}
+      </ul>
     );
   }
 
 };
 
-export default MissionsList;
+export default connect()(MissionsList);
