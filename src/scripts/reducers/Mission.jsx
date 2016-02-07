@@ -4,7 +4,7 @@ import { Mission as InitialState } from '../constants/InitialStates';
 
 /** Pure Functions
  *----------------------------------------------------------------------------*/
-function changeMissionsListStatus(state, status) {
+function getMissionsList(state, status) {
   return state.setIn(['missionsList', 'status'], status);
 };
 
@@ -28,8 +28,8 @@ function updateActiveMission(state, payload) {
  *----------------------------------------------------------------------------*/
 export default function MissionStore(state = InitialState, action) {
   switch ( action.type ) {
-    case Action.CHANGE_MISSIONS_LIST_STATUS :
-      return changeMissionsListStatus(state, action.status);
+    case Action.GET_MISSIONS_LIST :
+      return getMissionsList(state, action.status);
     case Action.UPDATE_MISSIONS_LIST :
       return updateMissionsList(state, action.list);
     case Action.UPDATE_ACTIVE_MISSION :
