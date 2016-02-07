@@ -32,6 +32,8 @@ export const Mission = fromJS({
 
 // Missions Status
 // -1 = Unstarted
+// 0 = Busy
+// 1 = Ready
 
 // Mission State
 // -1 = Loading
