@@ -33,8 +33,12 @@ const routes = (
 const handleMissionsList = (e, list) => {
   appStore.dispatch(MissionActions.updateMissionsList(list));
 };
+const handleActiveMission = (e, mission) => {
+  appStore.dispatch(MissionActions.updateActiveMission(mission));
+};
 
 ipcRenderer.on('missions:res:list', handleMissionsList);
+ipcRenderer.on('missions:res:mission', handleActiveMission);
 
 ReactDOM.render(
   <Provider store={appStore}>
