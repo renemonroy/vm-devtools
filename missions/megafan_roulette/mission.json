@@ -1,5 +1,5 @@
 {
-  "name": "Megafan Roulette",
+  "name": "megafan_roulette",
   "identifier": "com.virginmegausa.mission.megafan-roulette",
   "screens": ["Wheel", "Fan", "Nada", "Spin"],
   "initialState" : {
