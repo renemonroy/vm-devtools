@@ -4,8 +4,6 @@ import { UIContent, UISidebar, UITitlebar, UIScenesGroup, UIWinControls } from '
 import { Navigation } from './blocks';
 import { SidebarToggler } from './buttons';
 
-require('../images/vm-logo.png');
-
 /** App Class
  *----------------------------------------------------------------------------*/
 @Radium

@@ -2,8 +2,6 @@ import React from 'react';
 import Radium from 'radium';
 import { UIButton } from './index';
 
-require('../../images/window-icons-actions.png');
-
 const remote = require('electron').remote;
 const currentWindow = remote.getCurrentWindow();
 

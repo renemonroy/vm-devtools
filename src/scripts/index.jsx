@@ -10,7 +10,10 @@ import App from './components';
 import * as Scenes from './components/scenes';
 import { MissionActions } from './actions';
 
-require('./index.scss');
+require('../styles/index.scss');
+require('../images/window-icons-actions.png');
+require('../images/vm-logo.png');
+
 const electron = require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const remote = electron.remote;
