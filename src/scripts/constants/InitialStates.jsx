@@ -30,14 +30,7 @@ export const Mission = fromJS({
   }
 });
 
-// Missions Status
+// Status Meaning
 // -1 = Unstarted
 // 0 = Busy
 // 1 = Ready
-
-// Mission State
-// -1 = Loading
-// 0 = Reading
-// 1 = Adding
-// 2 = Editing
-// 3 = Deleting
