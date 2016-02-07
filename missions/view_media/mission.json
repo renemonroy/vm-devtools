@@ -2,9 +2,14 @@
   "name": "View Media",
   "identifier": "com.virginmegausa.mission.view-media",
   "screens": ["MissionSetup", "MissionInProgress", "MissionSuccess"],
-  "initialState" : {
-    "maxJumps" : 0,
-    "played": 0
+  "initialState": {
+    "screenName": "MissionSetup",
+    "played": 0,
+    "maxJumps": 0,
+    "earnedJumps": 0,
+    "intro": '',
+    "videoId": null,
+    "duration": 0
   },
   "missionStore": {
     "listening": true,

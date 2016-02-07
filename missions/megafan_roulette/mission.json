@@ -1,0 +1,15 @@
+{
+  "name": "Megafan Roulette",
+  "identifier": "com.virginmegausa.mission.megafan-roulette",
+  "screens": ["Wheel", "Fan", "Nada", "Spin"],
+  "initialState" : {
+    "items": [],
+    "maxJumps" : 0,
+    "played": 0,
+    "selected": null
+  },
+  "missionStore": {
+    "listening": false,
+    "events": []
+  }
+}
