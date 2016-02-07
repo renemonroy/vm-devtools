@@ -1,21 +1,21 @@
 import { Mission as Action } from '../constants/ActionTypes';
+let ipcRenderer = require('electron').ipcRenderer;
 
-export function updateMissionsNames(names) {
-  return { type: Action.UPDATE_MISSIONS_NAMES, names };
+export function changeMissionsListStatus(status) {
+  return { type : Action.CHANGE_MISSIONS_LIST_STATUS, status };
+}
+
+export function updateMissionsList(list) {
+  return { type: Action.UPDATE_MISSIONS_LIST, list };
 };
 
-export function editActiveMission(data) {
-  return { type: Action.EDIT_ACTIVE_MISSION, data };
+export function updateActiveMission(data) {
+  return { type: Action.UPDATE_ACTIVE_MISSION, data };
 };
 
-// export function addMission(payload) {
-//   return { type: Action.ADD_MISSION, payload };
-// };
-//
-// export function editMission(identifier, payload) {
-//   return { type: Action.EDIT_MISSION, identifier, payload };
-// };
-//
-// export function deleteMission(identifier) {
-//   return { type: Action.DELETE_MISSION, identifier };
-// };
+export function getMissionsList() {
+  return (dispatch) => {
+    dispatch(changeMissionsListStatus(0));
+    ipcRenderer.send('missions:req:list');
+  };
+};
