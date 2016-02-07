@@ -8,10 +8,12 @@ import CombinedReducers from './reducers';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import App from './components';
 import * as Scenes from './components/scenes';
+import * as missionActions from './actions/Mission';
 
 require('./index.scss');
-
-const remote = require('electron').remote;
+const electron = require('electron');
+const ipcRenderer = electron.ipcRenderer;
+const remote = electron.remote;
 const currentWindow = remote.getCurrentWindow();
 const logger = createLogger();
 const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
@@ -24,6 +26,12 @@ const routes = (
     <Route path="/labs" component={Scenes.LabsScene} />
   </Route>
 );
+
+const handleMissionsList = (e, list) => {
+  appStore.dispatch(missionActions.updateMissionsList(list));
+};
+
+ipcRenderer.on('missions:res:list', handleMissionsList);
 
 ReactDOM.render(
   <Provider store={appStore}>
