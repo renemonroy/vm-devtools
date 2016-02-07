@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import createLogger from 'redux-logger';
 import CombinedReducers from './reducers';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import App from './components';
@@ -11,7 +13,9 @@ require('./index.scss');
 
 const remote = require('electron').remote;
 const currentWindow = remote.getCurrentWindow();
-const appStore = createStore(CombinedReducers);
+const logger = createLogger();
+const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
+const appStore = createStoreWithMiddleware(CombinedReducers);
 
 const routes = (
   <Route path="/" component={App}>
