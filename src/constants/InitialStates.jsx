@@ -11,21 +11,27 @@ export const UI = fromJS({
 /** Initial state for Mission Scene
  *----------------------------------------------------------------------------*/
 export const Mission = fromJS({
-  sceneMode: 0,
-  missionsNames: ["invite_fried_sms", "line_picker", "megafan_roulette", "social_connect", "trivia", "user_picker", "view_media", "zip_code_collect"],
+  missionsList: {
+    status: -1,
+    data: []
+  },
   activeMission: {
-    name: 'view_media',
-    identifier: 'com.virginmegausa.mission.view-media',
-    screens: ['MissionSetup', 'MissionInProgress', 'MissionSuccess'],
-    initialState: {
-      maxJumps: 0,
-      played: 0
-    },
-    missionEvents: ['MISSION_RESOLVE_SUCCESS']
+    status: -1,
+    data: {
+      name: 'view_media',
+      identifier: 'com.virginmegausa.mission.view-media',
+      screens: ['MissionSetup', 'MissionInProgress', 'MissionSuccess'],
+      initialState: {
+        maxJumps: 0,
+        played: 0
+      },
+      missionEvents: ['MISSION_RESOLVE_SUCCESS']
+    }
   }
 });
 
-// ["invite_fried_sms", "line_picker", "megafan_roulette", "social_connect", "trivia", "user_picker", "view_media", "zip_code_collect"]
+// Missions Status
+// -1 = Unstarted
 
 // Mission State
 // -1 = Loading
