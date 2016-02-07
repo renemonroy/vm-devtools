@@ -5,7 +5,6 @@ import { MissionActions } from '../../actions';
 
 /** ActiveMission Class
  *----------------------------------------------------------------------------*/
-@connect(state => (state.Mission.get('activeMission').toJS()))
 class ActiveMission extends React.Component {
 
   static displayName = 'ActiveMission';
@@ -34,4 +33,4 @@ class ActiveMission extends React.Component {
 
 };
 
-export default ActiveMission;
+export default connect()(ActiveMission);

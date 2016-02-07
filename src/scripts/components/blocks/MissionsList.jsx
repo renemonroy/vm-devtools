@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 
 /** MissionsList Class
  *----------------------------------------------------------------------------*/
-@connect(state => (state.Mission.get('missionsList').toJS()))
 class MissionsList extends React.Component {
 
   static displayName = 'MissionsList';
