@@ -37,7 +37,7 @@ app.on('ready', function() {
     mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
   }
 
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function() {
     ipcMain.removeListener('missions:req:list', getMissionsList);
@@ -65,7 +65,6 @@ var getMissionsList = function(e) {
         missionsList.push(fileName);
       }
     });
-    console.log('>>> Missions List:', missionsList);
     e.sender.send('missions:res:list', missionsList);
   });
 };
