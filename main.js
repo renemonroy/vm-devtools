@@ -40,7 +40,8 @@ app.on('ready', function() {
   mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function() {
-    ipcMain.removeListener('missions:req:list', getMissionsList);
+    ipcMain.removeListener('missions:req:list', loadMissionsList);
+    ipcMain.removeListener('missions:req:mission', loadActiveMission);
     mainWindow = null;
   });
 
@@ -55,7 +56,7 @@ app.on('ready', function() {
 
 /* MISSIONS
  *--------------------------------------------------------------------------- */
-var getMissionsList = function(e) {
+var loadMissionsList = function(e) {
   fs.readdir(missionsPath, function(err, files) {
     var missionsList = [];
     if ( err ) throw err;
@@ -69,5 +70,14 @@ var getMissionsList = function(e) {
   });
 };
 
-ipcMain.on('missions:req:list', getMissionsList);
+var loadActiveMission = function(e, missionName) {
+  var configPath = missionsPath + missionName + '/mission.json';
+  fs.readFile(configPath, 'utf8', function(err, data) {
+    if ( err ) throw err;
+    e.sender.send('missions:res:mission', JSON.parse(data));
+  })
+};
+
+ipcMain.on('missions:req:list', loadMissionsList);
+ipcMain.on('missions:req:mission', loadActiveMission);
 
