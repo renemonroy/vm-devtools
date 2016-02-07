@@ -8,7 +8,7 @@ import CombinedReducers from './reducers';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import App from './components';
 import * as Scenes from './components/scenes';
-import * as missionActions from './actions/Mission';
+import { MissionActions } from './actions';
 
 require('./index.scss');
 const electron = require('electron');
@@ -28,7 +28,7 @@ const routes = (
 );
 
 const handleMissionsList = (e, list) => {
-  appStore.dispatch(missionActions.updateMissionsList(list));
+  appStore.dispatch(MissionActions.updateMissionsList(list));
 };
 
 ipcRenderer.on('missions:res:list', handleMissionsList);

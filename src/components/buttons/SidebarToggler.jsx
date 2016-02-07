@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Motion, spring } from 'react-motion';
 import { UIButton } from '../ui';
 import Radium from 'radium';
-import * as UIActions from '../../actions/UI';
+import { UIActions } from '../../actions';
 
 /** Sidebar Button Class
  *----------------------------------------------------------------------------*/

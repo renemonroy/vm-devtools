@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Motion, spring, presets } from 'react-motion';
 import Radium from 'radium';
 import { fastEaseOutElastic } from '../../constants/SpringPresets';
-import * as UIActions from '../../actions/UI';
+import { UIActions } from '../../actions';
 
 /** UIContent Class
  *----------------------------------------------------------------------------*/

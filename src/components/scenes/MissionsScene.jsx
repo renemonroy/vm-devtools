@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { UIScene, UIInputTag } from '../ui';
-import * as missionActions from '../../actions/Mission';
+import { MissionActions } from '../../actions';
 
 /** MissionScene Class
  *----------------------------------------------------------------------------*/
@@ -22,11 +22,11 @@ class MissionsScene extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(missionActions.getMissionsList());
+    this.props.dispatch(MissionActions.getMissionsList());
   }
 
   handleScreensChange(tags) {
-    this.props.dispatch(missionActions.updateActiveMission({ screens: tags }));
+    this.props.dispatch(MissionActions.updateActiveMission({ screens: tags }));
   }
 
   render() {
