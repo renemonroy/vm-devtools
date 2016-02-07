@@ -17,7 +17,7 @@ class MissionsScene extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(MissionActions.getMissionsList());
+    this.props.dispatch(MissionActions.loadMissionsList());
   }
 
   render() {

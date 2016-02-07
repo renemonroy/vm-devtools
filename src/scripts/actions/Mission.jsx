@@ -1,15 +1,27 @@
 import { Mission as Action } from '../constants/ActionTypes';
 let ipcRenderer = require('electron').ipcRenderer;
 
-export function getMissionsList() {
+// MISSIONS LIST
+
+export function loadMissionsList() {
   return (dispatch) => {
-    dispatch({ type: Action.GET_MISSIONS_LIST, status: 0 });
+    dispatch({ type: Action.LOAD_MISSIONS_LIST });
     ipcRenderer.send('missions:req:list');
   };
 };
 
 export function updateMissionsList(list) {
   return { type: Action.UPDATE_MISSIONS_LIST, list };
+};
+
+
+// ACTIVE MISSION
+
+export function loadActiveMission(name) {
+  return (dispatch) => {
+    dispatch({ type: Action.LOAD_ACTIVE_MISSION });
+    ipcRenderer.send('missions:req:mission', name);
+  };
 };
 
 export function updateActiveMission(data) {
