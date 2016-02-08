@@ -8,11 +8,12 @@ var app = electron.app;
 var BrowserWindow = electron.BrowserWindow;
 var Tray = electron.Tray;
 var missionsPath = './missions/';
+var missionsFilesToWatch = './missions/**/mission.json';
 var ipcMain = electron.ipcMain;
 
 var mainWindow = null;
 var appIcon = null;
-var missionsDirWatcher = null;
+var missionsWatcher = null;
 
 var toggleApp = function(e) {
   if ( mainWindow.isFocused() ) {
@@ -25,7 +26,7 @@ var toggleApp = function(e) {
 var closeMainWindow = function() {
   ipcMain.removeListener('missions:req:list', getMissionsList);
   ipcMain.removeListener('missions:req:mission', getMission);
-  missionsDirWatcher.close();
+  missionsWatcher.close();
   mainWindow = null;
 };
 
@@ -36,6 +37,13 @@ var getMissionsList = function(callback) {
       var mp = path.join(missionsPath, fileName);
       return fs.isDirectorySync(mp) && fs.existsSync(mp + '/mission.json');
     }));
+  });
+};
+
+var updateRemoteMissionsList = function(callback) {
+  getMissionsList( function(missionsList) {
+    mainWindow.webContents.send('missions:res:list', missionsList);
+    console.log('>>> [missions:res:list] =>', missionsList);
   });
 };
 
@@ -66,9 +74,9 @@ app.on('ready', function() {
     show: false
   });
 
-  missionsDirWatcher = chokidar.watch(missionsPath, {
+  missionsWatcher = chokidar.watch(missionsFilesToWatch, {
     ignored: /[\/\\]\./,
-    depth: 1,
+    depth: 2,
     persistent: true,
     ignoreInitial: true
   });
@@ -86,10 +94,7 @@ app.on('ready', function() {
 
   ipcMain.on('missions:req:list', function(e) {
     console.log('>>> [missions:req:list]');
-    getMissionsList( function(missionsList) {
-      e.sender.send('missions:res:list', missionsList);
-      console.log('>>> [missions:res:list] =>', missionsList);
-    });
+    updateRemoteMissionsList();
   });
 
   ipcMain.on('missions:req:mission', function(e, name) {
@@ -100,14 +105,16 @@ app.on('ready', function() {
     });
   });
 
-  missionsDirWatcher
-    .on('unlinkDir', function(missionPath) {
-      console.log('>>> [unlinkDir] =>', missionPath);
-      getMissionsList( function(missionsList) {
-        mainWindow.webContents.send('missions:res:list', missionsList);
-        console.log('>>> [missions:res:list] =>', missionsList);
-      });
-    });
+  missionsWatcher.on('add', function(missionPath) {
+    console.log('>>> [add] =>', missionPath);
+    updateRemoteMissionsList();
+  });
+
+  missionsWatcher.on('unlink', function(missionPath) {
+    console.log('>>> [unlink] =>', missionPath);
+    updateRemoteMissionsList();
+  });
+
 });
 
 
