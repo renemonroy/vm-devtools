@@ -6,7 +6,7 @@ let ipcRenderer = require('electron').ipcRenderer;
 export function loadMissionsList() {
   return (dispatch) => {
     dispatch({ type: Action.LOAD_MISSIONS_LIST });
-    ipcRenderer.send('missions:req:list');
+    ipcRenderer.send('missions:req:itemslist');
   };
 };
 
@@ -20,7 +20,7 @@ export function updateMissionsList(list) {
 export function loadActiveMission(name) {
   return (dispatch) => {
     dispatch({ type: Action.LOAD_ACTIVE_MISSION });
-    ipcRenderer.send('missions:req:mission', name);
+    ipcRenderer.send('missions:req:item', name);
   };
 };
 
