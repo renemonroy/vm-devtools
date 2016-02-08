@@ -2,6 +2,7 @@
 
 var electron = require('electron');
 var fs = require('fs-plus');
+var chokidar = require('chokidar');
 var path = require('path');
 var app = electron.app;
 var BrowserWindow = electron.BrowserWindow;
@@ -11,6 +12,40 @@ var ipcMain = electron.ipcMain;
 
 var mainWindow = null;
 var appIcon = null;
+var missionsDirWatcher = null;
+
+var toggleApp = function(e) {
+  if ( mainWindow.isFocused() ) {
+    mainWindow.hide();
+  } else {
+    mainWindow.show();
+  }
+};
+
+var closeMainWindow = function() {
+  ipcMain.removeListener('missions:req:list', getMissionsList);
+  ipcMain.removeListener('missions:req:mission', getMission);
+  missionsDirWatcher.close();
+  mainWindow = null;
+};
+
+var getMissionsList = function(callback) {
+  fs.readdir(missionsPath, function(err, files) {
+    if ( err ) throw err;
+    callback( files.filter( function(fileName) {
+      var mp = path.join(missionsPath, fileName);
+      return fs.isDirectorySync(mp) && fs.existsSync(mp + '/mission.json');
+    }));
+  });
+};
+
+var getMission = function(name, callback) {
+  var mp = missionsPath + name + '/mission.json';
+  fs.readFile(mp, 'utf8', function(err, missionData) {
+    if ( err ) throw err;
+    callback(JSON.parse(missionData));
+  });
+};
 
 app.dock.hide();
 
@@ -23,12 +58,19 @@ app.on('ready', function() {
   appIcon.setPressedImage('./src/images/icon-tray-highlight@4x.png');
 
   mainWindow = new BrowserWindow({
-    width : 570,
-    height : 750,
-    minWidth : 500,
-    minHeight : 700,
-    frame : false,
-    show : false
+    width: 570,
+    height: 750,
+    minWidth: 500,
+    minHeight: 700,
+    frame: false,
+    show: false
+  });
+
+  missionsDirWatcher = chokidar.watch(missionsPath, {
+    ignored: /[\/\\]\./,
+    depth: 1,
+    persistent: true,
+    ignoreInitial: true
   });
 
   if ( process.env && process.env.NODE_ENV == 'development' ) {
@@ -39,45 +81,33 @@ app.on('ready', function() {
 
   mainWindow.webContents.openDevTools();
 
-  mainWindow.on('closed', function() {
-    ipcMain.removeListener('missions:req:list', loadMissionsList);
-    ipcMain.removeListener('missions:req:mission', loadActiveMission);
-    mainWindow = null;
+  mainWindow.on('closed', closeMainWindow);
+  appIcon.on('click', toggleApp);
+
+  ipcMain.on('missions:req:list', function(e) {
+    console.log('>>> [missions:req:list]');
+    getMissionsList( function(missionsList) {
+      e.sender.send('missions:res:list', missionsList);
+      console.log('>>> [missions:res:list] =>', missionsList);
+    });
   });
 
-  appIcon.on('click', function(e) {
-    if ( mainWindow.isFocused() ) {
-      mainWindow.hide();
-    } else {
-      mainWindow.show();
-    }
-  }.bind(this));
+  ipcMain.on('missions:req:mission', function(e, name) {
+    console.log('>>> [missions:req:mission] =>', name);
+    getMission(name, function(mission) {
+      e.sender.send('missions:res:mission', mission);
+      console.log('>>> [missions:res:mission] =>', mission);
+    });
+  });
+
+  missionsDirWatcher
+    .on('unlinkDir', function(missionPath) {
+      console.log('>>> [unlinkDir] =>', missionPath);
+      getMissionsList( function(missionsList) {
+        mainWindow.webContents.send('missions:res:list', missionsList);
+        console.log('>>> [missions:res:list] =>', missionsList);
+      });
+    });
 });
 
-/* MISSIONS
- *--------------------------------------------------------------------------- */
-var loadMissionsList = function(e) {
-  fs.readdir(missionsPath, function(err, files) {
-    var missionsList = [];
-    if ( err ) throw err;
-    files.forEach( function(fileName) {
-      var mp = path.join(missionsPath, fileName);
-      if ( fs.isDirectorySync(mp) && fs.existsSync(mp + '/mission.json') ) {
-        missionsList.push(fileName);
-      }
-    });
-    e.sender.send('missions:res:list', missionsList);
-  });
-};
-
-var loadActiveMission = function(e, missionName) {
-  var configPath = missionsPath + missionName + '/mission.json';
-  fs.readFile(configPath, 'utf8', function(err, data) {
-    if ( err ) throw err;
-    e.sender.send('missions:res:mission', JSON.parse(data));
-  })
-};
-
-ipcMain.on('missions:req:list', loadMissionsList);
-ipcMain.on('missions:req:mission', loadActiveMission);
 
