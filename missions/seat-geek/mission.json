@@ -1,0 +1,12 @@
+{
+  "name": "seat_geek",
+  "identifier": "com.virginmegausa.mission.seatgeek",
+  "screens": ["Lorem", "Ipsum"],
+  "initialState" : {
+    "items": []
+  },
+  "missionStore": {
+    "listening": false,
+    "events": []
+  }
+}
