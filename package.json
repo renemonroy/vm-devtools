@@ -33,6 +33,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "chokidar": "^1.4.2",
     "fs-plus": "^2.8.1",
     "immutable": "^3.7.6",
     "react": "^0.14.6",
