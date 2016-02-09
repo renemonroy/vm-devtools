@@ -12,6 +12,25 @@ var bargain = function() {
   this.init.apply(this, arguments);
 };
 
+var onItemAdded = function(itemPath) {
+  console.log('>>> [' + evLog('add') + '] =>', itemPath);
+  this.validateItem(itemPath, function(err, itemData) {
+    if ( !err ) this.updateRemoteItemsList();
+  }.bind(this));
+};
+
+var onItemChanged = function(itemPath) {
+  console.log('>>> [' + evLog('change') + '] =>', itemPath);
+  this.validateItem(itemPath, function(err, itemData) {
+    if ( !err ) this.updateRemoteItemsList();
+  }.bind(this));
+};
+
+var onItemUnlinked = function(itemPath) {
+  console.log('>>> [' + evLog('unlink') + '] =>', itemPath);
+  this.updateRemoteItemsList();
+};
+
 bargain.prototype = {
 
   constructor: bargain,
@@ -30,29 +49,37 @@ bargain.prototype = {
   },
 
   watch: function(callback) {
-    var _self = this,
-      filesToWatch = this.path + '**/config.json';
+    var filesToWatch = this.path + '**/config.json';
     this.watcher = chokidar.watch(filesToWatch, {
       ignored: /[\/\\]\./,
       ignoreInitial: true,
       depth: 2,
       persitent: true
     });
-    this.watcher.on('add', function(packPath) {
-      console.log('>>> [' + evLog('add') + '] =>', packPath);
-      _self.updateRemoteItemsList();
-    });
-    this.watcher.on('unlink', function(packPath) {
-      console.log('>>> [' + evLog('unlink') + '] =>', packPath);
-      _self.updateRemoteItemsList();
-    });
+    this.watcher.on('add', onItemAdded.bind(this));
+    this.watcher.on('change', onItemChanged.bind(this));
+    this.watcher.on('unlink', onItemUnlinked.bind(this));
   },
 
-  get: function(name, callback) {
-    var packsPath = this.path + name + '/config.json';
-    fs.readFile(packsPath, 'utf8', function(err, packData) {
+  getItem: function(name, callback) {
+    var itemPath = this.path + name + '/config.json';
+    this.validateItem(itemPath, function(err, itemData) {
+      if ( !err ) callback(itemData);
+    }.bind(this));
+  },
+
+  validateItem: function(itemPath, callback) {
+    fs.readFile(itemPath, 'utf8', function(err, itemData) {
+      var data = null;
       if (err) throw err;
-      callback(JSON.parse(packData));
+      try {
+        data = JSON.parse(itemData);
+        callback(null, data);
+      } catch(e) {
+        data = { error: 'Not valid JSON.' };
+        console.log('>>>', warnLog(data.error))
+        callback(data);
+      }
     });
   },
 
