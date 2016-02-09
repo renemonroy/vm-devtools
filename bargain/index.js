@@ -6,6 +6,7 @@ var path = require('path');
 var chokidar = require('chokidar');
 
 var evLog = function(str) { return colors.green(str); };
+var warnLog = function(str) { return colors.yellow(str); };
 
 var bargain = function() {
   this.init.apply(this, arguments);
@@ -55,7 +56,7 @@ bargain.prototype = {
     });
   },
 
-  getList: function(callback) {
+  getItemsList: function(callback) {
     var packsPath = this.path;
     fs.readdir(packsPath, function(err, files) {
       if (err) throw err;
@@ -67,21 +68,19 @@ bargain.prototype = {
   },
 
   updateRemoteItemsList: function() {
-    var _self = this;
-    this.getList( function(packsList) {
-      var eventName = _self.identifier + ':res:itemslist';
-      _self.sender.send(eventName, packsList);
+    this.getItemsList( function(packsList) {
+      var eventName = this.identifier + ':res:itemslist';
+      this.sender.send(eventName, packsList);
       console.log('>>> [' + evLog(eventName) + '] =>', packsList);
-    });
+    }.bind(this));
   },
 
   updateRemoteItem: function(name) {
-    var _self = this;
-    this.get(name, function(data) {
-      var eventName = _self.identifier + ':res:item';
-      _self.sender.send(eventName, data);
+    this.getItem(name, function(data) {
+      var eventName = this.identifier + ':res:item';
+      this.sender.send(eventName, data);
       console.log('>>> [' + evLog(eventName) + '] =>', data);
-    });
+    }.bind(this));
   },
 
   end: function() {
