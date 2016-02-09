@@ -38,6 +38,12 @@ bargain.prototype = {
   identifier: 'packs',
   watcher: null,
   sender: null,
+  watcherConfig : {
+    ignored: /[\/\\]\./,
+    ignoreInitial: true,
+    depth: 2,
+    persitent: true
+  },
 
   init: function(config, sender) {
     for (var prop in config) {
@@ -50,12 +56,7 @@ bargain.prototype = {
 
   watch: function(callback) {
     var filesToWatch = this.path + '**/config.json';
-    this.watcher = chokidar.watch(filesToWatch, {
-      ignored: /[\/\\]\./,
-      ignoreInitial: true,
-      depth: 2,
-      persitent: true
-    });
+    this.watcher = chokidar.watch(filesToWatch, this.watcherConfig);
     this.watcher.on('add', onItemAdded.bind(this));
     this.watcher.on('change', onItemChanged.bind(this));
     this.watcher.on('unlink', onItemUnlinked.bind(this));
