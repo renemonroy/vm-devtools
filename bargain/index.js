@@ -17,12 +17,14 @@ bargain.prototype = {
   path: null,
   identifier: 'packs',
   watcher: null,
+  sender: null,
 
-  init: function(config) {
+  init: function(config, sender) {
     for (var prop in config) {
       this[prop] = config[prop];
     }
     if ( this.path == null ) this.path = './bargain/' + this.identifier + '/';
+    if ( sender ) this.sender = sender;
     this.watch();
   },
 
@@ -82,7 +84,7 @@ bargain.prototype = {
     });
   },
 
-  destroy: function() {
+  end: function() {
     this.watcher.close();
     this.path = null;
     this.identifier = null;
