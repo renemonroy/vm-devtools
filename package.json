@@ -19,6 +19,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-preset-stage-1": "^6.3.13",
     "classnames": "^2.2.3",
+    "colors": "^1.1.2",
     "css-loader": "^0.23.1",
     "electron-prebuilt": "^0.36.5",
     "electron-rebuild": "^1.1.1",

@@ -1,6 +1,7 @@
 'use strict';
 
 var electron = require('electron');
+var colors = require('colors/safe');
 var Bargain = require('./bargain');
 var chokidar = require('chokidar');
 var path = require('path');
@@ -12,6 +13,7 @@ var ipcMain = electron.ipcMain;
 var mainWindow = null;
 var appIcon = null;
 var missions = null;
+var evLog = function(str) { return colors.green(str); };
 
 var toggleApp = function(e) {
   if ( mainWindow.isFocused() ) {
@@ -22,12 +24,12 @@ var toggleApp = function(e) {
 };
 
 var onMissionsReqItemsList = function(e) {
-  console.log('>>> [missions:req:itemslist]');
+  console.log('>>> [' + evLog('missions:req:itemslist') + ']');
   missions.updateRemoteItemsList();
 };
 
 var onMissionsReqItem = function(e, name) {
-  console.log('>>> [missions:req:item] =>', name);
+  console.log('>>> [' + evLog('missions:req:item') + '] =>', name);
   missions.updateRemoteItem(name);
 };
 

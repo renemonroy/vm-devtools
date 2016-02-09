@@ -1,8 +1,11 @@
 'use strict';
 
+var colors = require('colors/safe');
 var fs = require('fs-plus');
 var path = require('path');
 var chokidar = require('chokidar');
+
+var evLog = function(str) { return colors.green(str); };
 
 var bargain = function() {
   this.init.apply(this, arguments);
@@ -33,11 +36,11 @@ bargain.prototype = {
       persitent: true
     });
     this.watcher.on('add', function(packPath) {
-      console.log('>>> [add] =>', packPath);
+      console.log('>>> [' + evLog('add') + '] =>', packPath);
       _self.updateRemoteItemsList();
     });
     this.watcher.on('unlink', function(packPath) {
-      console.log('>>> [unlink] =>', packPath);
+      console.log('>>> [' + evLog('unlink') + '] =>', packPath);
       _self.updateRemoteItemsList();
     });
   },
@@ -66,7 +69,7 @@ bargain.prototype = {
     this.getList( function(packsList) {
       var eventName = _self.identifier + ':res:itemslist';
       _self.sender.send(eventName, packsList);
-      console.log('>>> [' + eventName + '] =>', packsList);
+      console.log('>>> [' + evLog(eventName) + '] =>', packsList);
     });
   },
 
@@ -75,7 +78,7 @@ bargain.prototype = {
     this.get(name, function(data) {
       var eventName = _self.identifier + ':res:item';
       _self.sender.send(eventName, data);
-      console.log('>>> [' + eventName + '] =>', data);
+      console.log('>>> [' + evLog(eventName) + '] =>', data);
     });
   },
 
