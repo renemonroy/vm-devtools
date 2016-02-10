@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import CombinedReducers from '../reducers';
-import { MissionsActions } from '../actions';
+import { MissionActions } from '../actions';
 
 const electron = require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -12,15 +12,31 @@ const logger = createLogger();
 const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
 const appStore = createStoreWithMiddleware(CombinedReducers);
 
-ipRenderer.on('missions:res:itemslist', (e, list) => {
-  appStore.dispatch(MissionsActions.updateMissionsList(list));
-});
 
-ipRenderer.on('missions:res:item', (e, mission) => {
-  var currentMission = appStore.getState().Mission.get('activeMission').toJS();
-  if ( mission.name == currentMission.data.name ) {
-    appStore.dispatch(MissionsActions.updateActiveMission(mission));
+/** IPC Renderer Communication
+ *----------------------------------------------------------------------------*/
+const onMissionsList = (e, payload) => {
+  appStore.dispatch(MissionActions.updateMissionsList(payload.data));
+};
+
+const onMissionItem = (e, payload) => {
+  var currentMission = null;
+  switch (payload.type) {
+    case 'res':
+      appStore.dispatch(MissionActions.updateActiveMission(payload.data));
+      break;
+    case 'change':
+      currentMission = appStore.getState().Mission.get('activeMission').toJS();
+      if ( payload.data.name == currentMission.data.name )
+        appStore.dispatch(MissionActions.updateActiveMission(payload.data));
+      break;
   }
-});
+};
 
+ipcRenderer.on('missions:itemslist', onMissionsList);
+ipcRenderer.on('missions:item', onMissionItem);
+
+
+/** Export AppStore
+ *----------------------------------------------------------------------------*/
 export default appStore;

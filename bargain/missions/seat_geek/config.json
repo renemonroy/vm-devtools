@@ -1,7 +1,7 @@
 {
   "name": "seat_geek",
   "identifier": "com.virginmegausa.mission.seatgeek",
-  "screens": ["Lorem", "Ipsum"],
+  "screens": ["Lorem", "Ipsum", "Dolor"],
   "initialState" : {
     "items": []
   },

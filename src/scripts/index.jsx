@@ -11,7 +11,8 @@ require('../styles/index.scss');
 require('../images/window-icons-actions.png');
 require('../images/vm-logo.png');
 
-const currentWindow = remote.getCurrentWindow();
+const electron = require('electron');
+const currentWindow = electron.remote.getCurrentWindow();
 
 const routes = (
   <Route path="/" component={App}>

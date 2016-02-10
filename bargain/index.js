@@ -12,22 +12,35 @@ var bargain = function() {
   this.init.apply(this, arguments);
 };
 
-var onItemAdded = function(itemPath) {
-  console.log('>>> [' + evLog('add') + '] =>', itemPath);
+var watch = function() {
+  var filesToWatch = this.path + '**/config.json';
+  this.watcher = chokidar.watch(filesToWatch, this.watcherConfig);
+  this.watcher.on('add', onItemAdded.bind(this));
+  this.watcher.on('change', onItemChanged.bind(this));
+  this.watcher.on('unlink', onItemUnlinked.bind(this));
+};
+
+var handleItemEvent = function(eventName, itemPath) {
   this.validateItem(itemPath, function(err, itemData) {
-    if ( !err ) this.updateRemoteItemsList();
+    if ( !err ) {
+      this.updateRemoteItemsList();
+      this.sender.send(this.identifier + ':item', {
+        type: eventName,
+        data: itemData
+      });
+    }
   }.bind(this));
+};
+
+var onItemAdded = function(itemPath) {
+  handleItemEvent.apply(this, ['add', itemPath]);
 };
 
 var onItemChanged = function(itemPath) {
-  console.log('>>> [' + evLog('change') + '] =>', itemPath);
-  this.validateItem(itemPath, function(err, itemData) {
-    if ( !err ) this.updateRemoteItemsList();
-  }.bind(this));
+  handleItemEvent.apply(this, ['change', itemPath]);
 };
 
 var onItemUnlinked = function(itemPath) {
-  console.log('>>> [' + evLog('unlink') + '] =>', itemPath);
   this.updateRemoteItemsList();
 };
 
@@ -51,15 +64,23 @@ bargain.prototype = {
     }
     if ( this.path == null ) this.path = './bargain/' + this.identifier + '/';
     if ( sender ) this.sender = sender;
-    this.watch();
+    watch.apply(this);
   },
 
-  watch: function(callback) {
-    var filesToWatch = this.path + '**/config.json';
-    this.watcher = chokidar.watch(filesToWatch, this.watcherConfig);
-    this.watcher.on('add', onItemAdded.bind(this));
-    this.watcher.on('change', onItemChanged.bind(this));
-    this.watcher.on('unlink', onItemUnlinked.bind(this));
+  _emmitItemsList: function(obj) {
+    this.getItemsList( function(itemsList) {
+      obj.data = itemsList;
+      console.log('>>> Items List:', obj);
+      this.sender.send(this.identifier + ':itemslist', obj);
+    }.bind(this));
+  },
+
+  _emmitItem: function(obj) {
+    this.getItem(obj.name, function(data) {
+      obj.data = data;
+      console.log('>>> Item:', obj);
+      this.sender.send(this.identifier + ':item', obj);
+    }.bind(this));
   },
 
   getItem: function(name, callback) {
@@ -95,20 +116,18 @@ bargain.prototype = {
     });
   },
 
-  updateRemoteItemsList: function() {
-    this.getItemsList( function(packsList) {
-      var eventName = this.identifier + ':res:itemslist';
-      this.sender.send(eventName, packsList);
-      console.log('>>> [' + evLog(eventName) + '] =>', packsList);
-    }.bind(this));
+  respondItemsList: function() {
+    console.log('>>> responding items list...');
+    this._emmitItemsList({ type: 'res' });
   },
 
-  updateRemoteItem: function(name) {
-    this.getItem(name, function(data) {
-      var eventName = this.identifier + ':res:item';
-      this.sender.send(eventName, data);
-      console.log('>>> [' + evLog(eventName) + '] =>', data);
-    }.bind(this));
+  updateRemoteItemsList: function() {
+    this._emmitItemsList({ type: 'update' });
+  },
+
+  respondItem: function(name) {
+    console.log('>>> responding item...');
+    this._emmitItem({ type: 'res', name: name });
   },
 
   end: function() {

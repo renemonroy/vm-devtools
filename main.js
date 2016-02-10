@@ -22,19 +22,19 @@ var toggleApp = function(e) {
   mainWindow.isFocused() ? mainWindow.hide() : mainWindow.hide();
 };
 
-var onMissionsReqItemsList = function(e) {
-  console.log('>>> [' + evLog('missions:req:itemslist') + ']');
-  missions.updateRemoteItemsList();
+var onMissionsItemsList = function(e) {
+  console.log('>>> Receive items list instruction.');
+  missions.respondItemsList();
 };
 
-var onMissionsReqItem = function(e, name) {
-  console.log('>>> [' + evLog('missions:req:item') + '] =>', name);
-  missions.updateRemoteItem(name);
+var onMissionsItem = function(e, name) {
+  console.log('>>> Receive item instruction.');
+  missions.respondItem(name);
 };
 
 var closeMainWindow = function() {
-  ipcMain.removeListener('missions:req:itemslist', onMissionsReqItemsList);
-  ipcMain.removeListener('missions:req:item', onMissionsReqItem);
+  ipcMain.removeListener('missions:itemslist', onMissionsItemsList);
+  ipcMain.removeListener('missions:item', onMissionsItem);
   missions.end();
   mainWindow = null;
 };
@@ -59,8 +59,8 @@ app.on('ready', function() {
   mainWindow.webContents.openDevTools();
   mainWindow.on('closed', closeMainWindow);
 
-  ipcMain.on('missions:req:itemslist', onMissionsReqItemsList);
-  ipcMain.on('missions:req:item', onMissionsReqItem);
+  ipcMain.on('missions:itemslist', onMissionsItemsList);
+  ipcMain.on('missions:item', onMissionsItem);
 });
 
 
