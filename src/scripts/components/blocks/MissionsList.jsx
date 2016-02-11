@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { MissionActions } from '../../actions';
 
@@ -17,11 +18,11 @@ class MissionsList extends React.Component {
     const { data:missions, dispatch } = this.props;
     return (
       <ul>
-        {missions.map((mission, i) =>
+        {_.map(missions, (mission, i) =>
           <li
             onClick={(e) => dispatch(MissionActions.loadActiveMission(mission))}
             key={'mission-' + mission}>
-            {mission}
+            {_.startCase(mission)}
           </li>
         )}
       </ul>

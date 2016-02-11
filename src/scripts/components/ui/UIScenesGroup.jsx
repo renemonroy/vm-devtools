@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { TransitionMotion, spring } from 'react-motion';
 import Radium from 'radium';
 import { fastEaseOut } from '../../constants/SpringPresets';
@@ -32,7 +33,7 @@ class UIScenesGroup extends React.Component {
   }
 
   handleScenesGroup(anim) {
-    const scenes = Object.keys(anim).map( function(key) {
+    const scenes = _.map(_.keys(anim), function(key) {
       const sceneAnim = anim[key],
         sceneStyle = { opacity : sceneAnim.opacity },
         style = [styles.sceneWrapper, sceneStyle];
