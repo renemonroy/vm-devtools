@@ -7,11 +7,17 @@ class LabsScene extends React.Component {
 
   static displayName = 'LabsScene';
 
+  renderContent() {
+    return (
+      <p>Labs scene (example).</p>
+    );
+  }
+
   render() {
     return (
-      <UIScene name="auth">
-        <p>Labs scene.</p>
-      </UIScene>
+      <UIScene
+        content={::this.renderContent}
+        name="auth"/>
     );
   }
 

@@ -20,17 +20,23 @@ class MissionsScene extends React.Component {
     this.props.dispatch(MissionActions.loadMissionsList());
   }
 
+  renderSidebar() {
+    const { missionsList:ml } = this.props;
+    return <MissionsList status={ml.status} data={ml.data} />;
+  }
+
+  renderContent() {
+    const { activeMission:am } = this.props;
+    return <ActiveMission status={am.status} data={am.data} />
+  }
+
   render() {
     const { missionsList, activeMission } = this.props;
     return (
-      <UIScene name="missions">
-        <MissionsList
-          status={missionsList.status}
-          data={missionsList.data}/>
-        <ActiveMission
-          status={activeMission.status}
-          data={activeMission.data}/>
-      </UIScene>
+      <UIScene
+        sidebar={::this.renderSidebar}
+        content={::this.renderContent}
+        name="missions"/>
     );
   }
 

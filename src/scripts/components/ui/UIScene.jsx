@@ -10,17 +10,22 @@ class UIScene extends React.Component {
   static displayName = 'UIScene';
 
   static propTypes = {
-    name : React.PropTypes.string.isRequired
+    name : React.PropTypes.string.isRequired,
+    header: React.PropTypes.func,
+    sidebar: React.PropTypes.func,
+    content: React.PropTypes.func
   };
 
   render() {
-    let { name, children, style } = this.props;
-    let { sceneStyle } = styles;
+    let { name, header, sidebar, content, style } = this.props;
+    let { sceneStyle, sidebarStyle } = styles;
     let className = cx({ [name + '-scene'] : true });
     let sceneStyl = [sceneStyle.base, style];
     return (
       <section className={className} style={sceneStyl}>
-        {children}
+        {header ? <div>{header()}</div> : null}
+        {sidebar ? <div style={sidebarStyle}>{sidebar()}</div> : null}
+        {content ? <div>{content()}</div> : null}
       </section>
     );
   }
@@ -34,9 +39,15 @@ const styles = {
     base : {
       height : '100%',
       width : '100%',
-      padding : '6.3rem 2rem 2rem',
+      padding : '2.1rem 0 0',
       overflowY : 'auto'
     }
+  },
+  sidebarStyle : {
+    backgroundColor: '#f3f3f4',
+    height: '100%',
+    width: '15rem',
+    float: 'left'
   }
 };
 
