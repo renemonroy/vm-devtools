@@ -17,16 +17,7 @@ export const Mission = fromJS({
   },
   activeMission: {
     status: -1,
-    data: {
-      name: 'view_media',
-      identifier: 'com.virginmegausa.mission.view-media',
-      screens: ['MissionSetup', 'MissionInProgress', 'MissionSuccess'],
-      initialState: {
-        maxJumps: 0,
-        played: 0
-      },
-      missionEvents: ['MISSION_RESOLVE_SUCCESS']
-    }
+    data: {}
   }
 });
 
@@ -34,3 +25,13 @@ export const Mission = fromJS({
 // -1 = Unstarted
 // 0 = Busy
 // 1 = Ready
+
+
+// name: 'view_media',
+// identifier: 'com.virginmegausa.mission.view-media',
+// screens: ['MissionSetup', 'MissionInProgress', 'MissionSuccess'],
+// initialState: {
+//   maxJumps: 0,
+//   played: 0
+// },
+// missionEvents: ['MISSION_RESOLVE_SUCCESS']

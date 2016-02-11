@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import _ from 'lodash';
 
 /** UIInputTag Class
  *----------------------------------------------------------------------------*/
@@ -22,7 +23,8 @@ class UIInputTag extends React.Component {
     addKeys : [9, 13],
     removeKeys : [8],
     onChange : (e) => {},
-    color : 'lilac'
+    color : 'lilac',
+    stringCase : 'none'
   };
 
   constructor(props) {
@@ -33,7 +35,7 @@ class UIInputTag extends React.Component {
   addTag() {
     let { tagName } = this.state, newTags = null;
     if ( tagName !== '' || tagName !== ' ' ) {
-      newTags = this.props.tags.concat([tagName]);
+      newTags = this.props.tags.concat([this.handleStringCase(tagName)]);
       this.props.onChange(newTags);
       this.setState({ tagName : '' });
     }
@@ -61,6 +63,15 @@ class UIInputTag extends React.Component {
     }
   }
 
+  handleStringCase(str) {
+    switch (this.props.stringCase) {
+      case 'class':
+        return _.startCase(str).replace(/\s/g, '');
+      default :
+        return str;
+    }
+  }
+
   render() {
     const { tagName } = this.state,
       { tags, placeholder, color } = this.props,
@@ -70,7 +81,7 @@ class UIInputTag extends React.Component {
     return (
       <div style={wrapperStyle} onClick={(e) => this._input.focus()}>
         <div>
-          {tags.map((tag, i) =>
+          {_.map(tags, (tag, i) =>
             <span key={'tag-' + i} style={tagStyles}>
               <span style={tagNameStyle}>{tag}</span>
               <i
