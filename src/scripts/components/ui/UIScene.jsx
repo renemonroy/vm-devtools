@@ -17,15 +17,18 @@ class UIScene extends React.Component {
   };
 
   render() {
-    let { name, header, sidebar, content, style } = this.props;
-    let { sceneStyle, sidebarStyle } = styles;
-    let className = cx({ [name + '-scene'] : true });
-    let sceneStyl = [sceneStyle.base, style];
+    const { name, header, sidebar, content, style } = this.props;
+    const { base, withHeaderStyle, withoutHeaderStyle } = styles.mainStyle;
+    const className = cx({ [name + '-scene'] : true });
+    const sceneStyles = [styles.sceneStyle.base, style];
+    const mainStyles = [base, header ? withHeaderStyle : withoutHeaderStyle];
     return (
-      <section className={className} style={sceneStyl}>
-        {header ? <div>{header()}</div> : null}
-        {sidebar ? <div style={sidebarStyle}>{sidebar()}</div> : null}
-        {content ? <div>{content()}</div> : null}
+      <section className={className} style={sceneStyles}>
+        {header ? <div style={styles.headerStyle}>{header()}</div> : null}
+        <div style={mainStyles}>
+          {sidebar ? <div style={styles.sidebarStyle}>{sidebar()}</div> : null}
+          {content ? <div style={styles.contentStyle}>{content()}</div> : null}
+        </div>
       </section>
     );
   }
@@ -35,19 +38,49 @@ class UIScene extends React.Component {
 /** Scene Styles
  *----------------------------------------------------------------------------*/
 const styles = {
-  sceneStyle : {
-    base : {
-      height : '100%',
-      width : '100%',
-      padding : '2.1rem 0 0',
-      overflowY : 'auto'
+  sceneStyle: {
+    base: {
+      height: 'calc(100% - 2.1rem)',
+      width: '100%',
+      margin: '2.1rem 0 0'
     }
   },
-  sidebarStyle : {
+  headerStyle: {
+    backgroundColor: '#202223',
+    height: '11.3rem',
+    width: '100%'
+  },
+  mainStyle: {
+    base: {
+      width: '100%',
+      overflowY: 'hidden',
+      display: 'flex',
+      flexFlow: 'row wrap',
+      alignItems: 'stretch',
+      alignContent: 'flex-start'
+    },
+    withHeaderStyle: {
+      height: 'calc(100% - 11.3rem)'
+    },
+    withoutHeaderStyle: {
+      height: '100%'
+    }
+  },
+  sidebarStyle: {
     backgroundColor: '#f3f3f4',
-    height: '100%',
     width: '15rem',
-    float: 'left'
+    height: '100%',
+    flex: '0 1 15rem',
+    order: 1,
+    overflowY: 'auto',
+    boxShadow: 'inset -1px 1px 0 #e8e9ea'
+  },
+  contentStyle: {
+    backgroundColor: '#ffffff',
+    height: '100%',
+    flex: '1 1',
+    order: 2,
+    overflowY: 'auto'
   }
 };
 
