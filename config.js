@@ -1,7 +1,7 @@
 module.exports = {
   trayIcon: './src/images/icon-tray-default@4x.png',
   mainWindow: {
-    width: 570,
+    width: 716,
     height: 750,
     minWidth: 500,
     minHeight: 700,
