@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import { browserHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 import { UIButton, UIIcon } from '../ui';
 
 /** Navigation Button Class
@@ -22,7 +22,7 @@ class NavigationButton extends React.Component {
   onClick(e) {
     const { href } = this.props;
     e.preventDefault();
-    browserHistory.push(href);
+    hashHistory.push(href);
   }
 
   render() {

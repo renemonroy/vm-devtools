@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import CombinedReducers from './reducers';
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import App from './components';
 import * as Scenes from './components/scenes';
 import appStore from './utils/store';
@@ -16,7 +16,7 @@ const currentWindow = electron.remote.getCurrentWindow();
 
 const routes = (
   <Route path="/" component={App}>
-    <IndexRedirect to="/missions" />
+    <IndexRoute component={Scenes.MissionsScene}/>
     <Route path="/missions" component={Scenes.MissionsScene} />
     <Route path="/labs" component={Scenes.LabsScene} />
   </Route>
@@ -24,7 +24,7 @@ const routes = (
 
 ReactDOM.render(
   <Provider store={appStore}>
-    <Router  history={browserHistory} routes={routes} />
+    <Router  history={hashHistory} routes={routes} />
   </Provider>,
   document.getElementById('app-wrapper')
 );
