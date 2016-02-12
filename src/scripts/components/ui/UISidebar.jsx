@@ -71,7 +71,8 @@ const styles = {
     position : 'relative',
     height : '100%',
     top : 0,
-    paddingTop : '.4rem'
+    paddingTop : '.4rem',
+    borderRight: '1px solid #000000'
   }
 };
 
