@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import { hashHistory } from 'react-router';
 import { UIButton, UIIcon } from '../ui';
+let styles = null;
 
 /** Navigation Button Class
  *----------------------------------------------------------------------------*/
 @Radium
 class NavigationButton extends React.Component {
 
-  static displayName = "NavigationButton";
-
-  static contextTypes = {
-    router : React.PropTypes.object
-  };
+  static displayName = 'NavigationButton';
 
   static propTypes = {
-    icon : React.PropTypes.string.isRequired,
-    href : React.PropTypes.string.isRequired
+    icon: PropTypes.string.isRequired,
+    href: PropTypes.string.isRequired,
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object,
   };
 
   onClick(e) {
@@ -26,39 +27,37 @@ class NavigationButton extends React.Component {
   }
 
   render() {
-    const { href, icon } = this.props,
-      { button } = styles,
-      buttonMode = this.context.router.isActive(href) ? 'active' : 'normal',
-      buttonStyle = [button.base, button[buttonMode]];
+    const { href, icon } = this.props;
+    const { button } = styles;
+    const buttonMode = this.context.router.isActive(href) ? 'active' : 'normal';
+    const buttonStyle = [button.base, button[buttonMode]];
     return (
-      <UIButton
-        style={buttonStyle}
-        onClick={this.onClick.bind(this)}>
+      <UIButton style={buttonStyle} onClick={::this.onClick}>
         <UIIcon name={icon} size="22" />
       </UIButton>
     );
   }
 
-};
+}
 
 /** Styles for each Navigation Button
  *----------------------------------------------------------------------------*/
-const styles = {
-  button : {
-    base : {
-      width : '100%',
-      textAlign : 'center',
-      padding : '.8rem 0',
+styles = {
+  button: {
+    base: {
+      width: '100%',
+      textAlign: 'center',
+      padding: '.8rem 0',
     },
-    normal : {
-      backgroundColor : 'transparent',
-      color : '#7d7d7d'
+    normal: {
+      backgroundColor: 'transparent',
+      color: '#7d7d7d',
     },
-    active : {
-      backgroundColor : '#3f4041',
-      color : '#ffffff'
-    }
-  }
+    active: {
+      backgroundColor: '#3f4041',
+      color: '#ffffff',
+    },
+  },
 };
 
 export default NavigationButton;

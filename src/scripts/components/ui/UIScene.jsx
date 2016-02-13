@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import cx from 'classnames';
+let styles = null;
 
 /** Scene Class
  *----------------------------------------------------------------------------*/
@@ -10,16 +11,17 @@ class UIScene extends React.Component {
   static displayName = 'UIScene';
 
   static propTypes = {
-    name : React.PropTypes.string.isRequired,
-    header: React.PropTypes.func,
-    sidebar: React.PropTypes.func,
-    content: React.PropTypes.func
+    name: PropTypes.string.isRequired,
+    header: PropTypes.func,
+    sidebar: PropTypes.func,
+    content: PropTypes.func,
+    style: PropTypes.object,
   };
 
   render() {
     const { name, header, sidebar, content, style } = this.props;
     const { base, withHeaderStyle, withoutHeaderStyle } = styles.mainStyle;
-    const className = cx({ [name + '-scene'] : true });
+    const className = cx({ [`${name}-scene`]: true });
     const sceneStyles = [styles.sceneStyle.base, style];
     const mainStyles = [base, header ? withHeaderStyle : withoutHeaderStyle];
     return (
@@ -33,22 +35,22 @@ class UIScene extends React.Component {
     );
   }
 
-};
+}
 
 /** Scene Styles
  *----------------------------------------------------------------------------*/
-const styles = {
+styles = {
   sceneStyle: {
     base: {
       height: 'calc(100% - 2.1rem)',
       width: '100%',
-      margin: '2.1rem 0 0'
-    }
+      margin: '2.1rem 0 0',
+    },
   },
   headerStyle: {
     backgroundColor: '#202223',
     height: '11.3rem',
-    width: '100%'
+    width: '100%',
   },
   mainStyle: {
     base: {
@@ -57,14 +59,14 @@ const styles = {
       display: 'flex',
       flexFlow: 'row wrap',
       alignItems: 'stretch',
-      alignContent: 'flex-start'
+      alignContent: 'flex-start',
     },
     withHeaderStyle: {
-      height: 'calc(100% - 11.3rem)'
+      height: 'calc(100% - 11.3rem)',
     },
     withoutHeaderStyle: {
-      height: '100%'
-    }
+      height: '100%',
+    },
   },
   sidebarStyle: {
     backgroundColor: '#f3f3f4',
@@ -73,15 +75,15 @@ const styles = {
     flex: '0 1 15rem',
     order: 1,
     overflowY: 'auto',
-    boxShadow: 'inset -1px 1px 0 #e8e9ea'
+    boxShadow: 'inset -1px 1px 0 #e8e9ea',
   },
   contentStyle: {
     backgroundColor: '#ffffff',
     height: '100%',
     flex: '1 1',
     order: 2,
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 export default UIScene;

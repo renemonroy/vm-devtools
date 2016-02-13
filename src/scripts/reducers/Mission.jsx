@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS } from 'immutable';
 import { Mission as Action } from '../constants/ActionTypes';
 import { Mission as InitialState } from '../constants/InitialStates';
 
@@ -6,7 +6,7 @@ import { Mission as InitialState } from '../constants/InitialStates';
  *----------------------------------------------------------------------------*/
 function onMissionsListLoad(state) {
   return state.setIn(['missionsList', 'status'], 0);
-};
+}
 
 function onMissionsListUpdate(state, list) {
   return state
@@ -14,11 +14,11 @@ function onMissionsListUpdate(state, list) {
     .updateIn(['missionsList', 'data'], (data) =>
       data.clear().merge(fromJS(list))
     );
-};
+}
 
 function onActiveMissionLoad(state) {
   return state.setIn(['activeMission', 'status'], 0);
-};
+}
 
 function onActiveMissionUpdate(state, payload) {
   return state
@@ -26,12 +26,12 @@ function onActiveMissionUpdate(state, payload) {
     .updateIn(['activeMission', 'data'], (data) =>
       data.merge(fromJS(payload))
     );
-};
+}
 
 /** Reducer
  *----------------------------------------------------------------------------*/
 export default function MissionStore(state = InitialState, action) {
-  switch ( action.type ) {
+  switch (action.type) {
     case Action.LOAD_MISSIONS_LIST :
       return onMissionsListLoad(state);
     case Action.UPDATE_MISSIONS_LIST :
@@ -43,4 +43,4 @@ export default function MissionStore(state = InitialState, action) {
     default :
       return state;
   }
-};
+}

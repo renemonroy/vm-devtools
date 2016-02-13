@@ -5,14 +5,15 @@ import { UI as InitialState } from '../constants/InitialStates';
  *----------------------------------------------------------------------------*/
 function toggleSidebar(state) {
   return state.set('showSidebar', !state.get('showSidebar'));
-};
+}
 
 /** Reducer
  *----------------------------------------------------------------------------*/
 export default function UIReducer(state = InitialState, action) {
-  switch ( action.type ) {
+  switch (action.type) {
     case Action.TOGGLE_SIDEBAR :
       return toggleSidebar(state);
+    default :
+      return state;
   }
-  return state;
-};
+}

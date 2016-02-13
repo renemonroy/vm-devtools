@@ -12,17 +12,12 @@ class ActiveMission extends React.Component {
 
   static propTypes = {
     status: PropTypes.oneOf([-1, 0, 1]).isRequired,
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
   };
 
   handleScreensChange(screens) {
-    this.props.dispatch(MissionActions.updateActiveMission({ screens: screens }))
-  }
-
-  renderEmpty() {
-    return (
-      <div>Empty</div>
-    );
+    this.props.dispatch(MissionActions.updateActiveMission({ screens }));
   }
 
   renderForm() {
@@ -34,7 +29,8 @@ class ActiveMission extends React.Component {
           tags={data.screens}
           placeholder="Add a screen name"
           onChange={::this.handleScreensChange}
-          stringCase="class"/>
+          stringCase="class"
+        />
       </div>
     );
   }
@@ -43,11 +39,11 @@ class ActiveMission extends React.Component {
     const { data } = this.props;
     return (
       <div>
-        {_.isEmpty(data) ? this.renderEmpty() : this.renderForm()}
+        {_.isEmpty(data) ? <p>Empty</p> : this.renderForm()}
       </div>
     );
   }
 
-};
+}
 
 export default connect()(ActiveMission);

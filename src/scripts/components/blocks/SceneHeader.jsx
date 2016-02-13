@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+let styles = null;
 
 /** SceneHeader Class
  *----------------------------------------------------------------------------*/
@@ -8,12 +9,12 @@ class SceneHeader extends React.Component {
 
   static propTypes = {
     heading: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired
+    description: PropTypes.string.isRequired,
   };
 
   render() {
-    const { heading, description } = this.props,
-      { headerStyle, headingStyle, descStyle } = styles;
+    const { heading, description } = this.props;
+    const { headerStyle, headingStyle, descStyle } = styles;
     return (
       <header style={headerStyle}>
         <h2 style={headingStyle}>{heading}</h2>
@@ -22,26 +23,26 @@ class SceneHeader extends React.Component {
     );
   }
 
-};
+}
 
 /** SceneHeader Styles
  *----------------------------------------------------------------------------*/
-const styles = {
+styles = {
   headerStyle: {
-    padding: '2rem 2.4rem'
+    padding: '2rem 2.4rem',
   },
   headingStyle: {
     color: '#ffffff',
     fontSize: '2.4rem',
     fontWeight: 700,
-    marginBottom: '.6rem'
+    marginBottom: '.6rem',
   },
   descStyle: {
     color: '#ceced1',
     fontSize: '1.2rem',
     fontWeight: 300,
-    lineHeight: '1.8rem'
-  }
+    lineHeight: '1.8rem',
+  },
 };
 
 export default SceneHeader;

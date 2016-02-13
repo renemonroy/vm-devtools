@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Radium from 'radium';
+let styles = null;
 
 const remote = require('electron').remote;
 const currentWindow = remote.getCurrentWindow();
@@ -11,24 +12,30 @@ class UITitlebar extends React.Component {
 
   static displayName = 'UITitlebar';
 
+  static propTypes = {
+    leftItem: PropTypes.any,
+    centerItem: PropTypes.any,
+    rightItem: PropTypes.any,
+  };
+
   constructor(props) {
     super(props);
-    this.state = { windowState : 'normal' };
+    this.state = { windowState: 'normal' };
   }
 
   componentDidMount() {
     currentWindow.on('blur', () => this.setState({
-      windowState : 'blur'
+      windowState: 'blur',
     }));
     currentWindow.on('focus', () => this.setState({
-      windowState : 'focus'
+      windowState: 'focus',
     }));
   }
 
   render() {
-    const { leftItem, centerItem, rightItem } = this.props,
-      { windowState } = this.state,
-      { titlebarStyle, winStateStyle } = styles;
+    const { leftItem, centerItem, rightItem } = this.props;
+    const { windowState } = this.state;
+    const { titlebarStyle, winStateStyle } = styles;
     const titlebarStyles = [titlebarStyle, winStateStyle[windowState]];
     return (
       <div id="titlebar" style={titlebarStyles}>
@@ -45,77 +52,77 @@ class UITitlebar extends React.Component {
     );
   }
 
-};
+}
 
 /** UITitlebar Styles
  *----------------------------------------------------------------------------*/
-const styles = {
-  titlebarStyle : {
-    position : 'absolute',
-    zIndex : 3,
-    top : 0,
-    left : 0,
-    width : '100%',
-    height : '2.1rem',
-    padding : '0 1.4rem',
-    display : 'flex',
-    WebkitJustifyContent : 'space-between',
-    justifyContent : 'space-between',
-    WebkitFlexDirection : 'row',
-    flexDirection : 'row',
-    WebkitAlignItems : 'center',
-    alignItems : 'center',
-    WebkitAppRegion : 'drag',
-    fontFamily : '"Helvetica Neue", Helvetica, sans-serif',
-    fontSize : '1.2rem'
+styles = {
+  titlebarStyle: {
+    position: 'absolute',
+    zIndex: 3,
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '2.1rem',
+    padding: '0 1.4rem',
+    display: 'flex',
+    WebkitJustifyContent: 'space-between',
+    justifyContent: 'space-between',
+    WebkitFlexDirection: 'row',
+    flexDirection: 'row',
+    WebkitAlignItems: 'center',
+    alignItems: 'center',
+    WebkitAppRegion: 'drag',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSize: '1.2rem',
   },
-  leftItemStyle : {
-    width : '5rem',
-    height : '100%',
-    WebkitTransition : 'all 0.3s',
-    transition : 'all 0.3s',
-    position : 'relative',
-    display : 'flex',
-    WebkitFlexDirection : 'row',
-    flexDirection : 'row',
-    WebkitAlignItems : 'center',
-    alignItems : 'center'
+  leftItemStyle: {
+    width: '5rem',
+    height: '100%',
+    WebkitTransition: 'all 0.3s',
+    transition: 'all 0.3s',
+    position: 'relative',
+    display: 'flex',
+    WebkitFlexDirection: 'row',
+    flexDirection: 'row',
+    WebkitAlignItems: 'center',
+    alignItems: 'center',
   },
-  rightItemStyle : {
-    width : '5rem',
-    height : '100%',
-    WebkitTransition : 'all 0.3s',
-    transition : 'all 0.3s',
-    position : 'relative',
-    display : 'flex',
-    WebkitFlexDirection : 'row',
-    flexDirection : 'row',
-    WebkitAlignItems : 'center',
-    alignItems : 'center'
+  rightItemStyle: {
+    width: '5rem',
+    height: '100%',
+    WebkitTransition: 'all 0.3s',
+    transition: 'all 0.3s',
+    position: 'relative',
+    display: 'flex',
+    WebkitFlexDirection: 'row',
+    flexDirection: 'row',
+    WebkitAlignItems: 'center',
+    alignItems: 'center',
   },
-  centerItemStyle : {
-    height : '100%',
-    position : 'relative',
-    display : 'flex',
-    WebkitFlexDirection : 'row',
-    flexDirection : 'row',
-    WebkitAlignItems : 'center',
-    alignItems : 'center'
+  centerItemStyle: {
+    height: '100%',
+    position: 'relative',
+    display: 'flex',
+    WebkitFlexDirection: 'row',
+    flexDirection: 'row',
+    WebkitAlignItems: 'center',
+    alignItems: 'center',
   },
-  winStateStyle : {
-    blur : {
-      borderBottom : '1px solid rgba(0, 0, 0, .1)',
-      color : '#acacac',
-      backgroundColor : '#f6f6f6',
-      backgroundImage : 'none'
+  winStateStyle: {
+    blur: {
+      borderBottom: '1px solid rgba(0, 0, 0, .1)',
+      color: '#acacac',
+      backgroundColor: '#f6f6f6',
+      backgroundImage: 'none',
     },
-    focus : {
-      borderBottom : '1px solid rgba(0, 0, 0, .25)',
-      color : '#484848',
-      backgroundColor : 'rgb(251, 251, 251)',
-      backgroundImage : 'linear-gradient(#f4f4f4, #d4d1d4)'
-    }
-  }
+    focus: {
+      borderBottom: '1px solid rgba(0, 0, 0, .25)',
+      color: '#484848',
+      backgroundColor: 'rgb(251, 251, 251)',
+      backgroundImage: 'linear-gradient(#f4f4f4, #d4d1d4)',
+    },
+  },
 };
 
 export default UITitlebar;

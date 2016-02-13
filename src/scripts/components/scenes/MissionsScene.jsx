@@ -13,7 +13,8 @@ class MissionsScene extends React.Component {
 
   static propTypes = {
     missionsList: PropTypes.object.isRequired,
-    activeMission: PropTypes.object.isRequired
+    activeMission: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -24,32 +25,34 @@ class MissionsScene extends React.Component {
     return (
       <SceneHeader
         heading="Mission Boilerplate"
-        description="Set the values to generate the boostrap code of your next mission. Remember, is not a builder but only a starter. Code and configuration are saved in File System, check missions folder.</p>"
+        description="Set the values to generate the boostrap code of your next mission. \n
+        Remember, is not a builder but only a starter. Code and configuration are saved \n
+        in File System, check missions folder."
       />
     );
   }
 
   renderSidebar() {
-    const { missionsList:ml } = this.props;
+    const { missionsList: ml } = this.props;
     return <MissionsList status={ml.status} data={ml.data} />;
   }
 
   renderContent() {
-    const { activeMission:am } = this.props;
-    return <ActiveMission status={am.status} data={am.data} />
+    const { activeMission: am } = this.props;
+    return <ActiveMission status={am.status} data={am.data} />;
   }
 
   render() {
-    const { missionsList, activeMission } = this.props;
     return (
       <UIScene
         header={::this.renderHeader}
         sidebar={::this.renderSidebar}
         content={::this.renderContent}
-        name="missions"/>
+        name="missions"
+      />
     );
   }
 
-};
+}
 
 export default MissionsScene;

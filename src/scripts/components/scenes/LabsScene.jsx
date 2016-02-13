@@ -15,12 +15,10 @@ class LabsScene extends React.Component {
 
   render() {
     return (
-      <UIScene
-        content={::this.renderContent}
-        name="auth"/>
+      <UIScene content={::this.renderContent} name="auth"/>
     );
   }
 
-};
+}
 
 export default LabsScene;

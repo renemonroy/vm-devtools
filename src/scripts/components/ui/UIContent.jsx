@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Motion, spring, presets } from 'react-motion';
+import { Motion, spring } from 'react-motion';
 import Radium from 'radium';
 import { fastEaseOutElastic } from '../../constants/SpringPresets';
 import { UIActions } from '../../actions';
+let styles = null;
 
 /** UIContent Class
  *----------------------------------------------------------------------------*/
 @connect(state => ({
-  active : !state.UI.get('showSidebar'),
-  slideWidth : state.UI.get('sidebarWidth'),
-  disableSidebarAnimation : state.UI.get('disableSidebarAnimation')
+  active: !state.UI.get('showSidebar'),
+  slideWidth: state.UI.get('sidebarWidth'),
+  disableSidebarAnimation: state.UI.get('disableSidebarAnimation'),
 }))
 @Radium
 class UIContent extends React.Component {
@@ -18,39 +19,42 @@ class UIContent extends React.Component {
   static displayName = 'UIContent';
 
   static propTypes = {
-    active : React.PropTypes.bool.isRequired,
-    disableSidebarAnimation : React.PropTypes.bool.isRequired
+    active: PropTypes.bool.isRequired,
+    disableSidebarAnimation: PropTypes.bool.isRequired,
+    slideWidth: PropTypes.number,
+    dispatch: PropTypes.func.isRequired,
+    children: PropTypes.any,
   };
 
   getAnimation() {
     const { active, slideWidth } = this.props;
-    return { x : spring(active ? 0 : slideWidth, fastEaseOutElastic) };
+    return { x: spring(active ? 0 : slideWidth, fastEaseOutElastic) };
   }
 
   setStyles(anim) {
     const { slideWidth, disableSidebarAnimation } = this.props;
-    let x = disableSidebarAnimation ? slideWidth : anim.x;
-    let animStyle = {
-      WebkitTransform : 'translate3d(' + x + 'px, 0, 0)',
-      transform : 'translate3d(' + x + 'px, 0, 0)',
+    const x = disableSidebarAnimation ? slideWidth : anim.x;
+    const animStyle = {
+      WebkitTransform: `translate3d(${x}px, 0, 0)`,
+      transform: `translate3d(${x}px, 0, 0)`,
     };
-    if ( disableSidebarAnimation ) {
-      animStyle.width = 'calc(100% - ' + slideWidth + 'px)';
+    if (disableSidebarAnimation) {
+      animStyle.width = `calc(100% - ${slideWidth}px)`;
     }
     return [styles.contentStyle, animStyle];
   }
 
   renderOverlay() {
-    const toggleSidebar = (e) => this.props.dispatch(UIActions.toggleSidebar());
+    const toggleSidebar = () => this.props.dispatch(UIActions.toggleSidebar());
     return <div style={styles.overlayStyle} onClick={toggleSidebar}></div>;
   }
 
   renderContent(anim) {
-    const { active, children, disableSidebarAnimation } = this.props;
+    const { children, disableSidebarAnimation } = this.props;
     return (
       <div style={this.setStyles(anim)}>
-        { disableSidebarAnimation ? null : this.renderOverlay() }
-        {this.props.children}
+        {disableSidebarAnimation ? null : this.renderOverlay()}
+        {children}
       </div>
     );
   }
@@ -63,25 +67,25 @@ class UIContent extends React.Component {
     );
   }
 
-};
+}
 
 /** UIContent Styles
  *----------------------------------------------------------------------------*/
-const styles = {
-  contentStyle : {
-    position : 'absolute',
-    top : 0,
-    left : 0,
-    width : '100%',
-    height : '100%',
-    backgroundColor : '#ffffff'
+styles = {
+  contentStyle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ffffff',
   },
-  overlayStyle : {
-    position : 'absolute',
-    zIndex : 4,
-    height : '100%',
-    width : '100%'
-  }
+  overlayStyle: {
+    position: 'absolute',
+    zIndex: 4,
+    height: '100%',
+    width: '100%',
+  },
 };
 
 export default UIContent;

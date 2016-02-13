@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import CombinedReducers from './reducers';
 import { Router, Route, IndexRedirect, hashHistory } from 'react-router';
 import App from './components';
 import * as Scenes from './components/scenes';
@@ -24,11 +23,11 @@ const routes = (
 
 ReactDOM.render(
   <Provider store={appStore}>
-    <Router  history={hashHistory} routes={routes} />
+    <Router history={hashHistory} routes={routes} />
   </Provider>,
   document.getElementById('app-wrapper')
 );
 
-document.addEventListener('DOMContentLoaded', e => {
+document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => currentWindow.show(), 0);
 });

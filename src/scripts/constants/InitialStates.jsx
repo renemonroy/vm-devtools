@@ -5,7 +5,7 @@ import { fromJS } from 'immutable';
 export const UI = fromJS({
   showSidebar: true,
   sidebarWidth: 68,
-  disableSidebarAnimation: true
+  disableSidebarAnimation: true,
 });
 
 /** Initial state for Mission Scene
@@ -13,12 +13,12 @@ export const UI = fromJS({
 export const Mission = fromJS({
   missionsList: {
     status: -1,
-    data: []
+    data: [],
   },
   activeMission: {
     status: -1,
-    data: {}
-  }
+    data: {},
+  },
 });
 
 // Status Meaning

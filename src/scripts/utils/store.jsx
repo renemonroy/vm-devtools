@@ -1,4 +1,3 @@
-import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
@@ -7,7 +6,6 @@ import { MissionActions } from '../actions';
 
 const electron = require('electron');
 const ipcRenderer = electron.ipcRenderer;
-const remote = electron.remote;
 const logger = createLogger();
 const createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
 const appStore = createStoreWithMiddleware(CombinedReducers);
@@ -20,16 +18,19 @@ const onMissionsList = (e, payload) => {
 };
 
 const onMissionItem = (e, payload) => {
-  var currentMission = null;
+  let currentMission = null;
   switch (payload.type) {
     case 'res':
       appStore.dispatch(MissionActions.updateActiveMission(payload.data));
       break;
     case 'change':
       currentMission = appStore.getState().Mission.get('activeMission').toJS();
-      if ( payload.data.name == currentMission.data.name )
+      if (payload.data.name === currentMission.data.name) {
         appStore.dispatch(MissionActions.updateActiveMission(payload.data));
+      }
       break;
+    default :
+      throw new Error('>>> Event not defined.');
   }
 };
 

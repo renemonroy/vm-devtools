@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { TransitionMotion, spring } from 'react-motion';
 import Radium from 'radium';
 import { fastEaseOut } from '../../constants/SpringPresets';
+let styles = null;
 
 /** UIScenesGroup Class
  *----------------------------------------------------------------------------*/
@@ -12,33 +13,34 @@ class UIScenesGroup extends React.Component {
   static displayName = 'UIScenesGroup';
 
   static propTypes = {
-    sceneRoute : React.PropTypes.string.isRequired
+    sceneRoute: PropTypes.string.isRequired,
+    scenes: PropTypes.func.isRequired,
   };
-
-  willEnter() {
-    return { handler : this.props.scenes(), opacity : spring(0, fastEaseOut) };
-  }
-
-  willLeave(key, anim) {
-    return { handler : anim.handler, opacity : spring(0, fastEaseOut) };
-  }
 
   getAnimation() {
     return {
-      [this.props.sceneRoute] : {
-        handler : this.props.scenes(),
-        opacity : spring(1, fastEaseOut)
-      }
+      [this.props.sceneRoute]: {
+        handler: this.props.scenes(),
+        opacity: spring(1, fastEaseOut),
+      },
     };
   }
 
+  willEnter() {
+    return { handler: this.props.scenes(), opacity: spring(0, fastEaseOut) };
+  }
+
+  willLeave(key, anim) {
+    return { handler: anim.handler, opacity: spring(0, fastEaseOut) };
+  }
+
   handleScenesGroup(anim) {
-    const scenes = _.map(_.keys(anim), function(key) {
-      const sceneAnim = anim[key],
-        sceneStyle = { opacity : sceneAnim.opacity },
-        style = [styles.sceneWrapper, sceneStyle];
+    const scenes = _.map(_.keys(anim), (key) => {
+      const sceneAnim = anim[key];
+      const sceneStyle = { opacity: sceneAnim.opacity };
+      const style = [styles.sceneWrapper, sceneStyle];
       return (
-        <div key={key + '-scene-trans'} style={style}>
+        <div key={`${key}-scene-trans`} style={style}>
           {sceneAnim.handler}
         </div>
       );
@@ -50,23 +52,24 @@ class UIScenesGroup extends React.Component {
     return (
       <TransitionMotion
         styles={this.getAnimation()}
-        willEnter={this.willEnter.bind(this)}
-        willLeave={this.willLeave.bind(this)}>
+        willEnter={::this.willEnter}
+        willLeave={::this.willLeave}
+      >
         {this.handleScenesGroup.bind(this)}
       </TransitionMotion>
     );
   }
 
-};
+}
 
 /** UIScenesGroup Styles
  *----------------------------------------------------------------------------*/
-const styles = {
-  sceneWrapper : {
-    position : 'absolute',
-    width : '100%',
-    height : '100%'
-  }
+styles = {
+  sceneWrapper: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
 };
 
 export default UIScenesGroup;

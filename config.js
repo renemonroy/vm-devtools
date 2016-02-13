@@ -6,9 +6,9 @@ module.exports = {
     minWidth: 500,
     minHeight: 700,
     frame: false,
-    show: false
+    show: false,
   },
   missionsBargain: {
-    identifier: 'missions'
-  }
+    identifier: 'missions',
+  },
 };

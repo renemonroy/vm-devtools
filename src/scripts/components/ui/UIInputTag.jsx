@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import _ from 'lodash';
+let styles = null;
 
 /** UIInputTag Class
  *----------------------------------------------------------------------------*/
@@ -10,40 +11,42 @@ class UIInputTag extends React.Component {
   static displayName = 'UIInputTag';
 
   static propTypes = {
-    tags: React.PropTypes.array,
-    placeholder: React.PropTypes.string,
-    addKeys: React.PropTypes.array,
-    removeKeys: React.PropTypes.array,
-    onChange: React.PropTypes.func,
-    color: React.PropTypes.oneOf(['lilac', 'salmon', 'green'])
+    tags: PropTypes.array,
+    placeholder: PropTypes.string,
+    addKeys: PropTypes.array,
+    removeKeys: PropTypes.array,
+    onChange: PropTypes.func,
+    color: PropTypes.oneOf(['lilac', 'salmon', 'green']),
+    stringCase: PropTypes.string,
   };
 
   static defaultProps = {
-    placeholder : 'Add a tag',
-    addKeys : [9, 13],
-    removeKeys : [8],
-    onChange : (e) => {},
-    color : 'lilac',
-    stringCase : 'none'
+    placeholder: 'Add a tag',
+    addKeys: [9, 13],
+    removeKeys: [8],
+    onChange: () => {},
+    color: 'lilac',
+    stringCase: 'none',
   };
 
   constructor(props) {
     super(props);
-    this.state = { tagName : '' };
+    this.state = { tagName: '' };
   }
 
   addTag() {
-    let { tagName } = this.state, newTags = null;
-    if ( tagName !== '' || tagName !== ' ' ) {
+    const { tagName } = this.state;
+    let newTags = null;
+    if (tagName !== '' || tagName !== ' ') {
       newTags = this.props.tags.concat([this.handleStringCase(tagName)]);
       this.props.onChange(newTags);
-      this.setState({ tagName : '' });
+      this.setState({ tagName: '' });
     }
   }
 
   removeTag(i) {
-    let newTags = this.props.tags.concat([]);
-    if ( i > -1 && i < newTags.length ) {
+    const newTags = this.props.tags.concat([]);
+    if (i > -1 && i < newTags.length) {
       newTags.splice(i, 1);
       this.props.onChange(newTags);
     }
@@ -51,11 +54,11 @@ class UIInputTag extends React.Component {
 
   handleKeyDown(e) {
     const tagsSize = this.props.tags.length;
-    if ( this.props.addKeys.indexOf(e.keyCode) !== -1 ) {
+    if (this.props.addKeys.indexOf(e.keyCode) !== -1) {
       e.preventDefault();
       this.addTag();
     }
-    if ( (this.props.removeKeys.indexOf(e.keyCode) !== -1)
+    if ((this.props.removeKeys.indexOf(e.keyCode) !== -1)
       && (tagsSize > 0)
       && (this.state.tagName === '')) {
       e.preventDefault();
@@ -73,22 +76,18 @@ class UIInputTag extends React.Component {
   }
 
   render() {
-    const { tagName } = this.state,
-      { tags, placeholder, color } = this.props,
-      { wrapperStyle, inputStyle, tagStyle, tagNameStyle, iconStyle } = styles,
-      tagStyles = [tagStyle.base, tagStyle[color]],
-      iconStyles = [iconStyle.base, iconStyle[color]];
+    const { tagName } = this.state;
+    const { tags, placeholder, color } = this.props;
+    const { wrapperStyle, inputStyle, tagStyle, tagNameStyle, iconStyle } = styles;
+    const tagStyles = [tagStyle.base, tagStyle[color]];
+    const icStyl = [iconStyle.base, iconStyle[color]];
     return (
-      <div style={wrapperStyle} onClick={(e) => this._input.focus()}>
+      <div style={wrapperStyle} onClick={() => this._input.focus()}>
         <div>
           {_.map(tags, (tag, i) =>
-            <span key={'tag-' + i} style={tagStyles}>
+            <span key={`tag-${i}`} style={tagStyles}>
               <span style={tagNameStyle}>{tag}</span>
-              <i
-                style={iconStyles}
-                className="icon-close"
-                onClick={this.removeTag.bind(this,i)}>
-              </i>
+              <i style={icStyl} className="icon-close" onClick={this.removeTag.bind(this, i)} />
             </span>
           )}
           <input
@@ -96,92 +95,93 @@ class UIInputTag extends React.Component {
             placeholder={placeholder}
             style={inputStyle}
             type="text"
-            ref={(comp) => this._input = comp}
-            onChange={(e) => {this.setState({ tagName : e.target.value })}}
-            onKeyDown={::this.handleKeyDown}/>
+            ref={(comp) => {this._input = comp;}}
+            onChange={(e) => {this.setState({ tagName: e.target.value });}}
+            onKeyDown={::this.handleKeyDown}
+          />
         </div>
       </div>
     );
   }
 
-};
+}
 
 /** UIInputTag Styles
  *----------------------------------------------------------------------------*/
-const styles = {
-  wrapperStyle : {
-    borderBottom : '1px solid #e7e7e7',
-    overflow : 'hidden'
+styles = {
+  wrapperStyle: {
+    borderBottom: '1px solid #e7e7e7',
+    overflow: 'hidden',
   },
-  inputStyle : {
-    border : '0 none',
-    lineHeight : '2.2rem',
-    height : '2.2rem',
-    display : 'inline-block',
-    fontSize : '1.3rem',
-    padding : '.2rem',
-    fontWeight : 100,
-    marginBottom : '.5rem'
+  inputStyle: {
+    border: '0 none',
+    lineHeight: '2.2rem',
+    height: '2.2rem',
+    display: 'inline-block',
+    fontSize: '1.3rem',
+    padding: '.2rem',
+    fontWeight: 100,
+    marginBottom: '.5rem',
   },
-  tagStyle : {
-    base : {
-      padding : '0 .6rem',
-      display : 'inline-block',
-      marginBottom : '.5rem',
-      marginRight : '.5rem',
-      fontWeight : '600',
-      color : '#4c4c4c',
-      overflow : 'hidden',
-      float : 'left'
+  tagStyle: {
+    base: {
+      padding: '0 .6rem',
+      display: 'inline-block',
+      marginBottom: '.5rem',
+      marginRight: '.5rem',
+      fontWeight: '600',
+      color: '#4c4c4c',
+      overflow: 'hidden',
+      float: 'left',
     },
-    lilac : {
-      backgroundColor : '#e1cbe2'
+    lilac: {
+      backgroundColor: '#e1cbe2',
     },
-    salmon : {
-      backgroundColor : '#eccfcf'
+    salmon: {
+      backgroundColor: '#eccfcf',
     },
-    green : {
-      backgroundColor : '#cbe2d1'
-    }
+    green: {
+      backgroundColor: '#cbe2d1',
+    },
   },
-  tagNameStyle : {
-    display : 'inline-block',
-    fontWeight : 600,
-    float : 'left',
-    marginTop : '.3rem',
-    marginRight : '.4rem'
+  tagNameStyle: {
+    display: 'inline-block',
+    fontWeight: 600,
+    float: 'left',
+    marginTop: '.3rem',
+    marginRight: '.4rem',
   },
-  iconStyle : {
-    base : {
-      fontFamily : 'VMDevTools',
-      speak : 'none',
-      fontStyle : 'normal',
-      fontWeight : 'normal',
-      fontVariant : 'normal',
-      textTransform : 'none',
-      lineHeight : 1,
-      WebkitFontSmoothing : 'antialiased',
-      fontSize : '1.4rem',
-      display : 'inline-block',
-      height : '1.4rem',
-      widht : '1.4rem',
-      marginTop : '.4rem',
-      marginBottom : '.4rem',
-      borderRadius : '.7rem'
+  iconStyle: {
+    base: {
+      fontFamily: 'VMDevTools',
+      speak: 'none',
+      fontStyle: 'normal',
+      fontWeight: 'normal',
+      fontVariant: 'normal',
+      textTransform: 'none',
+      lineHeight: 1,
+      WebkitFontSmoothing: 'antialiased',
+      fontSize: '1.4rem',
+      display: 'inline-block',
+      height: '1.4rem',
+      widht: '1.4rem',
+      marginTop: '.4rem',
+      marginBottom: '.4rem',
+      borderRadius: '.7rem',
     },
-    lilac : {
-      color : '#b083b2',
-      backgroundColor : '#e9d7ea'
+    lilac: {
+      color: '#b083b2',
+      backgroundColor: '#e9d7ea',
     },
-    salmon : {
-      color : '#c79393',
-      backgroundColor : '#f1d8d8'
+    salmon: {
+      color: '#c79393',
+      backgroundColor: '#f1d8d8',
     },
-    green : {
-      color : '#83b28e',
-      backgroundColor : '#d6eadc'
-    }
-  }
+    green: {
+      color: '#83b28e',
+      backgroundColor: '#d6eadc',
+    },
+  },
 };
 
 export default UIInputTag;
