@@ -18,7 +18,7 @@ class MissionsScene extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(MissionActions.loadMissionsList());
+    this.props.dispatch(MissionActions.fetchMissionsList());
   }
 
   renderHeader() {
@@ -43,6 +43,7 @@ class MissionsScene extends React.Component {
   }
 
   render() {
+    console.log('>>> MissionScene');
     return (
       <UIScene
         header={::this.renderHeader}

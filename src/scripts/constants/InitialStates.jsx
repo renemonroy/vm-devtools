@@ -12,19 +12,20 @@ export const UI = fromJS({
  *----------------------------------------------------------------------------*/
 export const Mission = fromJS({
   missionsList: {
-    status: -1,
+    status: 0,
     data: [],
   },
   activeMission: {
-    status: -1,
+    status: 0,
     data: {},
   },
 });
 
 // Status Meaning
-// -1 = Unstarted
-// 0 = Busy
-// 1 = Ready
+// -1 = Error
+// 0 = Unstarted
+// 1 = Busy
+// 2 = Ready
 
 
 // name: 'view_media',

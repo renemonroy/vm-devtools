@@ -11,13 +11,13 @@ class ActiveMission extends React.Component {
   static displayName = 'ActiveMission';
 
   static propTypes = {
-    status: PropTypes.oneOf([-1, 0, 1]).isRequired,
+    status: PropTypes.oneOf([-1, 0, 1, 2]).isRequired,
     data: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
   };
 
   handleScreensChange(screens) {
-    this.props.dispatch(MissionActions.updateActiveMission({ screens }));
+    this.props.dispatch(MissionActions.changeActiveMissionData({ screens }));
   }
 
   renderForm() {

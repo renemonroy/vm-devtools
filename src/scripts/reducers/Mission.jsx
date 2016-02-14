@@ -4,43 +4,45 @@ import { Mission as InitialState } from '../constants/InitialStates';
 
 /** Pure Functions
  *----------------------------------------------------------------------------*/
-function onMissionsListLoad(state) {
-  return state.setIn(['missionsList', 'status'], 0);
+
+/* Missions List */
+
+function onChangeMissionsListData(state, newData) {
+  return state.updateIn(['missionsList', 'data'], (currData) =>
+    currData.clear().merge(fromJS(newData))
+  );
 }
 
-function onMissionsListUpdate(state, list) {
-  return state
-    .setIn(['missionsList', 'status'], 1)
-    .updateIn(['missionsList', 'data'], (data) =>
-      data.clear().merge(fromJS(list))
-    );
+function onChangeMissionsListStatus(state, status) {
+  return state.setIn(['missionsList', 'status'], status);
 }
 
-function onActiveMissionLoad(state) {
-  return state.setIn(['activeMission', 'status'], 0);
+/* Active Mission */
+
+function onChangeActiveMissionData(state, newData) {
+  return state.updateIn(['activeMission', 'data'], (currData) =>
+    currData.merge(fromJS(newData))
+  );
 }
 
-function onActiveMissionUpdate(state, payload) {
-  return state
-    .setIn(['activeMission', 'status'], 1)
-    .updateIn(['activeMission', 'data'], (data) =>
-      data.merge(fromJS(payload))
-    );
+function onChangeActiveMissionStatus(state, status) {
+  return state.setIn(['activeMission', 'status'], status);
 }
 
 /** Reducer
  *----------------------------------------------------------------------------*/
-export default function MissionStore(state = InitialState, action) {
+
+export default function MissionReducer(state = InitialState, action) {
   switch (action.type) {
-    case Action.LOAD_MISSIONS_LIST :
-      return onMissionsListLoad(state);
-    case Action.UPDATE_MISSIONS_LIST :
-      return onMissionsListUpdate(state, action.list);
-    case Action.LOAD_ACTIVE_MISSION :
-      return onActiveMissionLoad(state);
-    case Action.UPDATE_ACTIVE_MISSION :
-      return onActiveMissionUpdate(state, action.data);
-    default :
+    case Action.CHANGE_MISSIONS_LIST_DATA:
+      return onChangeMissionsListData(state, action.data);
+    case Action.CHANGE_MISSIONS_LIST_STATUS:
+      return onChangeMissionsListStatus(state, action.status);
+    case Action.CHANGE_ACTIVE_MISSION_DATA:
+      return onChangeActiveMissionData(state, action.data);
+    case Action.CHANGE_ACTIVE_MISSION_STATUS:
+      return onChangeActiveMissionStatus(state, action.status);
+    default:
       return state;
   }
 }

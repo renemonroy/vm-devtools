@@ -1,29 +1,29 @@
-import { Mission as Action } from '../constants/ActionTypes';
-const ipcRenderer = require('electron').ipcRenderer;
+import { Mission as ActionType } from '../constants/ActionTypes';
 
-// MISSIONS LIST
+/* Missions List */
 
-export function loadMissionsList() {
-  return (dispatch) => {
-    dispatch({ type: Action.LOAD_MISSIONS_LIST });
-    ipcRenderer.send('missions:itemslist');
-  };
-}
+export const fetchMissionsList = () =>
+  ({ type: ActionType.FETCH_MISSIONS_LIST_DATA });
 
-export function updateMissionsList(list) {
-  return { type: Action.UPDATE_MISSIONS_LIST, list };
-}
+export const receiveMissionsListData = (data) =>
+  ({ type: ActionType.RECEIVE_MISSIONS_LIST_DATA, data });
 
+export const changeMissionsListData = (data) =>
+  ({ type: ActionType.CHANGE_MISSIONS_LIST_DATA, data });
 
-// ACTIVE MISSION
+export const changeMissionsListStatus = (status) =>
+  ({ type: ActionType.CHANGE_MISSIONS_LIST_STATUS, status });
 
-export function loadActiveMission(name) {
-  return (dispatch) => {
-    dispatch({ type: Action.LOAD_ACTIVE_MISSION });
-    ipcRenderer.send('missions:item', name);
-  };
-}
+/* Active Mission */
 
-export function updateActiveMission(data) {
-  return { type: Action.UPDATE_ACTIVE_MISSION, data };
-}
+export const fetchActiveMissionData = (name) =>
+  ({ type: ActionType.FETCH_ACTIVE_MISSION_DATA, name });
+
+export const receiveActiveMissionData = (data) =>
+  ({ type: ActionType.RECEIVE_ACTIVE_MISSION_DATA, data });
+
+export const changeActiveMissionData = (data) =>
+  ({ type: ActionType.CHANGE_ACTIVE_MISSION_DATA, data });
+
+export const changeActiveMissionStatus = (status) =>
+  ({ type: ActionType.CHANGE_ACTIVE_MISSION_STATUS, status });
