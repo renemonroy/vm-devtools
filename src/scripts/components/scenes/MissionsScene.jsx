@@ -43,7 +43,6 @@ class MissionsScene extends React.Component {
   }
 
   render() {
-    console.log('>>> MissionScene');
     return (
       <UIScene
         header={::this.renderHeader}

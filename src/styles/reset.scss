@@ -36,6 +36,7 @@ html {
 *:after {
 	box-sizing: inherit;
 	-webkit-user-select: inherit;
+	cursor: default;
 }
 
 /* consider resetting the default cursor: https://gist.github.com/murtaugh/5247154 */
