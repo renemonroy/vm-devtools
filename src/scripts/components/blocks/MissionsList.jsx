@@ -19,7 +19,7 @@ class MissionsList extends React.Component {
   };
 
   selectMission(mission) {
-    this.props.dispatch(MissionActions.loadActiveMission(mission));
+    this.props.dispatch(MissionActions.fetchActiveMissionData(mission));
   }
 
   render() {
