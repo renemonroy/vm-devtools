@@ -19,7 +19,7 @@ var mainSrc = process.env && process.env.NODE_ENV == 'development' ?
 var evLog = function(str) { return colors.green(str); };
 
 var toggleApp = function(e) {
-  mainWindow.isFocused() ? mainWindow.hide() : mainWindow.hide();
+  mainWindow.isFocused() ? mainWindow.hide() : mainWindow.show();
 };
 
 var onMissionsItemsList = function(e) {
