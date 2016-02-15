@@ -4,6 +4,8 @@ var electron = require('electron');
 var colors = require('colors/safe');
 var Bargain = require('./bargain');
 var config = require('./config');
+var fs = require('fs-plus');
+var exec = require('child_process').exec;
 
 var app = electron.app;
 var BrowserWindow = electron.BrowserWindow;
@@ -30,6 +32,21 @@ var onMissionsItemsList = function(e) {
 var onMissionsItem = function(e, name) {
   console.log('>>> Receive item instruction.');
   missions.respondItem(name);
+};
+
+var onMissionItemDelete = function(e, name) {
+  console.log('>>> Deleting mission:', name);
+  missions.deleteItem(name);
+};
+
+var onOpenInTerminal = function(e, pathName) {
+  var dirpath = __dirname + pathName;
+  if (fs.isDirectorySync(dirpath)) exec(`open -a Terminal.app ${dirpath}`);
+};
+
+var onOpenInFinder = function(e, pathName) {
+  var dirpath = __dirname + pathName;
+  if (fs.isDirectorySync(dirpath)) exec(`open ${dirpath}`);
 };
 
 var closeMainWindow = function() {
@@ -61,6 +78,7 @@ app.on('ready', function() {
 
   ipcMain.on('missions:itemslist', onMissionsItemsList);
   ipcMain.on('missions:item', onMissionsItem);
+  ipcMain.on('missions:item:delete', onMissionItemDelete);
+  ipcMain.on('openterminal', onOpenInTerminal);
+  ipcMain.on('openfinder', onOpenInFinder);
 });
-
-

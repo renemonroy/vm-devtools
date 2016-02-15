@@ -20,7 +20,7 @@ export default function configureStore() {
   const onMissionsList = (e, payload) => {
     const newData = payload.data;
     const currData = appStore.getState().Mission.toJS().missionsList.data;
-    if (payload.type === 'res' && !_.isEqual(newData, currData)) {
+    if (!_.isEqual(newData, currData)) {
       appStore.dispatch(MissionActions.receiveMissionsListData(newData));
     }
   };

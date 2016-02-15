@@ -58,6 +58,38 @@ function* receiveActiveMissionData(getState) {
   }
 }
 
+/* Commands */
+
+function* deleteMission() {
+  while (true) {
+    const { name } = yield take(ActionType.DELETE_MISSION);
+    try {
+      ipcRenderer.send('missions:item:delete', name);
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+}
+
+function* openInApp() {
+  while (true) {
+    const { appName, pathName } = yield take(ActionType.OPEN_IN_APP);
+    try {
+      switch (appName) {
+        case 'terminal':
+          ipcRenderer.send('openterminal', pathName);
+          break;
+        case 'finder':
+          ipcRenderer.send('openfinder', pathName);
+          break;
+        default: break;
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+}
+
 /** Initial state for Mission Scene
  *----------------------------------------------------------------------------*/
 
@@ -66,4 +98,6 @@ export default function* MissionSaga(getState) {
   yield fork(receiveMissionsListData);
   yield fork(fetchActiveMissionData, getState);
   yield fork(receiveActiveMissionData, getState);
+  yield fork(deleteMission);
+  yield fork(openInApp);
 }

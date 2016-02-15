@@ -21,27 +21,27 @@ class MissionItemButton extends React.Component {
   };
 
   componentWillMount() {
-    const mName = this.props.name;
-    const mPaths = paths.missions;
+    const { name, dispatch } = this.props;
+    const { github, local: loc } = paths.missions;
     this.menu = Menu.buildFromTemplate([
       {
         label: 'View on GitHub',
-        click: () => shell.openExternal(`${mPaths.github}/${mName}`),
+        click: () => shell.openExternal(`${github}/${name}`),
       },
       {
         label: 'Open in Finder',
-        click: () => shell.showItemInFolder(`${mPaths.local}/${mName}`),
+        click: () => dispatch(MissionActions.openInApp('finder', `${loc}/${name}`)),
       },
       {
         label: 'Open in Terminal',
-        click: () => alert('Not implemented yet.'),
+        click: () => dispatch(MissionActions.openInApp('terminal', `${loc}/${name}`)),
       },
       {
         type: 'separator',
       },
       {
         label: 'Delete',
-        click: () => (shell.moveItemToTrash(`${mPaths.local}/${mName}`)),
+        click: () => dispatch(MissionActions.deleteMission(`${name}`)),
       },
     ]);
   }
@@ -51,7 +51,7 @@ class MissionItemButton extends React.Component {
   }
 
   onElementRender(el) {
-    if (!this.el) {
+    if (!this._el) {
       this._el = el;
       this._el.addEventListener('contextmenu', ::this.openContextMenu);
     }

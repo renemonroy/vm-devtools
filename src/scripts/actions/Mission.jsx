@@ -27,3 +27,12 @@ export const changeActiveMissionData = (data) =>
 
 export const changeActiveMissionStatus = (status) =>
   ({ type: ActionType.CHANGE_ACTIVE_MISSION_STATUS, status });
+
+
+/* Others */
+
+export const deleteMission = (name) =>
+  ({ type: ActionType.DELETE_MISSION, name });
+
+export const openInApp = (appName, pathName) =>
+  ({ type: ActionType.OPEN_IN_APP, appName, pathName });
