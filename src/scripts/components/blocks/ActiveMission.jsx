@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { UIInputTag } from '../ui';
+import { UIInputTag, UIButton } from '../ui';
 import { MissionActions } from '../../actions';
 
 /** ActiveMission Class
@@ -20,6 +20,12 @@ class ActiveMission extends React.Component {
     this.props.dispatch(MissionActions.changeActiveMissionData({ screens }));
   }
 
+  renderIndex() {
+    return (
+      <p>Empty</p>
+    );
+  }
+
   renderForm() {
     const { data } = this.props;
     return (
@@ -31,6 +37,7 @@ class ActiveMission extends React.Component {
           onChange={::this.handleScreensChange}
           stringCase="class"
         />
+        <UIButton kind="primary">Save</UIButton>
       </div>
     );
   }
@@ -39,7 +46,7 @@ class ActiveMission extends React.Component {
     const { data } = this.props;
     return (
       <div>
-        {_.isEmpty(data) ? <p>Empty</p> : this.renderForm()}
+        {_.isEmpty(data) ? this.renderIndex() : this.renderForm()}
       </div>
     );
   }

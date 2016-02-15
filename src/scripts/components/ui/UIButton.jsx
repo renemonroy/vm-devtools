@@ -40,6 +40,8 @@ styles = {
       backgroundColor: 'transparent',
     },
     primary: {
+      color: '#ffffff',
+      display: 'inline-block',
       backgroundColor: '#0074D9',
     },
     warning: {

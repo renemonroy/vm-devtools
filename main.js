@@ -34,9 +34,9 @@ var onMissionsItem = function(e, name) {
   missions.respondItem(name);
 };
 
-var onMissionItemDelete = function(e, name) {
-  console.log('>>> Deleting mission:', name);
-  missions.deleteItem(name);
+var onMissionItemDelete = function(e, missionName) {
+  console.log('>>> Deleting mission:', missionName);
+  missions.deleteItem(missionName);
 };
 
 var onOpenInTerminal = function(e, pathName) {

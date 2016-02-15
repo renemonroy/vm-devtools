@@ -26,19 +26,15 @@ export default function configureStore() {
   };
 
   const onMissionItem = (e, payload) => {
-    let currentMission = null;
-    switch (payload.type) {
-      case 'res':
-        appStore.dispatch(MissionActions.receiveActiveMissionData(payload.data));
-        break;
-      case 'change':
-        currentMission = appStore.getState().Mission.toJS().activeMission;
-        if (payload.name === currentMission.data.name) {
-          appStore.dispatch(MissionActions.receiveActiveMissionData(payload.data));
-        }
-        break;
-      default :
-        throw new Error('>>> Event not defined.');
+    const newData = payload.data;
+    let currData = null;
+    if (payload.type === 'res') {
+      appStore.dispatch(MissionActions.receiveActiveMissionData(newData));
+    } else {
+      currData = appStore.getState().Mission.toJS().activeMission.data;
+      if (payload.name === currData.name && !_.isEqual(newData, currData)) {
+        appStore.dispatch(MissionActions.receiveActiveMissionData(newData));
+      }
     }
   };
 

@@ -64,13 +64,13 @@ function* receiveActiveMissionData(getState) {
 
 /* Commands */
 
-function* deleteMission() {
+function* setMission() {
   while (true) {
-    const { name } = yield take(ActionType.DELETE_MISSION);
+    const { eventName, e } = yield take(ActionType.SET_MISSION);
     try {
-      ipcRenderer.send('missions:item:delete', name);
-    } catch (e) {
-      throw new Error(e);
+      ipcRenderer.send(`missions:item:${eventName}`, e);
+    } catch (err) {
+      throw new Error(err);
     }
   }
 }
@@ -102,6 +102,6 @@ export default function* MissionSaga(getState) {
   yield fork(receiveMissionsListData, getState);
   yield fork(fetchActiveMissionData, getState);
   yield fork(receiveActiveMissionData, getState);
-  yield fork(deleteMission);
+  yield fork(setMission);
   yield fork(openInApp);
 }

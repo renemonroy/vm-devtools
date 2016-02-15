@@ -43,10 +43,11 @@ class MissionsScene extends React.Component {
   }
 
   render() {
+    const mlData = this.props.missionsList.data;
     return (
       <UIScene
         header={::this.renderHeader}
-        sidebar={::this.renderSidebar}
+        sidebar={mlData.length > 0 ? ::this.renderSidebar : null}
         content={::this.renderContent}
         name="missions"
       />

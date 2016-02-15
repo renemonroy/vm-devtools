@@ -34,8 +34,8 @@ export const cleanActiveMissionData = () =>
 
 /* Others */
 
-export const deleteMission = (name) =>
-  ({ type: ActionType.DELETE_MISSION, name });
+export const setMission = (eventName, e) =>
+  ({ type: ActionType.SET_MISSION, eventName, e });
 
 export const openInApp = (appName, pathName) =>
   ({ type: ActionType.OPEN_IN_APP, appName, pathName });

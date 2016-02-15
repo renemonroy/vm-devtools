@@ -41,7 +41,7 @@ class MissionItemButton extends React.Component {
       },
       {
         label: 'Delete',
-        click: () => dispatch(MissionActions.deleteMission(`${name}`)),
+        click: () => dispatch(MissionActions.setMission('delete', `${name}`)),
       },
     ]);
   }
