@@ -4,6 +4,7 @@ var colors = require('colors/safe');
 var fs = require('fs-plus');
 var path = require('path');
 var chokidar = require('chokidar');
+var trash = require('trash');
 
 var evLog = function(str) { return colors.green(str); };
 var warnLog = function(str) { return colors.yellow(str); };
@@ -128,6 +129,16 @@ bargain.prototype = {
   respondItem: function(name) {
     console.log('>>> responding item...');
     this._emmitItem({ type: 'res', name: name });
+  },
+
+  deleteItem: function(name) {
+    var pathdir = this.path + name;
+    console.log(pathdir);
+    if (fs.isDirectorySync(pathdir)) {
+      trash([pathdir]).then( function() {
+        console.log(`>>> ${pathdir} deleted.`);
+      });
+    }
   },
 
   end: function() {
