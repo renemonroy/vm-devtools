@@ -2,8 +2,9 @@ import React, { PropTypes } from 'react';
 import Radium from 'radium';
 import { MissionActions } from '../../actions';
 import { connect } from 'react-redux';
+import { paths } from '../../constants/Globals';
 import _ from 'lodash';
-const remote = require('electron').remote;
+const { remote, shell } = require('electron');
 const Menu = remote.Menu;
 let styles = null;
 
@@ -17,35 +18,32 @@ class MissionItemButton extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
-    template: PropTypes.array.isRequired,
   };
 
-  static defaultProps = {
-    template: [
+  componentWillMount() {
+    const mName = this.props.name;
+    const mPaths = paths.missions;
+    this.menu = Menu.buildFromTemplate([
       {
         label: 'View on GitHub',
-        click: () => (console.log('View on GitHub...')),
+        click: () => shell.openExternal(`${mPaths.github}/${mName}`),
       },
       {
         label: 'Open in Finder',
-        click: () => (console.log('Open in Finder...')),
+        click: () => shell.showItemInFolder(`${mPaths.local}/${mName}`),
       },
       {
         label: 'Open in Terminal',
-        click: () => (console.log('Open in Terminal...')),
+        click: () => alert('Not implemented yet.'),
       },
       {
         type: 'separator',
       },
       {
         label: 'Delete',
-        click: () => (console.log('Delete Mission...')),
+        click: () => (shell.moveItemToTrash(`${mPaths.local}/${mName}`)),
       },
-    ],
-  };
-
-  componentWillMount() {
-    this.menu = Menu.buildFromTemplate(this.props.template);
+    ]);
   }
 
   componentWillUnmount() {
@@ -53,7 +51,7 @@ class MissionItemButton extends React.Component {
   }
 
   onElementRender(el) {
-    if (el) {
+    if (!this.el) {
       this._el = el;
       this._el.addEventListener('contextmenu', ::this.openContextMenu);
     }
@@ -61,7 +59,7 @@ class MissionItemButton extends React.Component {
 
   openContextMenu(e) {
     e.preventDefault();
-    this.menu.popup(remote.getCurrentWindow(e.pageX, e.pageY));
+    this.menu.popup(remote.getCurrentWindow());
   }
 
   selectMission() {
