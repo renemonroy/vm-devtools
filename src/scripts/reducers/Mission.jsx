@@ -29,6 +29,12 @@ function onChangeActiveMissionStatus(state, status) {
   return state.setIn(['activeMission', 'status'], status);
 }
 
+function onCleanActiveMissionData(state) {
+  return state.updateIn(['activeMission', 'data'], (currData) =>
+    currData.clear()
+  );
+}
+
 /** Reducer
  *----------------------------------------------------------------------------*/
 
@@ -42,6 +48,8 @@ export default function MissionReducer(state = InitialState, action) {
       return onChangeActiveMissionData(state, action.data);
     case Action.CHANGE_ACTIVE_MISSION_STATUS:
       return onChangeActiveMissionStatus(state, action.status);
+    case Action.CLEAN_ACTIVE_MISSION_DATA:
+      return onCleanActiveMissionData(state);
     default:
       return state;
   }

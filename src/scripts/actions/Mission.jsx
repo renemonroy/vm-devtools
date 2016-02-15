@@ -28,6 +28,9 @@ export const changeActiveMissionData = (data) =>
 export const changeActiveMissionStatus = (status) =>
   ({ type: ActionType.CHANGE_ACTIVE_MISSION_STATUS, status });
 
+export const cleanActiveMissionData = () =>
+  ({ type: ActionType.CLEAN_ACTIVE_MISSION_DATA });
+
 
 /* Others */
 

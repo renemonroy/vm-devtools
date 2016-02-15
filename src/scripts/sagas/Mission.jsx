@@ -21,11 +21,15 @@ function* fetchMissionsListData() {
   }
 }
 
-function* receiveMissionsListData() {
+function* receiveMissionsListData(getState) {
   while (true) {
     const { data: newData } = yield take(ActionType.RECEIVE_MISSIONS_LIST_DATA);
+    const currActiveMD = getState().Mission.getIn(['activeMission', 'data']).toJS();
     yield put(Action.changeMissionsListData(newData));
     yield put(Action.changeMissionsListStatus(1));
+    if (newData === 0 || newData.indexOf(currActiveMD.name) === -1) {
+      yield put(Action.cleanActiveMissionData());
+    }
   }
 }
 
@@ -95,7 +99,7 @@ function* openInApp() {
 
 export default function* MissionSaga(getState) {
   yield fork(fetchMissionsListData);
-  yield fork(receiveMissionsListData);
+  yield fork(receiveMissionsListData, getState);
   yield fork(fetchActiveMissionData, getState);
   yield fork(receiveActiveMissionData, getState);
   yield fork(deleteMission);
