@@ -54,7 +54,8 @@
     "react-router": "^2.0.0",
     "redux": "^3.0.5",
     "redux-logger": "^2.5.0",
-    "redux-saga": "^0.7.0"
+    "redux-saga": "^0.7.0",
+    "trash": "^3.4.1"
   },
   "babel": {
     "presets": [
