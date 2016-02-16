@@ -5,6 +5,7 @@ var fs = require('fs-plus');
 var path = require('path');
 var chokidar = require('chokidar');
 var trash = require('trash');
+var _ = require('lodash');
 
 var evLog = function(str) { return colors.green(str); };
 var warnLog = function(str) { return colors.yellow(str); };
@@ -94,7 +95,10 @@ bargain.prototype = {
   validateItem: function(itemPath, callback) {
     fs.readFile(itemPath, 'utf8', function(err, itemData) {
       var data = null;
-      if (err) throw err;
+      if (err) {
+        console.log('>>> Error', err);
+        throw err;
+      }
       try {
         data = JSON.parse(itemData);
         callback(null, data);
@@ -131,9 +135,20 @@ bargain.prototype = {
     this._emmitItem({ type: 'res', name: name });
   },
 
+  editItem: function(itemData) {
+    var pathdir = this.path + itemData.name;
+    var pathFile = `${pathdir}/config.json`;
+    if (fs.isDirectorySync(pathdir)) {
+      this.validateItem(pathFile, function(err, oldData) {
+        var newData = JSON.stringify(_.assign({}, oldData, itemData));
+        fs.writeFile(pathFile, newData, 'utf-8');
+        console.log('>>> File edited:', pathFile);
+      })
+    }
+  },
+
   deleteItem: function(name) {
     var pathdir = this.path + name;
-    console.log(pathdir);
     if (fs.isDirectorySync(pathdir)) {
       trash([pathdir]).then( function() {
         console.log(`>>> ${pathdir} deleted.`);

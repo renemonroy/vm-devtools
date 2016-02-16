@@ -39,6 +39,11 @@ var onMissionItemDelete = function(e, missionName) {
   missions.deleteItem(missionName);
 };
 
+var onMissionItemEdit = function(e, missionData) {
+  console.log('>>> Edit mission:', missionData);
+  missions.editItem(missionData);
+};
+
 var onOpenInTerminal = function(e, pathName) {
   var dirpath = __dirname + pathName;
   if (fs.isDirectorySync(dirpath)) exec(`open -a Terminal.app ${dirpath}`);
@@ -78,6 +83,7 @@ app.on('ready', function() {
 
   ipcMain.on('missions:itemslist', onMissionsItemsList);
   ipcMain.on('missions:item', onMissionsItem);
+  ipcMain.on('missions:item:edit', onMissionItemEdit);
   ipcMain.on('missions:item:delete', onMissionItemDelete);
   ipcMain.on('openterminal', onOpenInTerminal);
   ipcMain.on('openfinder', onOpenInFinder);

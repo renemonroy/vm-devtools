@@ -20,6 +20,10 @@ class ActiveMission extends React.Component {
     this.props.dispatch(MissionActions.changeActiveMissionData({ screens }));
   }
 
+  handleSave() {
+    this.props.dispatch(MissionActions.setMission('edit', this.props.data));
+  }
+
   renderIndex() {
     return (
       <p>Empty</p>
@@ -37,7 +41,9 @@ class ActiveMission extends React.Component {
           onChange={::this.handleScreensChange}
           stringCase="class"
         />
-        <UIButton kind="primary">Save</UIButton>
+        <UIButton kind="primary" onClick={::this.handleSave}>
+          Save
+        </UIButton>
       </div>
     );
   }
