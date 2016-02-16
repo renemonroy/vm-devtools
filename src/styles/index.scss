@@ -1,5 +1,4 @@
 @import './reset.scss';
-@import './font-proxima-nova.scss';
 @import './font-devtools.scss';
 
 // Initial styles
@@ -12,7 +11,7 @@ html {
 	font-size : 62.5%;
 }
 body {
-	font-family : "Proxima Nova";
+	font-family : "proxima-nova", sans-serif;
 	font-size : 1.4rem;
   color : #29292a;
 }
