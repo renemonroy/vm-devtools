@@ -118,10 +118,12 @@ styles = {
     lineHeight: '2.2rem',
     height: '2.2rem',
     display: 'inline-block',
-    fontSize: '1.3rem',
+    fontSize: '1.4rem',
     padding: '.2rem',
-    fontWeight: 100,
+    fontWeight: 600,
     marginBottom: '.5rem',
+    fontFamily: '"proxima-nova",sans-serif',
+    color: '#4c4c4c',
   },
   tagStyle: {
     base: {

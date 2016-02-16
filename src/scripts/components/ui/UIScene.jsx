@@ -83,6 +83,7 @@ styles = {
     flex: '1 1',
     order: 2,
     overflowY: 'auto',
+    padding: '2.6rem 2.2rem',
   },
 };
 

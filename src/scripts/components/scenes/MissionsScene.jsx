@@ -25,8 +25,8 @@ class MissionsScene extends React.Component {
     return (
       <SceneHeader
         heading="Mission Boilerplate"
-        description="Set the values to generate the boostrap code of your next mission. \n
-        Remember, is not a builder but only a starter. Code and configuration are saved \n
+        description="Set the values to generate the boostrap code of your next mission.
+        Remember, is not a builder but only a starter. Code and configurations are saved
         in File System, check missions folder."
       />
     );
