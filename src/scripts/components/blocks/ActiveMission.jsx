@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { UIInputTag, UIButton } from '../ui';
+import { UIFormGrid, UIInputText, UIInputTag, UIButton } from '../ui';
 import { MissionActions } from '../../actions';
+const { UIFormGroup, UIFormRow } = UIFormGrid;
 
 /** ActiveMission Class
  *----------------------------------------------------------------------------*/
@@ -20,6 +21,10 @@ class ActiveMission extends React.Component {
     this.props.dispatch(MissionActions.changeActiveMissionData({ screens }));
   }
 
+  handleInitialKeysChange(initialKeys) {
+    console.log('>>> Initial Keys change:', initialKeys);
+  }
+
   handleSave() {
     this.props.dispatch(MissionActions.setMission('edit', this.props.data));
   }
@@ -34,13 +39,32 @@ class ActiveMission extends React.Component {
     const { data } = this.props;
     return (
       <div>
-        <h3>Scenes Names</h3>
-        <UIInputTag
-          tags={data.screens}
-          placeholder="Add a screen name"
-          onChange={::this.handleScreensChange}
-          stringCase="class"
-        />
+        <UIFormGroup legend="Component">
+          <UIFormRow label="Mission name">
+            <UIInputText
+              type="text"
+              placeholder="e.g. ViewMedia"
+            />
+          </UIFormRow>
+          <UIFormRow label="Screens">
+            <UIInputTag
+              tags={data.screens}
+              placeholder="e.g. MissionSetup"
+              onChange={::this.handleScreensChange}
+              stringCase="class"
+            />
+          </UIFormRow>
+        </UIFormGroup>
+        <UIFormGroup legend="Store">
+          <UIFormRow label="Initial keys @type">
+            <UIInputTag
+              tags={[]}
+              placeholder="e.g. jumps @number"
+              onChange={::this.handleInitialKeysChange}
+              stringCase="class"
+            />
+          </UIFormRow>
+        </UIFormGroup>
         <UIButton kind="primary" onClick={::this.handleSave}>
           Save
         </UIButton>
