@@ -15,15 +15,20 @@ class MissionsList extends React.Component {
   static propTypes = {
     status: PropTypes.oneOf([-1, 0, 1, 2]).isRequired,
     data: PropTypes.array.isRequired,
+    activeMission: PropTypes.object.isRequired,
   };
 
   render() {
-    const { data: missions } = this.props;
+    const { data: missions, activeMission } = this.props;
     return (
       <aside>
         <ul style={styles.ulStyle}>
           {_.map(missions, (missionName) =>
-            <MissionItemButton name={missionName} key={`li-${missionName}`}/>
+            <MissionItemButton
+              name={missionName}
+              key={`li-${missionName}`}
+              active={activeMission.name === missionName}
+            />
           )}
         </ul>
       </aside>

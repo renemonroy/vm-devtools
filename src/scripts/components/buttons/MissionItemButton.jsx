@@ -18,6 +18,7 @@ class MissionItemButton extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
+    active: PropTypes.bool.isRequired,
   };
 
   componentWillMount() {
@@ -71,11 +72,12 @@ class MissionItemButton extends React.Component {
   }
 
   render() {
-    const { base } = styles.liStyle;
-    const liStyles = [base];
+    const { name, active: activated } = this.props;
+    const { base, active } = styles.liStyle;
+    const liStyles = [base, activated === true ? active : null];
     return (
       <li style={liStyles} onClick={::this.selectMission} ref={::this.onElementRender}>
-        {_.startCase(this.props.name)}
+        {_.startCase(name)}
       </li>
     );
   }
