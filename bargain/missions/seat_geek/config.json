@@ -1,1 +1,1 @@
-{"name":"seat_geek","identifier":"com.virginmegausa.mission.seatgeek","screens":["Lorem","Dolor"],"initialState":{"items":[]},"missionStore":{"events":[],"listening":false}}
+{"name":"seat_geek","identifier":"com.virginmegausa.mission.seatgeek","screens":["Lorem","Ipsum","Dolor"],"initialState":{"items":[]},"missionStore":{"events":[],"listening":false}}

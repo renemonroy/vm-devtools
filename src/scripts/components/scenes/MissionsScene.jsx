@@ -33,8 +33,8 @@ class MissionsScene extends React.Component {
   }
 
   renderSidebar() {
-    const { missionsList: ml } = this.props;
-    return <MissionsList status={ml.status} data={ml.data} />;
+    const { missionsList: ml, activeMission: am } = this.props;
+    return <MissionsList status={ml.status} data={ml.data} activeMission={am.data} />;
   }
 
   renderContent() {
