@@ -1,15 +1,1 @@
-{
-  "name": "megafan_roulette",
-  "identifier": "com.virginmegausa.mission.megafan-roulette",
-  "screens": ["Wheel", "Fan", "Nada", "Spin"],
-  "initialState" : {
-    "items": [],
-    "maxJumps" : 0,
-    "played": 0,
-    "selected": null
-  },
-  "missionStore": {
-    "listening": false,
-    "events": []
-  }
-}
+{"name":"megafan_roulette","identifier":"com.virginmegausa.mission.megafan-roulette","screens":["WheelView","FanView","SpinView","NadaView"],"initialState":{"items":[],"maxJumps":0,"played":0,"selected":null},"missionStore":{"events":[],"listening":false}}
