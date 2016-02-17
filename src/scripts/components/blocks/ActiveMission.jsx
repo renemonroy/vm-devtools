@@ -65,6 +65,7 @@ class ActiveMission extends React.Component {
             <UIInputText
               type="text"
               placeholder="e.g. com.virginmegausa.mission.view-media"
+              value={data.identifier}
             />
           </UIFormRow>
           <UIFormRow label="Initial keys @type">
@@ -74,15 +75,6 @@ class ActiveMission extends React.Component {
               onChange={::this.handleInitialKeysChange}
               stringCase="class"
               color="salmon"
-            />
-          </UIFormRow>
-          <UIFormRow label="Actions [args]">
-            <UIInputTag
-              tags={[]}
-              placeholder="e.g. earnJumps [jumps]"
-              onChange={::this.handleActionsChange}
-              stringCase="class"
-              color="green"
             />
           </UIFormRow>
         </UIFormGroup>
