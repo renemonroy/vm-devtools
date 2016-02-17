@@ -25,6 +25,10 @@ class ActiveMission extends React.Component {
     console.log('>>> Initial Keys change:', initialKeys);
   }
 
+  handleActionsChange(actions) {
+    console.log('>>> Actions change', actions);
+  }
+
   handleSave() {
     this.props.dispatch(MissionActions.setMission('edit', this.props.data));
   }
@@ -52,16 +56,33 @@ class ActiveMission extends React.Component {
               placeholder="e.g. MissionSetup"
               onChange={::this.handleScreensChange}
               stringCase="class"
+              color="lilac"
             />
           </UIFormRow>
         </UIFormGroup>
         <UIFormGroup legend="Store">
+          <UIFormRow label="Identifier">
+            <UIInputText
+              type="text"
+              placeholder="e.g. com.virginmegausa.mission.view-media"
+            />
+          </UIFormRow>
           <UIFormRow label="Initial keys @type">
             <UIInputTag
               tags={[]}
               placeholder="e.g. jumps @number"
               onChange={::this.handleInitialKeysChange}
               stringCase="class"
+              color="salmon"
+            />
+          </UIFormRow>
+          <UIFormRow label="Actions [args]">
+            <UIInputTag
+              tags={[]}
+              placeholder="e.g. earnJumps [jumps]"
+              onChange={::this.handleActionsChange}
+              stringCase="class"
+              color="green"
             />
           </UIFormRow>
         </UIFormGroup>

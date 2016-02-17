@@ -43,6 +43,7 @@ styles = {
     border: '0 none',
     lineHeight: '2.2rem',
     height: '2.2rem',
+    width: '100%',
     display: 'inline-block',
     fontSize: '1.4rem',
     padding: '.2rem',
