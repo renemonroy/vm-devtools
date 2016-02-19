@@ -3,7 +3,7 @@ import { Mission as Action } from '../constants/ActionTypes';
 import { Mission as InitialState } from '../constants/InitialStates';
 
 /** Pure Functions
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------*/
 
 /* Missions List */
 
@@ -36,7 +36,7 @@ function onCleanActiveMissionData(state) {
 }
 
 /** Reducer
- *----------------------------------------------------------------------------*/
+ *---------------------------------------------------------------------*/
 
 export default function MissionReducer(state = InitialState, action) {
   switch (action.type) {
