@@ -1,18 +1,45 @@
 {
   "name": "view_media",
   "identifier": "com.virginmegausa.mission.view-media",
-  "screens": ["MissionSetup", "MissionInProgress", "MissionSuccess"],
-  "initialState": {
-    "screenName": "MissionSetup",
-    "played": 0,
-    "maxJumps": 0,
-    "earnedJumps": 0,
-    "intro": "",
-    "videoId": null,
-    "duration": 0
-  },
-  "missionStore": {
-    "listening": true,
-    "events": ["MISSION_RESOLVE_SUCCESS"]
-  }
+  "screens": [
+    {
+      "name": "MissionSetup",
+      "type": "stateless"
+    },
+    {
+      "name": "MissionInProgress",
+      "type": "stateful"
+    },
+    {
+      "name": "MissionSuccess",
+      "type": "stateless"
+    }
+  ],
+  "properties": [
+    {
+      "name": "screen",
+      "type": "string",
+      "value": "MissionSetup"
+    },
+    {
+      "name": "played",
+      "type": "number",
+      "value": 0
+    },
+    {
+      "name": "maxJumps",
+      "type": "number",
+      "value": 0
+    },
+    {
+      "name": "earnedJumps",
+      "type": "number",
+      "value": 0
+    },
+    {
+      "name": "intro",
+      "type": "string",
+      "value": ""
+    }
+  ]
 }
