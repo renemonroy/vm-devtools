@@ -56,18 +56,5 @@
     "redux-logger": "^2.5.0",
     "redux-saga": "^0.8.1",
     "trash": "^3.4.1"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0",
-      "stage-1",
-      "stage-2",
-      "react"
-    ],
-    "plugins": [
-      "transform-react-display-name",
-      "transform-decorators-legacy"
-    ]
   }
 }
