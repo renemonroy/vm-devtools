@@ -17,7 +17,7 @@ class ActiveMission extends React.Component {
     dispatch: PropTypes.func.isRequired,
   };
 
-  handleScreensChange(screens) {
+  handleChangeScreen(screens) {
     this.props.dispatch(MissionActions.changeActiveMissionData({ screens }));
   }
 
@@ -54,7 +54,7 @@ class ActiveMission extends React.Component {
             <UIInputTag
               tags={data.screens}
               placeholder="e.g. MissionSetup"
-              onChange={::this.handleScreensChange}
+              onChange={::this.handleChangeScreen}
               stringCase="class"
               color="lilac"
             />
@@ -66,15 +66,6 @@ class ActiveMission extends React.Component {
               type="text"
               placeholder="e.g. com.virginmegausa.mission.view-media"
               value={data.identifier}
-            />
-          </UIFormRow>
-          <UIFormRow label="Initial keys @type">
-            <UIInputTag
-              tags={[]}
-              placeholder="e.g. jumps @number"
-              onChange={::this.handleInitialKeysChange}
-              stringCase="class"
-              color="salmon"
             />
           </UIFormRow>
         </UIFormGroup>
