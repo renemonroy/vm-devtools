@@ -1,0 +1,8 @@
+scss_files: './src/styles/**/*.scss'
+
+linters:
+  ColorVariable:
+    enabled: false
+
+  IdSelector:
+    enabled: false

@@ -1,1 +1,29 @@
-{"name":"seat_geek","identifier":"com.virginmegausa.mission.seatgeek","screens":["Lorem","Ipsum","Dolor"],"initialState":{"items":[]},"missionStore":{"events":[],"listening":false}}
+{
+  "name": "seat_geek",
+  "identifier": "con.virginmegausa.mission.seatgeek",
+  "screens": [
+    {
+      "name": "Lorem",
+      "type": "stateless"
+    },
+    {
+      "name": "Ipsum",
+      "type": "stateless"
+    },
+    {
+      "name": "Dolor",
+      "type": "stateless"
+    },
+    {
+      "name": "Sit",
+      "type": "stateless"
+    }
+  ],
+  "properties": [
+    {
+      "name": "items",
+      "type": "array",
+      "value": []
+    }
+  ]
+}

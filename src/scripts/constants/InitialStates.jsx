@@ -27,12 +27,49 @@ export const Mission = fromJS({
 // 1 = Busy
 // 2 = Ready
 
-
-// name: 'view_media',
-// identifier: 'com.virginmegausa.mission.view-media',
-// screens: ['MissionSetup', 'MissionInProgress', 'MissionSuccess'],
-// initialState: {
-//   maxJumps: 0,
-//   played: 0
-// },
-// missionEvents: ['MISSION_RESOLVE_SUCCESS']
+// Active Mission
+// {
+//   "name": "view_media",
+//   "identifier": "com.virginmegausa.mission.view-media",
+//   "screens": [
+//     {
+//       "name": "MissionSetup",
+//       "type": "stateless"
+//     },
+//     {
+//       "name": "MissionInProgress",
+//       "type": "stateful"
+//     },
+//     {
+//       "name": "MissionSuccess",
+//       "type": "stateless"
+//     }
+//   ],
+//   "properties": [
+//     {
+//       "name": "screen",
+//       "type": "string",
+//       "value": "MissionSetup"
+//     },
+//     {
+//       "name": "played",
+//       "type": "number",
+//       "value": 0
+//     },
+//     {
+//       "name": "maxJumps",
+//       "type": "number",
+//       "value": 0
+//     },
+//     {
+//       "name": "earnedJumps",
+//       "type": "number",
+//       "value": 0
+//     },
+//     {
+//       "name": "intro",
+//       "type": "string",
+//       "value": ""
+//     }
+//   ]
+// }

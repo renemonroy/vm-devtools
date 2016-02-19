@@ -15,18 +15,21 @@ class UIInputTag extends React.Component {
     placeholder: PropTypes.string,
     addKeys: PropTypes.array,
     removeKeys: PropTypes.array,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func.isRequired,
     color: PropTypes.oneOf(['lilac', 'salmon', 'green']),
     stringCase: PropTypes.string,
+    argChar: PropTypes.strong,
   };
 
   static defaultProps = {
     placeholder: 'Add a tag',
     addKeys: [9, 13],
     removeKeys: [8],
-    onChange: () => {},
     color: 'lilac',
     stringCase: 'none',
+    argChar: ' @',
+    onAdd: () => {},
+    onRemove: () => {},
   };
 
   constructor(props) {
@@ -34,12 +37,26 @@ class UIInputTag extends React.Component {
     this.state = { tagName: '' };
   }
 
+  buildTag(tagName) {
+    const { argChar } = this.props;
+    let val = '';
+    let arg = '';
+    let realName = tagName;
+    if (tagName.indexOf(argChar) !== -1) {
+      const tagArr = _.split(tagName, argChar, 2);
+      realName = tagArr[0];
+      arg = _.lowerCase(tagArr[1]).replace(/\s/g, '');
+    }
+    val = this.handleStringCase(realName);
+    return { name: val, type: arg };
+  }
+
   addTag() {
     const { tagName } = this.state;
-    let newTags = null;
     if (tagName !== '' || tagName !== ' ') {
-      newTags = this.props.tags.concat([this.handleStringCase(tagName)]);
-      this.props.onChange(newTags);
+      const tag = this.buildTag(tagName);
+      const newTags = this.props.tags.concat([tag]);
+      this.props.onChange(newTags, tag);
       this.setState({ tagName: '' });
     }
   }
@@ -47,8 +64,9 @@ class UIInputTag extends React.Component {
   removeTag(i) {
     const newTags = this.props.tags.concat([]);
     if (i > -1 && i < newTags.length) {
+      const removedTag = this.props.tags[i];
       newTags.splice(i, 1);
-      this.props.onChange(newTags);
+      this.props.onChange(newTags, removedTag);
     }
   }
 
@@ -85,8 +103,9 @@ class UIInputTag extends React.Component {
       <div style={wrapperStyle} onClick={() => this._input.focus()}>
         <div>
           {_.map(tags, (tag, i) =>
-            <span key={`tag-${i}`} style={tagStyles}>
-              <span style={tagNameStyle}>{tag}</span>
+            <span key={`tag-${tag.name}`} style={tagStyles}>
+              <span style={tagNameStyle}>{tag.name}</span>
+              {tag.type ? <em>{tag.type}</em> : null}
               <i style={icStyl} className="icon-close" onClick={this.removeTag.bind(this, i)} />
             </span>
           )}
