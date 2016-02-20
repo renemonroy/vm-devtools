@@ -17,8 +17,8 @@ class ActiveMission extends React.Component {
     dispatch: PropTypes.func.isRequired,
   };
 
-  handleChangeScreen(screens) {
-    this.props.dispatch(MissionActions.changeActiveMissionData({ screens }));
+  updateActiveMission(e) {
+    this.props.dispatch(MissionActions.changeActiveMissionData(e));
   }
 
   handleInitialKeysChange(initialKeys) {
@@ -47,14 +47,15 @@ class ActiveMission extends React.Component {
           <UIFormRow label="Mission name">
             <UIInputText
               type="text"
-              placeholder="e.g. ViewMedia"
+              placeholder="e.g. ViewMedia @stateless"
             />
           </UIFormRow>
           <UIFormRow label="Screens">
             <UIInputTag
               tags={data.screens}
               placeholder="e.g. MissionSetup"
-              onChange={::this.handleChangeScreen}
+              onAdd={(screens) => this.updateActiveMission({ screens })}
+              onRemove={(screens) => this.updateActiveMission({ screens })}
               stringCase="class"
               color="lilac"
             />

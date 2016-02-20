@@ -15,7 +15,8 @@ class UIInputTag extends React.Component {
     placeholder: PropTypes.string,
     addKeys: PropTypes.array,
     removeKeys: PropTypes.array,
-    onChange: PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
     color: PropTypes.oneOf(['lilac', 'salmon', 'green']),
     stringCase: PropTypes.string,
     argChar: PropTypes.strong,
@@ -56,7 +57,7 @@ class UIInputTag extends React.Component {
     if (tagName !== '' || tagName !== ' ') {
       const tag = this.buildTag(tagName);
       const newTags = this.props.tags.concat([tag]);
-      this.props.onChange(newTags, tag);
+      this.props.onAdd(newTags, tag);
       this.setState({ tagName: '' });
     }
   }
@@ -66,7 +67,7 @@ class UIInputTag extends React.Component {
     if (i > -1 && i < newTags.length) {
       const removedTag = this.props.tags[i];
       newTags.splice(i, 1);
-      this.props.onChange(newTags, removedTag);
+      this.props.onRemove(newTags, removedTag);
     }
   }
 
