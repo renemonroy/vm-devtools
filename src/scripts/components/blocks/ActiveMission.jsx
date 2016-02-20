@@ -21,12 +21,24 @@ class ActiveMission extends React.Component {
     this.props.dispatch(MissionActions.changeActiveMissionData(e));
   }
 
-  handleInitialKeysChange(initialKeys) {
-    console.log('>>> Initial Keys change:', initialKeys);
-  }
-
-  handleActionsChange(actions) {
-    console.log('>>> Actions change', actions);
+  handleAddedProperty(properties, newProperty) {
+    let value;
+    switch (newProperty.type) {
+      case 'String':
+        value = ''; break;
+      case 'Number':
+        value = 0; break;
+      case 'Boolean':
+        value = false; break;
+      case 'Array':
+        value = []; break;
+      case 'Object':
+        value = {}; break;
+      default:
+        value = null;
+    }
+    _.set(properties[properties.length - 1], 'value', value);
+    this.updateActiveMission({ properties });
   }
 
   handleSave() {
@@ -67,6 +79,16 @@ class ActiveMission extends React.Component {
               type="text"
               placeholder="e.g. com.virginmegausa.mission.view-media"
               value={data.identifier}
+            />
+          </UIFormRow>
+          <UIFormRow label="Properties @type">
+            <UIInputTag
+              tags={data.properties}
+              placeholder="e.g. screen @string"
+              onAdd={::this.handleAddedProperty}
+              onRemove={(properties) => this.updateActiveMission({ properties })}
+              stringCase="variable"
+              color="green"
             />
           </UIFormRow>
         </UIFormGroup>
