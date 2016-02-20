@@ -19,7 +19,7 @@ class UIInputTag extends React.Component {
     onRemove: PropTypes.func.isRequired,
     color: PropTypes.oneOf(['lilac', 'salmon', 'green']),
     stringCase: PropTypes.string,
-    argChar: PropTypes.strong,
+    argChar: PropTypes.string,
   };
 
   static defaultProps = {
