@@ -46,7 +46,7 @@ class UIInputTag extends React.Component {
     if (tagName.indexOf(argChar) !== -1) {
       const tagArr = _.split(tagName, argChar, 2);
       realName = tagArr[0];
-      arg = _.lowerCase(tagArr[1]).replace(/\s/g, '');
+      arg = _.startCase(tagArr[1]).replace(/\s/g, '');
     }
     val = this.handleStringCase(realName);
     return { name: val, type: arg };
@@ -89,6 +89,8 @@ class UIInputTag extends React.Component {
     switch (this.props.stringCase) {
       case 'class':
         return _.startCase(str).replace(/\s/g, '');
+      case 'variable':
+        return _.camelCase(str).replace(/\s/g, '');
       default :
         return str;
     }
