@@ -4,40 +4,40 @@
   "screens": [
     {
       "name": "WheelView",
-      "type": "stateful"
+      "type": "Stateful"
     },
     {
       "name": "FanView",
-      "type": "stateless"
+      "type": "Stateless"
     },
     {
       "name": "SpinView",
-      "type": "stateless"
+      "type": "Stateless"
     },
     {
       "name": "NadaView",
-      "type": "stateless"
+      "type": "Stateless"
     }
   ],
   "properties": [
     {
       "name": "items",
-      "type": "array",
+      "type": "Array",
       "value": []
     },
     {
       "name": "maxJumps",
-      "type": "number",
+      "type": "Number",
       "value": 0
     },
     {
       "name": "played",
-      "type": "number",
+      "type": "Number",
       "value": 0
     },
     {
       "name": "selected",
-      "type": "boolean",
+      "type": "Boolean",
       "value": false
     }
   ]

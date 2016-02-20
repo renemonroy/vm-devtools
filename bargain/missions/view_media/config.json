@@ -4,41 +4,41 @@
   "screens": [
     {
       "name": "MissionSetup",
-      "type": "stateless"
+      "type": "Stateless"
     },
     {
       "name": "MissionInProgress",
-      "type": "stateful"
+      "type": "Stateful"
     },
     {
       "name": "MissionSuccess",
-      "type": "stateless"
+      "type": "Stateless"
     }
   ],
   "properties": [
     {
       "name": "screen",
-      "type": "string",
+      "type": "String",
       "value": "MissionSetup"
     },
     {
       "name": "played",
-      "type": "number",
+      "type": "Number",
       "value": 0
     },
     {
       "name": "maxJumps",
-      "type": "number",
+      "type": "Number",
       "value": 0
     },
     {
       "name": "earnedJumps",
-      "type": "number",
+      "type": "Number",
       "value": 0
     },
     {
       "name": "intro",
-      "type": "string",
+      "type": "String",
       "value": ""
     }
   ]
