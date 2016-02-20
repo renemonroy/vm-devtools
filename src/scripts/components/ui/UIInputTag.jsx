@@ -97,25 +97,27 @@ class UIInputTag extends React.Component {
   }
 
   render() {
-    const { tagName } = this.state;
     const { tags, placeholder, color } = this.props;
-    const { wrapperStyle, inputStyle, tagStyle, tagNameStyle, iconStyle } = styles;
-    const tagStyles = [tagStyle.base, tagStyle[color]];
-    const icStyl = [iconStyle.base, iconStyle[color]];
+    const tagStyles = [styles.tagStyle.base, styles.tagStyle[color]];
+    const icStyl = [styles.iconStyle.base, styles.iconStyle[color]];
     return (
-      <div style={wrapperStyle} onClick={() => this._input.focus()}>
+      <div style={styles.wrapperStyle} onClick={() => this._input.focus()}>
         <div>
           {_.map(tags, (tag, i) =>
             <span key={`tag-${tag.name}`} style={tagStyles}>
-              <span style={tagNameStyle}>{tag.name}</span>
-              {tag.type ? <em>{tag.type}</em> : null}
-              <i style={icStyl} className="icon-close" onClick={this.removeTag.bind(this, i)} />
+              <span style={styles.tagNameStyle}>{tag.name}</span>
+              {tag.type ? <span style={styles.tagArgStyle}>{tag.type}</span> : null}
+              <i
+                style={icStyl}
+                className="icon-close"
+                onClick={this.removeTag.bind(this, i)}
+              />
             </span>
           )}
           <input
-            value={tagName}
+            value={this.state.tagName}
             placeholder={placeholder}
-            style={inputStyle}
+            style={styles.inputStyle}
             type="text"
             ref={(comp) => {this._input = comp;}}
             onChange={(e) => {this.setState({ tagName: e.target.value });}}
@@ -174,6 +176,12 @@ styles = {
     float: 'left',
     marginTop: '.3rem',
     marginRight: '.4rem',
+  },
+  tagArgStyle: {
+    fontSize: '1.2rem',
+    fontWeight: 100,
+    margin: '.4rem .4rem 0 .2rem',
+    float: 'left',
   },
   iconStyle: {
     base: {
