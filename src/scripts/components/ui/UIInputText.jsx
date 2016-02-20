@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import shallowCompare from 'react/lib/shallowCompare';
+import _ from 'lodash';
 let styles = null;
 
 /** UIInputText Component
@@ -9,7 +11,81 @@ class UIInputText extends React.Component {
 
   static propTypes = {
     type: PropTypes.string.isRequired,
+    debounceTime: PropTypes.number,
+    value: PropTypes.string,
+    addKeys: PropTypes.array,
+    onChange: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    onBlur: PropTypes.func,
   };
+
+  static defaultProps = {
+    debounceTime: -1,
+    addKeys: [9, 13],
+    onChange: () => {},
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value || '',
+    };
+  }
+
+  componentWillMount() {
+    this._debounce = null;
+    this.addDebounce(this.props.debounceTime);
+  }
+
+  componentWillReceiveProps({ value, debounceTime }) {
+    if (typeof value !== 'undefined' && this.state.value !== value) {
+      this.setState({ value });
+    }
+    if (debounceTime !== this.props.debounceTime) {
+      this.addDebounce(debounceTime);
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
+  componentWillUnmount() {
+    if (this._debounce.cancel) this._debounce.cancel();
+  }
+
+  addDebounce() {
+    const { debounceTime, onChange } = this.props;
+    if (debounceTime < 0) {
+      this._debounce = () => null;
+    } else if (debounceTime === 0) {
+      this._debounce = onChange;
+    } else {
+      this._debounce = _.debounce(onChange, debounceTime);
+    }
+  }
+
+  forceDebounce(e) {
+    if (this._debounce.cancel) this._debounce.cancel();
+    if (this.props.onChange) this.props.onChange(e);
+  }
+
+  handleChange(e) {
+    e.persist();
+    this.setState({ value: e.target.value }, () => {
+      this._debounce(e);
+    });
+  }
+
+  handleKeyDown(e) {
+    if (this.props.addKeys.indexOf(e.keyCode) !== -1) this.forceDebounce(e);
+    if (this.props.onKeyDown) this.props.onKeyDown(e);
+  }
+
+  handleBlur(e) {
+    this.forceDebounce(e);
+    if (this.props.onBlur) this.props.onBlur(e);
+  }
 
   render() {
     const { type } = this.props;
@@ -22,8 +98,12 @@ class UIInputText extends React.Component {
           /> :
           <input
             {...this.props}
+            value={this.state.value}
             style={styles.input}
             ref={(comp) => {this._input = comp;}}
+            onChange={::this.handleChange}
+            onKeyDown={::this.handleKeyDown}
+            onBlur={::this.handleBlur}
           />
         }
       </div>
