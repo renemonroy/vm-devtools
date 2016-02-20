@@ -19,28 +19,29 @@ var mainSrc = process.env && process.env.NODE_ENV == 'development' ?
   'http://localhost:8081' : 'file://' + __dirname + '/dist/index.html';
 
 var evLog = function(str) { return colors.green(str); };
+var infoLog = function(str) { return colors.blue(str); };
 
 var toggleApp = function(e) {
   mainWindow.isFocused() ? mainWindow.hide() : mainWindow.show();
 };
 
 var onMissionsItemsList = function(e) {
-  console.log('>>> Receive items list instruction.');
+  console.log(infoLog('>>> Receive items list instruction.'));
   missions.respondItemsList();
 };
 
 var onMissionsItem = function(e, name) {
-  console.log('>>> Receive item instruction.');
+  console.log(infoLog('>>> Receive item instruction.'));
   missions.respondItem(name);
 };
 
 var onMissionItemDelete = function(e, missionName) {
-  console.log('>>> Deleting mission:', missionName);
+  console.log(infoLog('>>> Deleting mission:'), missionName);
   missions.deleteItem(missionName);
 };
 
 var onMissionItemEdit = function(e, missionData) {
-  console.log('>>> Edit mission:', missionData);
+  console.log(infoLog('>>> Editing mission:'), missionData);
   missions.editItem(missionData);
 };
 

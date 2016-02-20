@@ -9,6 +9,8 @@ var _ = require('lodash');
 
 var evLog = function(str) { return colors.green(str); };
 var warnLog = function(str) { return colors.yellow(str); };
+var errLog = function(str) { return colors.red(str); };
+var confirmLog = function(str) { return colors.cyan(str); };
 
 var bargain = function() {
   this.init.apply(this, arguments);
@@ -72,7 +74,7 @@ bargain.prototype = {
   _emmitItemsList: function(obj) {
     this.getItemsList( function(itemsList) {
       obj.data = itemsList;
-      console.log('>>> Items List:', obj);
+      console.log(evLog('>>> Items List:'), obj);
       this.sender.send(this.identifier + ':itemslist', obj);
     }.bind(this));
   },
@@ -80,7 +82,7 @@ bargain.prototype = {
   _emmitItem: function(obj) {
     this.getItem(obj.name, function(data) {
       obj.data = data;
-      console.log('>>> Item:', obj);
+      console.log(evLog('>>> Item:'), obj);
       this.sender.send(this.identifier + ':item', obj);
     }.bind(this));
   },
@@ -96,7 +98,7 @@ bargain.prototype = {
     fs.readFile(itemPath, 'utf8', function(err, itemData) {
       var data = null;
       if (err) {
-        console.log('>>> Error', err);
+        console.log('>>>', errLog(err));
         throw err;
       }
       try {
@@ -122,7 +124,7 @@ bargain.prototype = {
   },
 
   respondItemsList: function() {
-    console.log('>>> responding items list...');
+    console.log(confirmLog('>>> responding items list...'));
     this._emmitItemsList({ type: 'res' });
   },
 
@@ -131,7 +133,7 @@ bargain.prototype = {
   },
 
   respondItem: function(name) {
-    console.log('>>> responding item...');
+    console.log(confirmLog('>>> responding item...'));
     this._emmitItem({ type: 'res', name: name });
   },
 
@@ -142,7 +144,7 @@ bargain.prototype = {
       this.validateItem(pathFile, function(err, oldData) {
         var newData = JSON.stringify(_.assign({}, oldData, itemData));
         fs.writeFile(pathFile, newData, 'utf-8');
-        console.log('>>> File edited:', pathFile);
+        console.log(evLog('>>> File edited:'), pathFile);
       })
     }
   },
@@ -151,7 +153,7 @@ bargain.prototype = {
     var pathdir = this.path + name;
     if (fs.isDirectorySync(pathdir)) {
       trash([pathdir]).then( function() {
-        console.log(`>>> ${pathdir} deleted.`);
+        console.log(evLog('>>> ' + pathdir + ' deleted.'));
       });
     }
   },
