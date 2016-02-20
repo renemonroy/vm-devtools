@@ -79,6 +79,8 @@ class ActiveMission extends React.Component {
               type="text"
               placeholder="e.g. com.virginmegausa.mission.view-media"
               value={data.identifier}
+              debounceTime={500}
+              onChange={(e) => this.updateActiveMission({ identifier: e.target.value })}
             />
           </UIFormRow>
           <UIFormRow label="Properties @type">
