@@ -28,6 +28,7 @@ class MissionsScene extends React.Component {
         description="Set the values to generate the boostrap code of your next mission.
         Remember, is not a builder but only a starter. Code and configurations are saved
         in File System, check missions folder."
+        background="/images/banner-mission.jpg"
       />
     );
   }

@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
+import Radium from 'radium';
 let styles = null;
 
 /** SceneHeader Class
  *----------------------------------------------------------------------------*/
+@Radium
 class SceneHeader extends React.Component {
 
   static displayName = 'SceneHeader';
@@ -10,11 +12,14 @@ class SceneHeader extends React.Component {
   static propTypes = {
     heading: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    background: PropTypes.string,
   };
 
   render() {
-    const { heading, description } = this.props;
-    const { headerStyle, headingStyle, descStyle } = styles;
+    const { heading, description, background } = this.props;
+    const { headingStyle, descStyle } = styles;
+    const headerStyle = styles.headerStyle;
+    headerStyle.backgroundImage = background ? `url(${background})` : 'none';
     return (
       <header style={headerStyle}>
         <h2 style={headingStyle}>{heading}</h2>
@@ -29,7 +34,8 @@ class SceneHeader extends React.Component {
  *----------------------------------------------------------------------------*/
 styles = {
   headerStyle: {
-    padding: '2rem 2.4rem',
+    padding: '2.1rem 2.4rem',
+    backgroundSize: 'cover',
   },
   headingStyle: {
     color: '#ffffff',

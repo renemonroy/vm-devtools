@@ -10,6 +10,7 @@ import configureStore from './utils/configureStore';
 require('../styles/index.scss');
 require('../images/window-icons-actions.png');
 require('../images/vm-logo.png');
+require('../images/banner-mission.jpg');
 
 const electron = require('electron');
 const currentWindow = electron.remote.getCurrentWindow();

@@ -59,13 +59,13 @@ class ActiveMission extends React.Component {
           <UIFormRow label="Mission name">
             <UIInputText
               type="text"
-              placeholder="e.g. ViewMedia @stateless"
+              placeholder="e.g. ViewMedia"
             />
           </UIFormRow>
           <UIFormRow label="Screens">
             <UIInputTag
               tags={data.screens}
-              placeholder="e.g. MissionSetup"
+              placeholder="e.g. MissionSetup @stateless"
               onAdd={(screens) => this.updateActiveMission({ screens })}
               onRemove={(screens) => this.updateActiveMission({ screens })}
               stringCase="class"
