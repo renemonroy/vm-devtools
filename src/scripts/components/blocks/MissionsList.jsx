@@ -20,9 +20,11 @@ class MissionsList extends React.Component {
 
   render() {
     const { data: missions, activeMission } = this.props;
+    const { wrapperStyle, headerStyle, listStyle } = styles;
     return (
-      <aside>
-        <ul style={styles.ulStyle}>
+      <aside style={wrapperStyle}>
+        <h3 style={headerStyle}>Missions</h3>
+        <ul style={listStyle}>
           {_.map(missions, (missionName) =>
             <MissionItemButton
               name={missionName}
@@ -40,7 +42,16 @@ class MissionsList extends React.Component {
 /** MissionsList Styles
  *----------------------------------------------------------------------------*/
 styles = {
-  ulStyle: {
+  wrapperStyle: {
+    padding: '1rem 0',
+  },
+  headerStyle: {
+    padding: '1rem 2rem',
+    fontSize: '1.4rem',
+    color: '#4c4c4c',
+    fontWeight: 600,
+  },
+  listStyle: {
     paddingTop: '2.4rem',
   },
 };
