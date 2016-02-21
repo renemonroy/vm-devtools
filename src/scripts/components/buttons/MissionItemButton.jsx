@@ -6,6 +6,7 @@ import { paths } from '../../constants/Globals';
 import _ from 'lodash';
 const { remote, shell } = require('electron');
 const Menu = remote.Menu;
+const dialog = remote.dialog;
 let styles = null;
 
 /** Button Class for MissionsList Items
@@ -42,7 +43,17 @@ class MissionItemButton extends React.Component {
       },
       {
         label: 'Delete',
-        click: () => dispatch(MissionActions.setMission('delete', `${name}`)),
+        click: () => {
+          dialog.showMessageBox(null, {
+            type: 'question',
+            buttons: ['Delete', 'Cancel'],
+            title: 'Delete Mission',
+            message: `Are you sure you want to delete ${name} mission?`,
+          }, (btnId) => {
+            if (btnId === 1) return;
+            this.deleteMission(name);
+          });
+        },
       },
     ]);
   }
@@ -67,8 +78,8 @@ class MissionItemButton extends React.Component {
     this.props.dispatch(MissionActions.fetchActiveMissionData(this.props.name));
   }
 
-  deleteMission() {
-    this.props.dispatch(MissionActions.deleteMission(this.props.name));
+  deleteMission(name) {
+    this.props.dispatch(MissionActions.setMission('delete', name));
   }
 
   render() {
