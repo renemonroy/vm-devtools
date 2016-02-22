@@ -21,11 +21,12 @@
       "allowArrowFunctions": true,
       "allowBind": true
     }],
+    "no-new": [0],
     "no-constant-condition": [0],
     "no-empty-label": [0],
     "space-before-keywords": [0],
     "space-after-keywords": [0],
     "no-arrow-condition": [0],
-    "space-return-throw-case": [0]    
+    "space-return-throw-case": [0]
   }
 }
