@@ -54,16 +54,18 @@ class UIInputTag extends React.Component {
 
   addTag() {
     const { tagName } = this.state;
+    const { tags } = this.props;
     if (tagName !== '' || tagName !== ' ') {
       const tag = this.buildTag(tagName);
-      const newTags = this.props.tags.concat([tag]);
+      const newTags = tags.concat([tag]);
       this.props.onAdd(newTags, tag);
       this.setState({ tagName: '' });
     }
   }
 
   removeTag(i) {
-    const newTags = this.props.tags.concat([]);
+    const { tags } = this.props;
+    const newTags = tags.concat([]);
     if (i > -1 && i < newTags.length) {
       const removedTag = this.props.tags[i];
       newTags.splice(i, 1);
@@ -72,12 +74,13 @@ class UIInputTag extends React.Component {
   }
 
   handleKeyDown(e) {
-    const tagsSize = this.props.tags.length;
-    if (this.props.addKeys.indexOf(e.keyCode) !== -1) {
+    const { tags, addKeys, removeKeys } = this.props;
+    const tagsSize = tags.length;
+    if (addKeys.indexOf(e.keyCode) !== -1) {
       e.preventDefault();
       this.addTag();
     }
-    if ((this.props.removeKeys.indexOf(e.keyCode) !== -1)
+    if ((removeKeys.indexOf(e.keyCode) !== -1)
       && (tagsSize > 0)
       && (this.state.tagName === '')) {
       e.preventDefault();
