@@ -82,11 +82,6 @@ class UIInputText extends React.Component {
     if (this.props.onKeyDown) this.props.onKeyDown(e);
   }
 
-  handleBlur(e) {
-    this.forceDebounce(e);
-    if (this.props.onBlur) this.props.onBlur(e);
-  }
-
   render() {
     const { type } = this.props;
     return (
@@ -103,7 +98,6 @@ class UIInputText extends React.Component {
             ref={(comp) => {this._input = comp;}}
             onChange={::this.handleChange}
             onKeyDown={::this.handleKeyDown}
-            onBlur={::this.handleBlur}
           />
         }
       </div>
