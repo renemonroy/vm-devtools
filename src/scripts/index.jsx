@@ -20,7 +20,7 @@ const routes = (
   <Route path="/" component={App}>
     <Route path="/missions" component={Scenes.MissionsScene} />
     <Route path="/labs" component={Scenes.LabsScene} />
-    <IndexRedirect to="/missions"/>
+    <IndexRedirect to="/missions" />
   </Route>
 );
 

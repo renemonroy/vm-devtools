@@ -32,8 +32,13 @@ export default function configureStore() {
       appStore.dispatch(MissionActions.receiveActiveMissionData(newData));
     } else {
       currData = appStore.getState().Mission.toJS().activeMission.data;
-      if (payload.name === currData.name && !_.isEqual(newData, currData)) {
+      if (newData.name === currData.name && !_.isEqual(newData, currData)) {
         appStore.dispatch(MissionActions.receiveActiveMissionData(newData));
+      } else if (payload.type === 'change') {
+        new Notification('Mission change succeeded', {
+          body: `Your mission ${newData.name} has been changed successfully.`,
+          silent: true,
+        });
       }
     }
   };
