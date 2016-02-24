@@ -21,6 +21,7 @@ class UIInputTag extends React.Component {
     stringCase: PropTypes.string,
     argChar: PropTypes.string,
     validate: PropTypes.func,
+    validArgs: PropTypes.array,
   };
 
   static defaultProps = {
@@ -30,6 +31,7 @@ class UIInputTag extends React.Component {
     color: 'lilac',
     stringCase: 'none',
     argChar: ' @',
+    validArgs: [],
     onAdd: () => {},
     onRemove: () => {},
     validate: () => true,
@@ -44,7 +46,7 @@ class UIInputTag extends React.Component {
   }
 
   buildTag(tagName) {
-    const { argChar } = this.props;
+    const { argChar, validArgs } = this.props;
     let val = '';
     let arg = '';
     let realName = tagName;
@@ -54,7 +56,7 @@ class UIInputTag extends React.Component {
       arg = _.startCase(tagArr[1]).replace(/\s/g, '');
     }
     val = this.handleStringCase(realName);
-    return { name: val, type: arg };
+    return { name: val, type: arg, args: validArgs };
   }
 
   addTag() {
@@ -66,7 +68,11 @@ class UIInputTag extends React.Component {
       onAdd(newTags, tag);
       this.setState({ tagName: '', status: 1 });
     } else {
-      this.setState({ status: 0 });
+      if (tag.name === '') {
+        this.setState({ status: 1 });
+      } else {
+        this.setState({ status: 0 });
+      }
     }
   }
 
