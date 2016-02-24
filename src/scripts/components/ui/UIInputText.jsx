@@ -23,7 +23,7 @@ class UIInputText extends React.Component {
   };
 
   static defaultProps = {
-    debounceTime: -1,
+    debounceTime: 500,
     addKeys: [9, 13],
     onChange: () => {},
     validate: () => true,
@@ -60,7 +60,7 @@ class UIInputText extends React.Component {
   }
 
   change(e) {
-    const { onChange, validate, onInvalid } = this.props;
+    const { onChange, validate } = this.props;
     if (validate(e.target.value) === true && onChange) {
       onChange(e);
     } else {
