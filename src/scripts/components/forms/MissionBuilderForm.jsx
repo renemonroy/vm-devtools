@@ -13,9 +13,12 @@ class MissionBuilderForm extends React.Component {
   static displayName = 'MissionBuilderForm';
 
   static propTypes = {
-    status: PropTypes.oneOf([-1, 0, 1, 2]).isRequired,
     data: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(this.props.data, nextProps.data);
   }
 
   updateData(e) {
@@ -58,6 +61,7 @@ class MissionBuilderForm extends React.Component {
 
   render() {
     const { data } = this.props;
+    console.log('>>>> MISSION BUILDER');
     return (
       <UIForm onSubmit={::this.handleSubmit}>
         <UIFormGroup legend="Component">
