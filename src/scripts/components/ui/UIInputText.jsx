@@ -16,10 +16,10 @@ class UIInputText extends React.Component {
     debounceTime: PropTypes.number,
     value: PropTypes.string,
     addKeys: PropTypes.array,
+    validate: PropTypes.func,
     onChange: PropTypes.func,
     onKeyDown: PropTypes.func,
     onBlur: PropTypes.func,
-    validate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -60,7 +60,7 @@ class UIInputText extends React.Component {
   }
 
   change(e) {
-    const { onChange, validate } = this.props;
+    const { onChange, validate, onInvalid } = this.props;
     if (validate(e.target.value) === true && onChange) {
       onChange(e);
     } else {
@@ -82,7 +82,6 @@ class UIInputText extends React.Component {
   forceDebounce(e) {
     if (this._debounce.cancel) this._debounce.cancel();
     this.change(e);
-    // if (this.props.onChange) this.props.onChange(e);
   }
 
   handleChange(e) {
