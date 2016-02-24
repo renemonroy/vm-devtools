@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { UIFormGrid, UIInputText, UIInputTag, UIButton } from '../ui';
 import { MissionActions } from '../../actions';
+import { MissionBuilderForm } from '../forms';
 const { UIFormGroup, UIFormRow } = UIFormGrid;
 
 /** ActiveMission Class
@@ -105,7 +106,7 @@ class ActiveMission extends React.Component {
     const { data } = this.props;
     return (
       <div>
-        {_.isEmpty(data) ? this.renderIndex() : this.renderForm()}
+        {_.isEmpty(data) ? this.renderIndex() : <MissionBuilderForm data={data} />}
       </div>
     );
   }
