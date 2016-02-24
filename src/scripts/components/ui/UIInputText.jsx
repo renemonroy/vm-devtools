@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
+import Radium from 'radium';
 import shallowCompare from 'react/lib/shallowCompare';
 import _ from 'lodash';
 let styles = null;
 
 /** UIInputText Component
  *----------------------------------------------------------------------------*/
+@Radium
 class UIInputText extends React.Component {
 
   static displayName = 'UIInputText';
@@ -17,18 +19,21 @@ class UIInputText extends React.Component {
     onChange: PropTypes.func,
     onKeyDown: PropTypes.func,
     onBlur: PropTypes.func,
+    validate: PropTypes.func,
   };
 
   static defaultProps = {
     debounceTime: -1,
     addKeys: [9, 13],
     onChange: () => {},
+    validate: () => true,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       value: props.value || '',
+      status: 1,
     };
   }
 
@@ -54,6 +59,15 @@ class UIInputText extends React.Component {
     if (this._debounce.cancel) this._debounce.cancel();
   }
 
+  change(e) {
+    const { onChange, validate } = this.props;
+    if (validate(e.target.value) === true && onChange) {
+      onChange(e);
+    } else {
+      this.setState({ status: 0 });
+    }
+  }
+
   addDebounce() {
     const { debounceTime, onChange } = this.props;
     if (debounceTime < 0) {
@@ -61,18 +75,19 @@ class UIInputText extends React.Component {
     } else if (debounceTime === 0) {
       this._debounce = onChange;
     } else {
-      this._debounce = _.debounce(onChange, debounceTime);
+      this._debounce = _.debounce(this.change, debounceTime);
     }
   }
 
   forceDebounce(e) {
     if (this._debounce.cancel) this._debounce.cancel();
-    if (this.props.onChange) this.props.onChange(e);
+    this.change(e);
+    // if (this.props.onChange) this.props.onChange(e);
   }
 
   handleChange(e) {
     e.persist();
-    this.setState({ value: e.target.value }, () => {
+    this.setState({ value: e.target.value, status: 1 }, () => {
       this._debounce(e);
     });
   }
@@ -84,8 +99,10 @@ class UIInputText extends React.Component {
 
   render() {
     const { type } = this.props;
+    const { wrapper, inputStyle, errorStyle } = styles;
+    const wStyles = [wrapper, this.state.status === 0 ? errorStyle : null];
     return (
-      <div style={styles.wrapper} onClick={() => this._input.focus()}>
+      <div style={wStyles} onClick={() => this._input.focus()}>
         {type === 'textarea' ?
           <textarea
             {...this.props}
@@ -94,7 +111,7 @@ class UIInputText extends React.Component {
           <input
             {...this.props}
             value={this.state.value}
-            style={styles.input}
+            style={inputStyle}
             ref={(comp) => {this._input = comp;}}
             onChange={::this.handleChange}
             onKeyDown={::this.handleKeyDown}
@@ -113,7 +130,7 @@ styles = {
     borderBottom: '1px solid #e7e7e7',
     overflow: 'hidden',
   },
-  input: {
+  inputStyle: {
     border: '0 none',
     lineHeight: '2.2rem',
     height: '2.2rem',
@@ -125,6 +142,9 @@ styles = {
     marginBottom: '.5rem',
     fontFamily: '"proxima-nova",sans-serif',
     color: '#4c4c4c',
+  },
+  errorStyle: {
+    borderBottom: '1px solid red',
   },
 };
 
