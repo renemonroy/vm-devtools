@@ -36,7 +36,7 @@ export default function configureStore() {
         appStore.dispatch(MissionActions.receiveActiveMissionData(newData));
       } else if (payload.type === 'change') {
         new Notification('Mission change succeeded', {
-          body: `Your mission ${newData.name} has been changed successfully.`,
+          body: `The mission ${newData.name} has been changed successfully.`,
           silent: true,
         });
       }

@@ -56,24 +56,35 @@ class MissionBuilderForm extends React.Component {
   validateTag(tag) {
     return this.validateText(tag.name)
       && this.validateText(tag.type)
-      && !validator.isNull(tag.type);
+      && !validator.isNull(tag.type)
+      && (_.indexOf(tag.args, tag.type) !== -1);
+  }
+
+  validateForm() {
+    const invalidFields = _.reduce(this.refs, (result, comp) => {
+      if (comp.state.status === 0) result.push(comp);
+      return result;
+    }, []);
+    return invalidFields.length === 0;
   }
 
   render() {
     const { data } = this.props;
-    console.log('>>>> MISSION BUILDER');
     return (
-      <UIForm onSubmit={::this.handleSubmit}>
+      <UIForm onSubmit={::this.handleSubmit} validate={::this.validateForm}>
         <UIFormGroup legend="Component">
           <UIFormRow label="Mission name">
             <UIInputText
+              ref="missionName"
               type="text"
+              value={data.name}
               placeholder="e.g. ViewMedia"
               validate={::this.validateText}
             />
           </UIFormRow>
           <UIFormRow label="Screens">
             <UIInputTag
+              ref="missionScreens"
               tags={data.screens}
               placeholder="e.g. Home @stateless"
               stringCase="class"
@@ -81,23 +92,24 @@ class MissionBuilderForm extends React.Component {
               onAdd={(screens) => this.updateData({ screens })}
               onRemove={(screens) => this.updateData({ screens })}
               validate={::this.validateTag}
+              validArgs={['Stateful', 'Stateless']}
             />
           </UIFormRow>
         </UIFormGroup>
         <UIFormGroup legend="Store">
           <UIFormRow label="Identifier">
             <UIInputText
-              ref="identifier"
+              ref="missionIdentifier"
               type="text"
               value={data.identifier}
               placeholder="e.g. com.virginmegausa.mission.view-media"
-              debounceTime={500}
               onChange={(e) => this.updateData({ identifier: e.target.value })}
               validate={::this.validateText}
             />
           </UIFormRow>
           <UIFormRow label="Properties @type">
             <UIInputTag
+              ref="missionProperties"
               tags={data.properties}
               placeholder="e.g. screen @string"
               stringCase="variable"
@@ -105,6 +117,7 @@ class MissionBuilderForm extends React.Component {
               onAdd={::this.handleAddedProperty}
               onRemove={(properties) => this.updateData({ properties })}
               validate={::this.validateTag}
+              validArgs={['String', 'Object', 'Array', 'Boolean', 'Number']}
             />
           </UIFormRow>
         </UIFormGroup>
