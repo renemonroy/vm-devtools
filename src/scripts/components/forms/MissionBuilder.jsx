@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import validator from 'validator';
 import { UIForm, UIFormGrid, UIInputTag, UIInputText, UIButton } from '../ui';
@@ -12,6 +13,7 @@ class MissionBuilderForm extends React.Component {
   static displayName = 'MissionBuilderForm';
 
   static propTypes = {
+    status: PropTypes.oneOf([-1, 0, 1, 2]).isRequired,
     data: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
   }
@@ -24,8 +26,24 @@ class MissionBuilderForm extends React.Component {
     this.props.dispatch(MissionActions.setMission('edit', this.props.data));
   }
 
-  handleAddedProperty() {
-    debugger;
+  handleAddedProperty(properties, newProperty) {
+    let value;
+    switch (newProperty.type) {
+      case 'String':
+        value = ''; break;
+      case 'Number':
+        value = 0; break;
+      case 'Boolean':
+        value = false; break;
+      case 'Array':
+        value = []; break;
+      case 'Object':
+        value = {}; break;
+      default:
+        value = null;
+    }
+    _.set(properties[properties.length - 1], 'value', value);
+    this.updateData({ properties });
   }
 
   validateText(str) {

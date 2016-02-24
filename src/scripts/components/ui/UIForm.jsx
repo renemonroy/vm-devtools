@@ -13,7 +13,6 @@ class UIForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    debugger;
     this.props.onSubmit(e);
   }
 
