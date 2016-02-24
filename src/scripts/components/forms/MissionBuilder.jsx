@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import validator from 'validator';
 import { UIForm, UIFormGrid, UIInputTag, UIInputText, UIButton } from '../ui';
+import { MissionActions } from '../../actions';
 const { UIFormGroup, UIFormRow } = UIFormGrid;
 
 /** MissionBuilder Form Class
@@ -11,14 +13,29 @@ class MissionBuilderForm extends React.Component {
 
   static propTypes = {
     data: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
+  }
+
+  updateData(e) {
+    this.props.dispatch(MissionActions.changeActiveMissionData(e));
   }
 
   handleSubmit() {
-    debugger;
+    this.props.dispatch(MissionActions.setMission('edit', this.props.data));
   }
 
   handleAddedProperty() {
     debugger;
+  }
+
+  validateText(str) {
+    return str !== '' && str !== ' ' && !validator.isNumeric(str);
+  }
+
+  validateTag(tag) {
+    return this.validateText(tag.name)
+      && this.validateText(tag.type)
+      && !validator.isNull(tag.type);
   }
 
   render() {
@@ -30,16 +47,18 @@ class MissionBuilderForm extends React.Component {
             <UIInputText
               type="text"
               placeholder="e.g. ViewMedia"
+              validate={::this.validateText}
             />
           </UIFormRow>
           <UIFormRow label="Screens">
             <UIInputTag
               tags={data.screens}
               placeholder="e.g. Home @stateless"
-              onAdd={(screens) => this.updateData({ screens })}
-              onRemove={(screens) => this.updateData({ screens })}
               stringCase="class"
               color="lilac"
+              onAdd={(screens) => this.updateData({ screens })}
+              onRemove={(screens) => this.updateData({ screens })}
+              validate={::this.validateTag}
             />
           </UIFormRow>
         </UIFormGroup>
@@ -52,17 +71,18 @@ class MissionBuilderForm extends React.Component {
               placeholder="e.g. com.virginmegausa.mission.view-media"
               debounceTime={500}
               onChange={(e) => this.updateData({ identifier: e.target.value })}
-              validate={(str) => validator.isLowercase(str) && str !== '' && !validator.isInt(str)}
+              validate={::this.validateText}
             />
           </UIFormRow>
           <UIFormRow label="Properties @type">
             <UIInputTag
               tags={data.properties}
               placeholder="e.g. screen @string"
-              onAdd={::this.handleAddedProperty}
-              onRemove={(properties) => this.updateData({ properties })}
               stringCase="variable"
               color="green"
+              onAdd={::this.handleAddedProperty}
+              onRemove={(properties) => this.updateData({ properties })}
+              validate={::this.validateTag}
             />
           </UIFormRow>
         </UIFormGroup>
@@ -73,4 +93,4 @@ class MissionBuilderForm extends React.Component {
 
 }
 
-export default MissionBuilderForm;
+export default connect()(MissionBuilderForm);
