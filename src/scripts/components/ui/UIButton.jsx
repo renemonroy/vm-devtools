@@ -14,12 +14,24 @@ class UIButton extends React.Component {
     onClick: PropTypes.func,
     children: PropTypes.any,
     style: PropTypes.object,
+    type: PropTypes.oneOf(['default', 'submit']),
+  };
+
+  static defaultProps = {
+    type: 'default',
   };
 
   render() {
     const { kind, children, style } = this.props;
     const { buttonStyle } = styles;
     const btnStyl = [buttonStyle.base, buttonStyle[kind], style];
+    if (this.props.type === 'submit') {
+      return (
+        <button type="submit" style={btnStyl} className="ui-button">
+          {children}
+        </button>
+      );
+    }
     return (
       <div {...this.props} className="ui-button" style={btnStyl}>
         {children}
