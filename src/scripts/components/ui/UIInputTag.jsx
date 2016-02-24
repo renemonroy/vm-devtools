@@ -20,6 +20,7 @@ class UIInputTag extends React.Component {
     color: PropTypes.oneOf(['lilac', 'salmon', 'green']),
     stringCase: PropTypes.string,
     argChar: PropTypes.string,
+    validate: PropTypes.func,
   };
 
   static defaultProps = {
@@ -31,11 +32,15 @@ class UIInputTag extends React.Component {
     argChar: ' @',
     onAdd: () => {},
     onRemove: () => {},
+    validate: () => true,
   };
 
   constructor(props) {
     super(props);
-    this.state = { tagName: '' };
+    this.state = {
+      tagName: '',
+      status: 1,
+    };
   }
 
   buildTag(tagName) {
@@ -54,12 +59,14 @@ class UIInputTag extends React.Component {
 
   addTag() {
     const { tagName } = this.state;
-    const { tags } = this.props;
-    if (tagName !== '' || tagName !== ' ') {
-      const tag = this.buildTag(tagName);
+    const { tags, validate, onAdd } = this.props;
+    const tag = this.buildTag(tagName);
+    if (validate(tag) === true && onAdd) {
       const newTags = tags.concat([tag]);
-      this.props.onAdd(newTags, tag);
-      this.setState({ tagName: '' });
+      onAdd(newTags, tag);
+      this.setState({ tagName: '', status: 1 });
+    } else {
+      this.setState({ status: 0 });
     }
   }
 
@@ -101,10 +108,12 @@ class UIInputTag extends React.Component {
 
   render() {
     const { tags, placeholder, color } = this.props;
-    const tagStyles = [styles.tagStyle.base, styles.tagStyle[color]];
-    const icStyl = [styles.iconStyle.base, styles.iconStyle[color]];
+    const { wrapperStyle, tagStyle, iconStyle, errorStyle } = styles;
+    const tagStyles = [tagStyle.base, tagStyle[color]];
+    const icStyl = [iconStyle.base, iconStyle[color]];
+    const wStyles = [wrapperStyle, this.state.status === 0 ? errorStyle : null];
     return (
-      <div style={styles.wrapperStyle} onClick={() => this._input.focus()}>
+      <div style={wStyles} onClick={() => this._input.focus()}>
         <div>
           {_.map(tags, (tag, i) =>
             <span key={`tag-${tag.name}`} style={tagStyles}>
@@ -139,6 +148,9 @@ styles = {
   wrapperStyle: {
     borderBottom: '1px solid #e7e7e7',
     overflow: 'hidden',
+  },
+  errorStyle: {
+    borderBottom: '1px solid red',
   },
   inputStyle: {
     border: '0 none',
