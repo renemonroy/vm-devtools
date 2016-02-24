@@ -1,5 +1,6 @@
 export UIButton from './UIButton';
 export UIContent from './UIContent';
+export UIForm from './UIForm';
 export UIFormGrid from './UIFormGrid';
 export UIIcon from './UIIcon';
 export UIInputTag from './UIInputTag';
