@@ -24,11 +24,12 @@ function* fetchMissionsListData() {
 function* receiveMissionsListData(getState) {
   while (true) {
     const { data: newData } = yield take(ActionType.RECEIVE_MISSIONS_LIST_DATA);
-    const currActiveMD = getState().Mission.ActiveMission.getIn(['data']).toJS();
     yield put(Action.changeMissionsListData(newData));
     yield put(Action.changeMissionsListStatus(1));
-    if (newData === 0 || newData.indexOf(currActiveMD.name) === -1) {
+    const currActiveMD = getState().Mission.ActiveMission.getIn(['data']).toJS();
+    if (newData.length === 0 || newData.indexOf(currActiveMD.name) === -1) {
       yield put(Action.cleanActiveMissionData());
+      yield put(Action.changeActiveMissionStatus(0));
     }
   }
 }
