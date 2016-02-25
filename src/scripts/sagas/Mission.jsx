@@ -24,7 +24,7 @@ function* fetchMissionsListData() {
 function* receiveMissionsListData(getState) {
   while (true) {
     const { data: newData } = yield take(ActionType.RECEIVE_MISSIONS_LIST_DATA);
-    const currActiveMD = getState().Mission.getIn(['activeMission', 'data']).toJS();
+    const currActiveMD = getState().Mission.ActiveMission.getIn(['data']).toJS();
     yield put(Action.changeMissionsListData(newData));
     yield put(Action.changeMissionsListStatus(1));
     if (newData === 0 || newData.indexOf(currActiveMD.name) === -1) {
@@ -38,7 +38,7 @@ function* receiveMissionsListData(getState) {
 function* fetchActiveMissionData(getState) {
   while (true) {
     const { name } = yield take(ActionType.FETCH_ACTIVE_MISSION_DATA);
-    const currName = getState().Mission.getIn(['activeMission', 'data', 'name']);
+    const currName = getState().Mission.ActiveMission.getIn(['data', 'name']);
     if (name !== currName) {
       try {
         ipcRenderer.send('missions:item', name);
@@ -54,7 +54,7 @@ function* fetchActiveMissionData(getState) {
 function* receiveActiveMissionData(getState) {
   while (true) {
     const { data: newData } = yield take(ActionType.RECEIVE_ACTIVE_MISSION_DATA);
-    const currentData = getState().Mission.toJS().activeMission.data;
+    const currentData = getState().Mission.ActiveMission.getIn(['data']).toJS();
     if (newData.name !== currentData.name) {
       yield put(Action.changeActiveMissionData(newData));
     }

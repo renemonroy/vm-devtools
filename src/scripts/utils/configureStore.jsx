@@ -19,7 +19,7 @@ export default function configureStore() {
    *--------------------------------------------------------------------------*/
   const onMissionsList = (e, payload) => {
     const newData = payload.data;
-    const currData = appStore.getState().Mission.toJS().missionsList.data;
+    const currData = appStore.getState().Mission.MissionsList.toJS().data;
     if (!_.isEqual(newData, currData)) {
       appStore.dispatch(MissionActions.receiveMissionsListData(newData));
     }
@@ -31,7 +31,7 @@ export default function configureStore() {
     if (payload.type === 'res') {
       appStore.dispatch(MissionActions.receiveActiveMissionData(newData));
     } else {
-      currData = appStore.getState().Mission.toJS().activeMission.data;
+      currData = appStore.getState().Mission.ActiveMission.toJS().data;
       if (newData.name === currData.name && !_.isEqual(newData, currData)) {
         appStore.dispatch(MissionActions.receiveActiveMissionData(newData));
       } else if (payload.type === 'change') {
