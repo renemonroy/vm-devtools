@@ -17,7 +17,7 @@ function onChangeMissionsListData(state, newData) {
 }
 
 function onChangeMissionsListStatus(state, status) {
-  return state.setIn(['status'], status);
+  return state.set('status', status);
 }
 
 /* Active Mission */
@@ -29,7 +29,7 @@ function onChangeActiveMissionData(state, newData) {
 }
 
 function onChangeActiveMissionStatus(state, status) {
-  return state.setIn(['status'], status);
+  return state.set('status', status);
 }
 
 function onCleanActiveMissionData(state) {

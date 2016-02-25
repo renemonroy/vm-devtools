@@ -1,1 +1,1 @@
-{"name":"seat_geek","identifier":"con.virginmegausa.mission.seatgeek","screens":[{"name":"Lorem","type":"Stateless"},{"name":"Ipsum","type":"Stateless"},{"args":["Stateful","Stateless"],"name":"Sit","type":"Stateful"}],"properties":[{"name":"items","type":"Array","value":[]},{"name":"screen","type":"Object","value":{}}]}
+{"name":"seat_geek","identifier":"con.virginmegausa.mission.seatgeek","screens":[{"name":"Lorem","type":"Stateless"},{"name":"Ipsum","type":"Stateless"}],"properties":[{"name":"items","type":"Array","value":[]},{"name":"screen","type":"Object","value":{}}]}
