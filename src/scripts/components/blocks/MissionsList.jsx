@@ -7,6 +7,11 @@ let styles = null;
 
 /** MissionsList Class
  *----------------------------------------------------------------------------*/
+@connect(state => ({
+  data: state.Mission.MissionsList.get('data').toJS(),
+  status: state.Mission.MissionsList.get('status'),
+  activeMission: state.Mission.ActiveMission.get('data').toJS(),
+}))
 @Radium
 class MissionsList extends React.Component {
 
@@ -56,4 +61,4 @@ styles = {
   },
 };
 
-export default connect()(MissionsList);
+export default MissionsList;

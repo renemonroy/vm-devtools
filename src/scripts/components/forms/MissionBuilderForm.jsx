@@ -8,11 +8,16 @@ const { UIFormGroup, UIFormRow } = UIFormGrid;
 
 /** MissionBuilder Form Class
  *----------------------------------------------------------------------------*/
+@connect(state => ({
+  data: state.Mission.ActiveMission.get('data').toJS(),
+  status: state.Mission.ActiveMission.get('status'),
+}))
 class MissionBuilderForm extends React.Component {
 
   static displayName = 'MissionBuilderForm';
 
   static propTypes = {
+    status: PropTypes.oneOf([-1, 0, 1, 2]).isRequired,
     data: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
   }
@@ -128,4 +133,4 @@ class MissionBuilderForm extends React.Component {
 
 }
 
-export default connect()(MissionBuilderForm);
+export default MissionBuilderForm;

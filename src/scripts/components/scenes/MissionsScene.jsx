@@ -1,19 +1,17 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { UIScene } from '../ui';
-import { SceneHeader, MissionsList, ActiveMission } from '../blocks';
+import { SceneHeader, MissionsList } from '../blocks';
+import { MissionBuilderForm } from '../forms';
 import { MissionActions } from '../../actions';
 
 /** MissionScene Class
  *----------------------------------------------------------------------------*/
-@connect(state => (state.Mission.toJS()))
 class MissionsScene extends React.Component {
 
   static displayName = 'MissionsScene';
 
   static propTypes = {
-    missionsList: PropTypes.object.isRequired,
-    activeMission: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
   };
 
@@ -33,23 +31,12 @@ class MissionsScene extends React.Component {
     );
   }
 
-  renderSidebar() {
-    const { missionsList: ml, activeMission: am } = this.props;
-    return <MissionsList status={ml.status} data={ml.data} activeMission={am.data} />;
-  }
-
-  renderContent() {
-    const { activeMission: am } = this.props;
-    return <ActiveMission status={am.status} data={am.data} />;
-  }
-
   render() {
-    const mlData = this.props.missionsList.data;
     return (
       <UIScene
         header={::this.renderHeader}
-        sidebar={mlData.length > 0 ? ::this.renderSidebar : null}
-        content={::this.renderContent}
+        sidebar={() => <MissionsList />}
+        content={() => <MissionBuilderForm />}
         name="missions"
       />
     );
@@ -57,4 +44,4 @@ class MissionsScene extends React.Component {
 
 }
 
-export default MissionsScene;
+export default connect()(MissionsScene);
